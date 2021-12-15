@@ -24,4 +24,4 @@ define(["require", "exports"], function (require, exports) {
     })(CloseView = exports.CloseView || (exports.CloseView = {}));
 });
 
-//# sourceMappingURL=dist/code/tools/CloseView.js.map
+//# sourceMappingURL=dist/code/tools/~Sort Out/CloseView.js.map

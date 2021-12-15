@@ -16,7 +16,9 @@ define(["require", "exports"], function (require, exports) {
         }
         var initiateEvents = (function () {
             function initiateEvents() {
-                console.log(tag('default-overlay'));
+                $('#manager-tickets button').on('click', function () {
+                    console.log('Go to Manager');
+                });
                 console.log('--DefaultOverlay.js Loaded');
             }
             return initiateEvents;

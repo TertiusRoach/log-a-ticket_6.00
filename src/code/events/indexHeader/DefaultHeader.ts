@@ -1,4 +1,4 @@
-import { GetPage } from 'code/tools/GetPage';
+import { GetEvent } from 'code/tools/GetEvent';
 
 //--|►| Default Header |◄|--//
 export namespace DefaultHeader {

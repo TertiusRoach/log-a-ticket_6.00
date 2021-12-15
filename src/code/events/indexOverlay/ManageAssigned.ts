@@ -1,5 +1,3 @@
-import { CloseView } from 'code/tools/CloseView';
-
 //--|►| Manage Assigned |◄|--//
 export namespace ManageAssigned {
   export class initiateEvents {

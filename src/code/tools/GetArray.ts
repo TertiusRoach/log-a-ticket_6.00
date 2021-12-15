@@ -1,15 +1,5 @@
-//--|►| GetArray |◄|--//
-export namespace GetEmployee {
-  class employeeReference {
-    firstName: String;
-    middleName: undefined | String;
-    lastName: String;
-    department: 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources' | String;
-    occupation: String | undefined;
-    role: 'Manager' | 'Employee';
-    email: undefined | String;
-    phone: undefined | Number;
-  }
+//--|►| GetArray (Tool) |◄|--//
+export namespace GetArray {
   export function employees(): employeeReference[] {
     return [
       {
@@ -114,26 +104,16 @@ export namespace GetEmployee {
       },
     ];
   }
-}
-export namespace GetTicket {
-  class ticketReference {
-    ticketStatus: 'Pending' | 'Assigned' | 'Resolved' | 'Deleted';
-    ticketRating: undefined | Number;
-    subjectText: String;
-    descriptionText: String;
-    senderName: String;
-    senderDepartment: 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources' | String;
-    receiverName: undefined | String;
-    receiverDepartment: 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources' | String;
-    dateShort: String;
-    datePending: String;
-    dateAssigned: undefined | String;
-    dateResolved: undefined | String;
-    noteResolved: undefined | String;
-    dateDeleted: undefined | String;
-    noteDeleted: undefined | String;
+  class employeeReference {
+    firstName: String;
+    middleName: undefined | String;
+    lastName: String;
+    department: 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources' | String;
+    occupation: String | undefined;
+    role: 'Manager' | 'Employee';
+    email: undefined | String;
+    phone: undefined | Number;
   }
-
   export function tickets(): ticketReference[] {
     return [
       {
@@ -9385,5 +9365,22 @@ export namespace GetTicket {
         noteDeleted: undefined,
       },
     ];
+  }
+  class ticketReference {
+    ticketStatus: 'Pending' | 'Assigned' | 'Resolved' | 'Deleted';
+    ticketRating: undefined | Number;
+    subjectText: String;
+    descriptionText: String;
+    senderName: String;
+    senderDepartment: 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources' | String;
+    receiverName: undefined | String;
+    receiverDepartment: 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources' | String;
+    dateShort: String;
+    datePending: String;
+    dateAssigned: undefined | String;
+    dateResolved: undefined | String;
+    noteResolved: undefined | String;
+    dateDeleted: undefined | String;
+    noteDeleted: undefined | String;
   }
 }
