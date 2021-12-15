@@ -1,4 +1,9 @@
 //--|▼| Tools (Import) |▼|--//
+import { DataCreate } from 'code/tools/DataCreate';
+import { DataErase } from 'code/tools/DataErase';
+import { DataRead } from 'code/tools/DataRead';
+import { DataUpdate } from 'code/tools/DataUpdate';
+
 import { GetArray } from 'code/tools/GetArray';
 import { GetColor } from 'code/tools/GetColor';
 import { GetElement } from 'code/tools/GetElement';
@@ -10,6 +15,7 @@ import { Use } from 'main';
 export namespace DefaultOverlay {
   export class initiateEvents {
     constructor() {
+      new DataCreate.initiateCode('index-data');
       new GetEvent.forPage('default-header', GetPath.forHTML('header'));
 
       const defaultOverlay = document.querySelector('.default-overlay');

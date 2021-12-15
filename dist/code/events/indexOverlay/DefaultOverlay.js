@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, GetArray_1, GetEvent_1, GetPath_1) {
+define(["require", "exports", "code/tools/DataCreate", "code/tools/GetArray", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, DataCreate_1, GetArray_1, GetEvent_1, GetPath_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultOverlay = void 0;
@@ -6,6 +6,7 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
     (function (DefaultOverlay) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataCreate_1.DataCreate.initiateCode('index-data');
                 new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
                 var defaultOverlay = document.querySelector('.default-overlay');
                 var managerButton = document.querySelector('#manager-tickets button');
