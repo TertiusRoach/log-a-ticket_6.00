@@ -1,6 +1,3 @@
-import { GetPage } from 'code/tools/GetPage';
-import { CloseView } from 'code/tools/CloseView';
-
 //--|►| Logged Pending |◄|--//
 export namespace LoggedPending {
   export class initiateEvents {

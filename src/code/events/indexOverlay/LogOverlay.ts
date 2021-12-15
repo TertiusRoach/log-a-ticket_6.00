@@ -1,5 +1,3 @@
-import { CloseView } from 'code/tools/CloseView';
-
 //--|►| Log Overlay |◄|--//
 export namespace LogOverlay {
   export class initiateEvents {

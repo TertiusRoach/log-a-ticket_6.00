@@ -1,5 +1,3 @@
-import { Get } from 'main';
-
 //--|►| Default Overlay |◄|--//
 export namespace DefaultOverlay {
   function tag(element: 'default-overlay' | 'manager-button' | 'employee-button') {
@@ -14,7 +12,11 @@ export namespace DefaultOverlay {
   }
   export class initiateEvents {
     constructor() {
-      console.log(tag('default-overlay'));
+      $('#manager-tickets button').on('click', () => {
+        // new GetPage.initiateCode(Get.path('main'), 'logged-main');
+
+        console.log('Go to Manager');
+      });
 
       console.log('--DefaultOverlay.js Loaded');
     }

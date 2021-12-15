@@ -1,6 +1,4 @@
-import { StyleTags } from 'code/tools/StyleTags';
-import { BuildTickets } from 'code/tools/BuildTickets';
-
+//--|▼| Events (Import) |▼|--//
 import { DefaultBody } from 'code/events/indexBody/defaultBody';
 
 import { DefaultHeader } from 'code/events/indexHeader/DefaultHeader';
@@ -33,8 +31,8 @@ import { UserResolved } from 'code/events/indexOverlay/UserResolved';
 
 import { DefaultData } from 'code/events/indexData/defaultData';
 
-//--|►| GetPage |◄|--//
-export namespace GetPage {
+//--|►| Get Event |◄|--//
+export namespace GetEvent {
   export function loadBody(pageName: String | 'default-body') {
     //--► Body <body> ◄--//
     switch (pageName) {
@@ -162,8 +160,8 @@ export namespace GetPage {
     }
   }
 
-  export class initiateCode {
-    constructor(pagePath: String, pageName: String) {
+  export class forPage {
+    constructor(pageName: String, pagePath: String) {
       const folderName = pagePath.split('/')[1];
       const segment = folderName.split('-')[1];
 
@@ -177,7 +175,7 @@ export namespace GetPage {
             bodyBlock.style.display = 'grid';
 
             $(bodyBlock).html(data);
-            GetPage.loadBody(pageName);
+            GetEvent.loadBody(pageName);
           });
           break;
         case 'header':
@@ -194,7 +192,7 @@ export namespace GetPage {
             }
 
             $(headerBlock).html(data);
-            GetPage.loadHeader(pageName);
+            GetEvent.loadHeader(pageName);
           });
           break;
         case 'main':
@@ -206,7 +204,7 @@ export namespace GetPage {
             mainBlock.style.display = 'grid';
 
             $(mainBlock).html(data);
-            GetPage.loadMain(pageName);
+            GetEvent.loadMain(pageName);
           });
           break;
         case 'sidebar':
@@ -223,7 +221,7 @@ export namespace GetPage {
             }
 
             $(sidebarBlock).html(data);
-            GetPage.loadSidebar(pageName);
+            GetEvent.loadSidebar(pageName);
           });
           break;
         case 'overlay':
@@ -235,7 +233,7 @@ export namespace GetPage {
             overlayBlock.style.display = 'grid';
 
             $(overlayBlock).html(data);
-            GetPage.loadOverlay(pageName);
+            GetEvent.loadOverlay(pageName);
           });
           break;
         case 'data':
@@ -247,7 +245,7 @@ export namespace GetPage {
             dataBlock.style.display = 'grid';
 
             $(dataBlock).html(data);
-            GetPage.loadData(pageName);
+            GetEvent.loadData(pageName);
           });
       }
     }

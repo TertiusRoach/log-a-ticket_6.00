@@ -1,5 +1,3 @@
-import { CloseView } from 'code/tools/CloseView';
-
 //--|►| DeleteOverlay |◄|--//
 export namespace DeleteOverlay {
   export class initiateEvents {

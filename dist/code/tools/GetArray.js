@@ -1,14 +1,9 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.GetTicket = exports.GetEmployee = void 0;
-    var GetEmployee;
-    (function (GetEmployee) {
-        var employeeReference = (function () {
-            function employeeReference() {
-            }
-            return employeeReference;
-        }());
+    exports.GetArray = void 0;
+    var GetArray;
+    (function (GetArray) {
         function employees() {
             return [
                 {
@@ -113,14 +108,11 @@ define(["require", "exports"], function (require, exports) {
                 },
             ];
         }
-        GetEmployee.employees = employees;
-    })(GetEmployee = exports.GetEmployee || (exports.GetEmployee = {}));
-    var GetTicket;
-    (function (GetTicket) {
-        var ticketReference = (function () {
-            function ticketReference() {
+        GetArray.employees = employees;
+        var employeeReference = (function () {
+            function employeeReference() {
             }
-            return ticketReference;
+            return employeeReference;
         }());
         function tickets() {
             return [
@@ -8626,8 +8618,13 @@ define(["require", "exports"], function (require, exports) {
                 },
             ];
         }
-        GetTicket.tickets = tickets;
-    })(GetTicket = exports.GetTicket || (exports.GetTicket = {}));
+        GetArray.tickets = tickets;
+        var ticketReference = (function () {
+            function ticketReference() {
+            }
+            return ticketReference;
+        }());
+    })(GetArray = exports.GetArray || (exports.GetArray = {}));
 });
 
 //# sourceMappingURL=dist/code/tools/GetArray.js.map
