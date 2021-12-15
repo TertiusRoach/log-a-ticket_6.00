@@ -7,8 +7,9 @@ import { GetPath } from 'code/tools/GetPath';
 
 //--|►| Main (Log a Ticket) |◄|--//
 export namespace Start {
-  //--▼ GetPage.forPage(pagePath, pageName) ▼--//
+  //--▼ GetPage.forPage(pageName, pagePath) ▼--//
   new GetEvent.forPage('default-body', GetPath.forHTML('body'));
   new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
+
   /*--► console.log('--main.js Loaded'); ◄--*/
 }

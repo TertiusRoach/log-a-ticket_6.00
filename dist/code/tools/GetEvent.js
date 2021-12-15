@@ -5,6 +5,7 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
     var GetEvent;
     (function (GetEvent) {
         function loadBody(pageName) {
+            $('#user-form').css('display', 'flex');
             switch (pageName) {
                 case 'default-body':
                     new defaultBody_1.DefaultBody.initiateEvents();
@@ -132,12 +133,7 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                             var overlayBlock = document.querySelector('#index-overlay');
                             headerBlock.className = '';
                             headerBlock.className = "".concat(pageName);
-                            if ('default-overlay' === overlayBlock.className) {
-                                headerBlock.style.display = 'none';
-                            }
-                            else {
-                                headerBlock.style.display = 'grid';
-                            }
+                            headerBlock.style.display = 'grid';
                             $(headerBlock).html(data);
                             GetEvent.loadHeader(pageName);
                         });

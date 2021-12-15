@@ -27,14 +27,14 @@
   font-weight: bolder;
 }
 
-.default-body #testing-form {
+.default-body #user-form {
   grid-column: 5/8;
   grid-row: 1/2;
   z-index: 2;
   display: flex;
   justify-content: center;
 }
-.default-body #testing-form select {
+.default-body #user-form select {
   width: 75%;
   cursor: pointer;
   border-radius: 1rem;
@@ -47,6 +47,6 @@
   color: #084887;
   border: 2px solid #909cc2;
 }
-.default-body #testing-form select:hover {
+.default-body #user-form select:hover {
   border: 2px solid #f58a07;
 }
