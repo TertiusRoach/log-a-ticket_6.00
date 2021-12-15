@@ -13,3 +13,15 @@ export namespace Start {
 
   /*--► console.log('--main.js Loaded'); ◄--*/
 }
+export namespace Use {
+  export function capitalize(employeeValue: String) {
+    let firstSplit: String = employeeValue.split('-')[0];
+    let firstName: String = `${firstSplit.charAt(0).toUpperCase() + firstSplit.slice(1)}`;
+
+    let secondSplit: String = employeeValue.split('-')[1];
+    let lastName: String = `${secondSplit.charAt(0).toUpperCase() + secondSplit.slice(1)}`;
+
+    return `${firstName} ${lastName}`;
+  }
+  export function valuing(employeeName: String) {}
+}
