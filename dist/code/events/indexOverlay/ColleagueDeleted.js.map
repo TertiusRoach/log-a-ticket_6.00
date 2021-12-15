@@ -1,0 +1,1 @@
+{"version":3,"sources":["code/events/indexOverlay/ColleagueDeleted.ts"],"names":[],"mappings":";;;;IAIA,IAAiB,gBAAgB,CAMhC;IAND,WAAiB,gBAAgB;QAC/B;YACE;gBACE,OAAO,CAAC,GAAG,CAAC,8BAA8B,CAAC,CAAC;YAC9C,CAAC;YACH,qBAAC;QAAD,CAJA,AAIC,IAAA;QAJY,+BAAc,iBAI1B,CAAA;IACH,CAAC,EANgB,gBAAgB,GAAhB,wBAAgB,KAAhB,wBAAgB,QAMhC","file":"ColleagueDeleted.js","sourceRoot":"../../../../src"}

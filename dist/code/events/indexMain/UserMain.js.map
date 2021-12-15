@@ -1,0 +1,1 @@
+{"version":3,"sources":["code/events/indexMain/UserMain.ts"],"names":[],"mappings":";;;;IACA,IAAiB,QAAQ,CAMxB;IAND,WAAiB,QAAQ;QACvB;YACE;gBACE,OAAO,CAAC,GAAG,CAAC,sBAAsB,CAAC,CAAC;YACtC,CAAC;YACH,qBAAC;QAAD,CAJA,AAIC,IAAA;QAJY,uBAAc,iBAI1B,CAAA;IACH,CAAC,EANgB,QAAQ,GAAR,gBAAQ,KAAR,gBAAQ,QAMxB","file":"UserMain.js","sourceRoot":"../../../../src"}

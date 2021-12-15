@@ -1,0 +1,1 @@
+{"version":3,"sources":["code/events/indexSidebar/EmployeesSidebar.ts"],"names":[],"mappings":";;;;IACA,IAAiB,gBAAgB,CAOhC;IAPD,WAAiB,gBAAgB;QAC/B;YACE;gBAEE,OAAO,CAAC,GAAG,CAAC,8BAA8B,CAAC,CAAC;YAC9C,CAAC;YACH,qBAAC;QAAD,CALA,AAKC,IAAA;QALY,+BAAc,iBAK1B,CAAA;IACH,CAAC,EAPgB,gBAAgB,GAAhB,wBAAgB,KAAhB,wBAAgB,QAOhC","file":"EmployeesSidebar.js","sourceRoot":"../../../../src"}

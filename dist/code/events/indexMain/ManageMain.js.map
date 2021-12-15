@@ -1,0 +1,1 @@
+{"version":3,"sources":["code/events/indexMain/ManageMain.ts"],"names":[],"mappings":";;;;IACA,IAAiB,UAAU,CAM1B;IAND,WAAiB,UAAU;QACzB;YACE;gBACE,OAAO,CAAC,GAAG,CAAC,wBAAwB,CAAC,CAAC;YACxC,CAAC;YACH,qBAAC;QAAD,CAJA,AAIC,IAAA;QAJY,yBAAc,iBAI1B,CAAA;IACH,CAAC,EANgB,UAAU,GAAV,kBAAU,KAAV,kBAAU,QAM1B","file":"ManageMain.js","sourceRoot":"../../../../src"}
