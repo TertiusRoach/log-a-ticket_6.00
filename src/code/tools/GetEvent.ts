@@ -34,6 +34,8 @@ import { DefaultData } from 'code/events/indexData/defaultData';
 //--|►| Get Event |◄|--//
 export namespace GetEvent {
   export function loadBody(pageName: String | 'default-body') {
+    $('#user-form').css('display', 'flex');
+
     //--► Body <body> ◄--//
     switch (pageName) {
       case 'default-body':
@@ -185,11 +187,14 @@ export namespace GetEvent {
 
             headerBlock.className = '';
             headerBlock.className = `${pageName}`;
+            /*
             if ('default-overlay' === overlayBlock.className) {
               headerBlock.style.display = 'none';
             } else {
               headerBlock.style.display = 'grid';
             }
+            */
+            headerBlock.style.display = 'grid';
 
             $(headerBlock).html(data);
             GetEvent.loadHeader(pageName);
