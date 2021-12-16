@@ -4,12 +4,12 @@ define(["require", "exports"], function (require, exports) {
     exports.DataErase = void 0;
     var DataErase;
     (function (DataErase) {
-        var initiateCode = (function () {
-            function initiateCode() {
+        var forBlock = (function () {
+            function forBlock() {
             }
-            return initiateCode;
+            return forBlock;
         }());
-        DataErase.initiateCode = initiateCode;
+        DataErase.forBlock = forBlock;
     })(DataErase = exports.DataErase || (exports.DataErase = {}));
 });
 

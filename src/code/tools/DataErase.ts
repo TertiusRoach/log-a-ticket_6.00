@@ -1,6 +1,6 @@
 //--|►| DataErase (Tool) |◄|--//
 export namespace DataErase {
-  export class initiateCode {
+  export class forBlock {
     constructor() {}
   }
 }

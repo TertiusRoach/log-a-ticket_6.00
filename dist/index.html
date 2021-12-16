@@ -26,6 +26,8 @@
     <link rel="stylesheet" type="text/css" href="css/index-sidebar.css" />
     <!--► Index Overlay (CSS) ▼-->
     <link rel="stylesheet" type="text/css" href="css/index-overlay.css" />
+    <!--► Index Data (CSS) ▼-->
+    <link rel="stylesheet" type="text/css" href="css/index-data.css" />
     <!--|▲| Styling |▲|-->
 
     <title>Log a Ticket</title>
@@ -47,6 +49,11 @@
         <option value="firstName-lastName">${Name Surname}</option>
       </select>
     </form>
+
+    <div id="preloader">
+      <img class="image" src="content/preloader.gif" alt="Log a Ticket" />
+    </div>
+
     <!--►=========================================================================================================◄-->
     <header id="index-header" class="default-header" style="display: none">
       <!--▲ style="display: grid" ▲-->
@@ -68,10 +75,9 @@
       <!--► class="default-overlay" ◄-->
     </section>
     <!--►=========================================================================================================◄-->
-    <iframe id="index-data" class="default-data" src="html/index-data/default-data.html" style="display: none">
+    <div id="index-data" class="default-data" style="display: none">
       <!--▲ Default: style="display: none" ▲-->
       <!--► class="default-data" ◄-->
-    </iframe>
-    <!--►=========================================================================================================◄-->
+    </div>
   </body>
 </html>

@@ -203,9 +203,17 @@ export namespace GetEvent {
         case 'main':
           $.get(`${pagePath}/${pageName}.html`, function (data) {
             let mainBlock: HTMLElement = document.querySelector('#index-main');
+            let overlayBlock: HTMLElement = document.querySelector('#index-overlay');
 
             mainBlock.className = '';
             mainBlock.className = `${pageName}`;
+            /*
+            if ('default-overlay' === overlayBlock.className) {
+              mainBlock.style.display = 'none';
+            } else {
+              mainBlock.style.display = 'grid';
+            }
+            */
             mainBlock.style.display = 'grid';
 
             $(mainBlock).html(data);

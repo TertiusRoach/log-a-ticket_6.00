@@ -50,3 +50,15 @@
 .default-body #user-form select:hover {
   border: 2px solid #f58a07;
 }
+.default-body #preloader {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+}
