@@ -5,6 +5,10 @@ import { GetElement } from 'code/tools/GetElement';
 import { GetEvent } from 'code/tools/GetEvent';
 import { GetPath } from 'code/tools/GetPath';
 
+import { UseCapify } from 'code/tools/UseCapify';
+import { UseDatefy } from 'code/tools/UseDatefy';
+import { UseValufy } from 'code/tools/UseValufy';
+
 //--|►| DataCreate (Tool) |◄|--//
 export namespace DataCreate {
   export class forBlock {
@@ -19,7 +23,51 @@ export namespace DataCreate {
 
           let employeesTotal: Number = GetArray.employees().length;
           for (let i = 0; i < employeesTotal; i++) {
-            // console.log(`Employee - ${[i]}`);
+            //--▼ Defining a const first avoids undefined browser errors ▼--//
+            const GetEmployees = GetArray.employees()[i];
+            let firstName: String = GetEmployees.firstName;
+            let middleName: String | undefined = GetEmployees.middleName;
+            let lastName: String = GetEmployees.lastName;
+            let department: String = GetEmployees.department;
+            let occupation: String | undefined = GetEmployees.occupation;
+            let role: String | 'Manager' | 'Employee' = GetEmployees.role;
+            let email: String | undefined = GetEmployees.email;
+            let phone: Number | undefined = GetEmployees.phone;
+
+            let nameDefault = (name: String | undefined) => {
+              switch (name) {
+                case undefined:
+                  return 'undefined';
+                default:
+                  return name;
+              }
+            };
+
+            $('#employees-data').append(
+              `<article
+              id="${
+                firstName.toLowerCase() +
+                '-' +
+                nameDefault(middleName).toLowerCase() +
+                '-' +
+                lastName.toLowerCase() +
+                '-' +
+                UseValufy.forSentence(`${department}`) +
+                '-' +
+                UseValufy.forSentence(`${occupation}`) +
+                '-' +
+                role.toLowerCase()
+              }">
+                <p class="first-name">${firstName}</p>
+                <p class="middle-name">${middleName}</p>
+                <p class="last-name">${lastName}</p>
+                <p class="department">${department}</p>
+                <p class="occupation">${occupation}</p>
+                <p class="role">${role}</p>
+                <p class="email">${email}</p>
+                <p class="phone">${phone}</p>
+              </article>`
+            );
           }
           //--► console.log(employeesContainer); ◄--//
           break;
@@ -56,13 +104,13 @@ export namespace DataCreate {
             };
 
             $('#tickets-data').append(
-              `<article class="ticket ${ticketStatus.toLowerCase()}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
+              `<article class="ticket ${ticketStatus.toLowerCase()}">
                 <header>
                   <p class="shortdate">${dateShort}</p>
                   <p class="subject">${subjectText}</p>
                   <p class="receiver">${receiverDefault()}</p>
                 </header>                  
-                <footer style="display: none">
+                <footer>
                   <p class="ticket-status">${ticketStatus}</p>
                   <p class="ticket-rating">${ticketRating}</p>
                   <p class="subject-text">${subjectText}</p>
