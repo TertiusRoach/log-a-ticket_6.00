@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataCreate"], function (require, exports, DataCreate_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultData = void 0;
@@ -6,7 +6,9 @@ define(["require", "exports"], function (require, exports) {
     (function (DefaultData) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                console.log('--defaultData.js Loaded');
+                new DataCreate_1.DataCreate.forBlock('employees');
+                new DataCreate_1.DataCreate.forBlock('tickets');
+                console.log('--DefaultData.js Loaded');
             }
             return initiateEvents;
         }());

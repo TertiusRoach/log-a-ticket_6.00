@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, GetEvent_1, GetPath_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultBody = void 0;
@@ -6,7 +6,7 @@ define(["require", "exports"], function (require, exports) {
     (function (DefaultBody) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                console.log('--DefaultBody.js Loaded');
+                new GetEvent_1.GetEvent.forPage('default-data', GetPath_1.GetPath.forHTML('data'));
             }
             return initiateEvents;
         }());

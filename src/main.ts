@@ -10,34 +10,22 @@ import { GetElement } from 'code/tools/GetElement';
 import { GetEvent } from 'code/tools/GetEvent';
 import { GetPath } from 'code/tools/GetPath';
 
+import { UseCapify } from 'code/tools/UseCapify';
+import { UseDatefy } from 'code/tools/UseDatefy';
+import { UseValufy } from 'code/tools/UseValufy';
 //--|►| Main (Log a Ticket) |◄|--//
 export namespace Start {
-  new DataCreate.forBlock('index-data');
-
   new GetEvent.forPage('default-body', GetPath.forHTML('body'));
+
+  /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+  // new GetEvent.forPage('colleague-main', GetPath.forHTML('main'));
+  // new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
+  // new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
+  // new GetEvent.forPage('user-main', GetPath.forHTML('main'));
+  /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+
   new GetEvent.forPage('default-header', GetPath.forHTML('header'));
-  /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
-  new GetEvent.forPage('colleague-main', GetPath.forHTML('main'));
-  new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
-  new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
-  new GetEvent.forPage('user-main', GetPath.forHTML('main'));
-
-  /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
-
   new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
-
+  // console.log('►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄');
   /*--► console.log('--main.js Loaded'); ◄--*/
-}
-
-export namespace Use {
-  export function capitalize(employeeValue: String) {
-    let firstSplit: String = employeeValue.split('-')[0];
-    let firstName: String = `${firstSplit.charAt(0).toUpperCase() + firstSplit.slice(1)}`;
-
-    let secondSplit: String = employeeValue.split('-')[1];
-    let lastName: String = `${secondSplit.charAt(0).toUpperCase() + secondSplit.slice(1)}`;
-
-    return `${firstName} ${lastName}`;
-  }
-  export function valuing(employeeName: String) {}
 }

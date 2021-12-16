@@ -1,4 +1,5 @@
 //--|▼| Tools (Import) |▼|--//
+//--|▼| Tools (Import) |▼|--//
 import { DataCreate } from 'code/tools/DataCreate';
 import { DataErase } from 'code/tools/DataErase';
 import { DataRead } from 'code/tools/DataRead';
@@ -10,7 +11,9 @@ import { GetElement } from 'code/tools/GetElement';
 import { GetEvent } from 'code/tools/GetEvent';
 import { GetPath } from 'code/tools/GetPath';
 
-import { Use } from 'main';
+import { UseCapify } from 'code/tools/UseCapify';
+import { UseDatefy } from 'code/tools/UseDatefy';
+import { UseValufy } from 'code/tools/UseValufy';
 
 export namespace DefaultOverlay {
   export class initiateEvents {
