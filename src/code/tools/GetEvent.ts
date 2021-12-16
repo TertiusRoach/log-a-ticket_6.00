@@ -251,11 +251,10 @@ export namespace GetEvent {
           break;
         case 'data':
           $.get(`${pagePath}/${pageName}.html`, function (data) {
-            let dataBlock: HTMLElement = document.querySelector('#index-overlay');
+            let dataBlock: HTMLElement = document.querySelector('#index-data');
 
             dataBlock.className = '';
             dataBlock.className = `${pageName}`;
-            dataBlock.style.display = 'grid';
 
             $(dataBlock).html(data);
             GetEvent.loadData(pageName);

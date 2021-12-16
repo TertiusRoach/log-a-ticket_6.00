@@ -177,10 +177,9 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                         break;
                     case 'data':
                         $.get("".concat(pagePath, "/").concat(pageName, ".html"), function (data) {
-                            var dataBlock = document.querySelector('#index-overlay');
+                            var dataBlock = document.querySelector('#index-data');
                             dataBlock.className = '';
                             dataBlock.className = "".concat(pageName);
-                            dataBlock.style.display = 'grid';
                             $(dataBlock).html(data);
                             GetEvent.loadData(pageName);
                         });
