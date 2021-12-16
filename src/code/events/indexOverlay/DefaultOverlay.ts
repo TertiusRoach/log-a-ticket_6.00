@@ -15,16 +15,13 @@ import { Use } from 'main';
 export namespace DefaultOverlay {
   export class initiateEvents {
     constructor() {
-      new DataCreate.initiateCode('index-data');
-      new GetEvent.forPage('default-header', GetPath.forHTML('header'));
-
       const defaultOverlay = document.querySelector('.default-overlay');
       const managerButton = document.querySelector('#manager-tickets button');
       const employeeButton = document.querySelector('#employee-tickets button');
 
       function highlight(button: 'manager-button' | 'employee-button') {
-        let managerButton = defaultOverlay.parentElement.children[1].children[0].children[0];
-        let employeeButton = defaultOverlay.parentElement.children[1].children[2].children[0];
+        let managerButton = defaultOverlay.parentElement.children[2].children[0].children[0];
+        let employeeButton = defaultOverlay.parentElement.children[2].children[2].children[0];
 
         switch (button) {
           case 'manager-button':
@@ -95,8 +92,11 @@ export namespace DefaultOverlay {
         buildEmployees(selectUser('Employee'));
         highlight('employee-button');
       });
-
+      /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+      const preloader: HTMLDivElement = document.querySelector('#preloader');
+      preloader.style.display = 'none';
       console.log('--DefaultOverlay.js Loaded');
+      /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
     }
   }
 }

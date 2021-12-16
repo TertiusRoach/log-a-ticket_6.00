@@ -4,18 +4,12 @@ define(["require", "exports"], function (require, exports) {
     exports.DataCreate = void 0;
     var DataCreate;
     (function (DataCreate) {
-        var initiateCode = (function () {
-            function initiateCode(blockName) {
-                switch (blockName) {
-                    case 'index-data':
-                        var iframe = document.querySelector('#index-data');
-                        var indexData = iframe.contentDocument || iframe.contentWindow.document;
-                        break;
-                }
+        var forBlock = (function () {
+            function forBlock(pageName) {
             }
-            return initiateCode;
+            return forBlock;
         }());
-        DataCreate.initiateCode = initiateCode;
+        DataCreate.forBlock = forBlock;
     })(DataCreate = exports.DataCreate || (exports.DataCreate = {}));
 });
 

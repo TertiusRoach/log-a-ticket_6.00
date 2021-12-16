@@ -141,6 +141,7 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                     case 'main':
                         $.get("".concat(pagePath, "/").concat(pageName, ".html"), function (data) {
                             var mainBlock = document.querySelector('#index-main');
+                            var overlayBlock = document.querySelector('#index-overlay');
                             mainBlock.className = '';
                             mainBlock.className = "".concat(pageName);
                             mainBlock.style.display = 'grid';

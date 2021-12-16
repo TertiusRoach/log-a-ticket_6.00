@@ -1,6 +1,6 @@
 //--|►| DataRead (Tool) |◄|--//
 export namespace DataRead {
-  export class initiateCode {
+  export class forBlock {
     constructor() {}
   }
 }

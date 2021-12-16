@@ -4,12 +4,12 @@ define(["require", "exports"], function (require, exports) {
     exports.DataRead = void 0;
     var DataRead;
     (function (DataRead) {
-        var initiateCode = (function () {
-            function initiateCode() {
+        var forBlock = (function () {
+            function forBlock() {
             }
-            return initiateCode;
+            return forBlock;
         }());
-        DataRead.initiateCode = initiateCode;
+        DataRead.forBlock = forBlock;
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
 });
 

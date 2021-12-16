@@ -4,12 +4,12 @@ define(["require", "exports"], function (require, exports) {
     exports.DataUpdate = void 0;
     var DataUpdate;
     (function (DataUpdate) {
-        var initiateCode = (function () {
-            function initiateCode() {
+        var forBlock = (function () {
+            function forBlock() {
             }
-            return initiateCode;
+            return forBlock;
         }());
-        DataUpdate.initiateCode = initiateCode;
+        DataUpdate.forBlock = forBlock;
     })(DataUpdate = exports.DataUpdate || (exports.DataUpdate = {}));
 });
 

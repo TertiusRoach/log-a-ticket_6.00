@@ -1,6 +1,6 @@
 //--|►| DataUpdate (Tool) |◄|--//
 export namespace DataUpdate {
-  export class initiateCode {
+  export class forBlock {
     constructor() {}
   }
 }
