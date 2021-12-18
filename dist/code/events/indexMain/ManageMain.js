@@ -21,6 +21,7 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
                     .on('mouseleave', function () { });
                 $(deletedTab)
                     .on('click', function () {
+                    console.log('test');
                     new DataRead_1.DataRead.forMain('manage-main', 'deleted');
                 })
                     .on('mouseenter', function () { })

@@ -35,6 +35,7 @@ export namespace ManageMain {
 
       $(deletedTab)
         .on('click', () => {
+          console.log('test');
           new DataRead.forMain('manage-main', 'deleted');
         })
         .on('mouseenter', () => {})
