@@ -8,7 +8,6 @@ define(["require", "exports", "code/tools/DataCreate"], function (require, expor
             function initiateEvents() {
                 new DataCreate_1.DataCreate.forBlock('employees');
                 new DataCreate_1.DataCreate.forBlock('tickets');
-                console.log('--DefaultData.js Loaded');
             }
             return initiateEvents;
         }());

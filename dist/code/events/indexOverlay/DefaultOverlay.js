@@ -6,6 +6,7 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
     (function (DefaultOverlay) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                var preloader = document.querySelector('#preloader');
                 var defaultOverlay = document.querySelector('.default-overlay');
                 var managerButton = document.querySelector('#manager-tickets button');
                 var employeeButton = document.querySelector('#employee-tickets button');
@@ -65,19 +66,27 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
                         }
                     }
                 }
-                $(managerButton).on('mouseenter', function () {
+                $(managerButton)
+                    .on('click', function () {
+                    defaultOverlay.innerHTML = '';
+                    defaultOverlay.style.display = 'none';
+                })
+                    .on('mouseenter', function () {
                     new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
                     buildEmployees(selectUser('Manager'));
                     highlight('manager-button');
                 });
-                $(employeeButton).on('mouseenter', function () {
+                $(employeeButton)
+                    .on('click', function () {
+                    defaultOverlay.innerHTML = '';
+                    defaultOverlay.style.display = 'none';
+                })
+                    .on('mouseenter', function () {
                     new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
                     buildEmployees(selectUser('Employee'));
                     highlight('employee-button');
                 });
-                var preloader = document.querySelector('#preloader');
                 preloader.style.display = 'none';
-                console.log('--DefaultOverlay.js Loaded');
             }
             return initiateEvents;
         }());
