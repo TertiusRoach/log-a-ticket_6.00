@@ -12,12 +12,12 @@ import { UseValufy } from 'code/tools/UseValufy';
 //--|►| DataCreate (Tool) |◄|--//
 export namespace DataCreate {
   export class forBlock {
-    constructor(arrayName: 'employees' | 'tickets') {
+    constructor(container: 'employees' | 'tickets') {
       const indexData: HTMLDivElement = document.querySelector('#index-data');
       const employeesContainer: HTMLDivElement = document.querySelector('#employees-data');
       const ticketsContainer: HTMLDivElement = document.querySelector('#tickets-data');
 
-      switch (arrayName) {
+      switch (container) {
         case 'employees':
           $(employeesContainer).empty();
 
@@ -72,7 +72,7 @@ export namespace DataCreate {
           //--► console.log(employeesContainer); ◄--//
           break;
         case 'tickets':
-          $(ticketsContainer).empty();
+          ticketsContainer.innerHTML = '';
 
           let ticketsTotal: Number = GetArray.tickets().length;
           for (let i = 0; i < ticketsTotal; i++) {

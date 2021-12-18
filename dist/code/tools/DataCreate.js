@@ -5,11 +5,11 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
     var DataCreate;
     (function (DataCreate) {
         var forBlock = (function () {
-            function forBlock(arrayName) {
+            function forBlock(container) {
                 var indexData = document.querySelector('#index-data');
                 var employeesContainer = document.querySelector('#employees-data');
                 var ticketsContainer = document.querySelector('#tickets-data');
-                switch (arrayName) {
+                switch (container) {
                     case 'employees':
                         $(employeesContainer).empty();
                         var employeesTotal = GetArray_1.GetArray.employees().length;
@@ -45,7 +45,7 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
                         }
                         break;
                     case 'tickets':
-                        $(ticketsContainer).empty();
+                        ticketsContainer.innerHTML = '';
                         var ticketsTotal = GetArray_1.GetArray.tickets().length;
                         var _loop_1 = function (i) {
                             var GetTickets = GetArray_1.GetArray.tickets()[i];

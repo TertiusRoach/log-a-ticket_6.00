@@ -1,5 +1,4 @@
 //--|▼| Tools (Import) |▼|--//
-//--|▼| Tools (Import) |▼|--//
 import { DataCreate } from 'code/tools/DataCreate';
 import { DataErase } from 'code/tools/DataErase';
 import { DataRead } from 'code/tools/DataRead';
@@ -18,9 +17,10 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace DefaultOverlay {
   export class initiateEvents {
     constructor() {
-      const defaultOverlay = document.querySelector('.default-overlay');
-      const managerButton = document.querySelector('#manager-tickets button');
-      const employeeButton = document.querySelector('#employee-tickets button');
+      const preloader: HTMLDivElement = document.querySelector('#preloader');
+      const defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
+      const managerButton: HTMLElement = document.querySelector('#manager-tickets button');
+      const employeeButton: HTMLElement = document.querySelector('#employee-tickets button');
 
       function highlight(button: 'manager-button' | 'employee-button') {
         let managerButton = defaultOverlay.parentElement.children[2].children[0].children[0];
@@ -83,22 +83,31 @@ export namespace DefaultOverlay {
         }
       }
 
-      $(managerButton).on('mouseenter', () => {
-        new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
+      $(managerButton)
+        .on('click', () => {
+          defaultOverlay.innerHTML = '';
+          defaultOverlay.style.display = 'none';
+        })
+        .on('mouseenter', () => {
+          new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
 
-        buildEmployees(selectUser('Manager'));
-        highlight('manager-button');
-      });
-      $(employeeButton).on('mouseenter', () => {
-        new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
+          buildEmployees(selectUser('Manager'));
+          highlight('manager-button');
+        });
+      $(employeeButton)
+        .on('click', () => {
+          defaultOverlay.innerHTML = '';
+          defaultOverlay.style.display = 'none';
+        })
+        .on('mouseenter', () => {
+          new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
 
-        buildEmployees(selectUser('Employee'));
-        highlight('employee-button');
-      });
+          buildEmployees(selectUser('Employee'));
+          highlight('employee-button');
+        });
       /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
-      const preloader: HTMLDivElement = document.querySelector('#preloader');
       preloader.style.display = 'none';
-      console.log('--DefaultOverlay.js Loaded');
+      /*--► console.log('--DefaultOverlay.js Loaded'); ◄--*/
       /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
     }
   }

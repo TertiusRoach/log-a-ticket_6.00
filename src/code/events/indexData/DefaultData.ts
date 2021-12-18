@@ -17,7 +17,7 @@ export namespace DefaultData {
       new DataCreate.forBlock('employees');
       new DataCreate.forBlock('tickets');
 
-      console.log('--DefaultData.js Loaded');
+      /*--► console.log('--DefaultData.js Loaded'); ◄--*/
     }
   }
 }
