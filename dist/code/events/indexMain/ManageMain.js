@@ -17,8 +17,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 $(openEmployees).on('mouseenter', function () {
                     var openSidebar = openEmployees.children[0];
                     $(openSidebar).on('click', function () {
-                        document.querySelector('.active-page').className = '';
                         new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
+                        document.querySelector('.active-page').className = '';
                     });
                 });
                 $(pendingTab)

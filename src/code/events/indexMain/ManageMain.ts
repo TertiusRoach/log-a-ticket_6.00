@@ -37,8 +37,9 @@ export namespace ManageMain {
       $(openEmployees).on('mouseenter', () => {
         let openSidebar: Element = openEmployees.children[0];
         $(openSidebar).on('click', () => {
-          document.querySelector('.active-page').className = '';
           new GetEvent.forPage('user-main', GetPath.forHTML('main'));
+
+          document.querySelector('.active-page').className = '';
         });
       });
 
