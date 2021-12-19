@@ -4,6 +4,15 @@ define(["require", "exports"], function (require, exports) {
     exports.GetArray = void 0;
     var GetArray;
     (function (GetArray) {
+        function departments() {
+            return [];
+        }
+        GetArray.departments = departments;
+        var departmentReference = (function () {
+            function departmentReference() {
+            }
+            return departmentReference;
+        }());
         function employees() {
             return [
                 {
