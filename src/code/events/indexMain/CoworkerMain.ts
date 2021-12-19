@@ -22,10 +22,19 @@ export namespace CoworkerMain {
       new DataRead.forMain('coworker-main', 'resolved');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const openCoworkers = document.querySelector('#open-coworkers');
+
       const resolvedTab: HTMLButtonElement = document.querySelector('#resolved-tab');
       const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(openCoworkers).on('click', () => {
+        /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+        /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      });
+
       $(resolvedTab)
         .on('click', () => {
           new DataRead.forMain('coworker-main', 'resolved');
@@ -40,10 +49,9 @@ export namespace CoworkerMain {
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
-      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      console.log('--CoworkerMain.js Loaded');
+      new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
+      /*--► console.log('--CoworkerMain.js Loaded'); ◄--*/
     }
   }
 }

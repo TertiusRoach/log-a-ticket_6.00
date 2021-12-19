@@ -282,11 +282,92 @@ export namespace DataRead {
           }
           break;
       }
-
-      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
     }
   }
   export class forSidebar {
-    constructor(page: 'coworker-sidebar' | 'employees-sidebar') {}
+    constructor(page: 'coworker-sidebar' | 'employees-sidebar') {
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      function build(type: 'header' | 'footer') {
+        const userName = $('#testing-form select option:selected').text();
+        switch (type) {
+          case 'header':
+            const departmentForm: HTMLSelectElement = document.querySelector('#department-form select');
+            let activeUser: String = $('#testing-form select option:selected').text();
+            let employeesTotal: Number = GetArray.employees().length;
+            let userDepartment: String;
+
+            for (let i = 0; i < employeesTotal; i++) {
+              let employeeName = `${GetArray.employees()[i].firstName} ${GetArray.employees()[i].lastName}`;
+              if (activeUser === employeeName) {
+                userDepartment = GetArray.employees()[i].department;
+              }
+            }
+
+            $(departmentForm).empty();
+            $(departmentForm).append(`<option value="${textToValue(userDepartment)}">${userDepartment}</option>`);
+
+            let departmentsTotal = GetArray.departments().length;
+            for (let i = 0; i < departmentsTotal; i++) {
+              let coworkerDepartment = GetArray.departments()[i].department;
+              if (userDepartment !== coworkerDepartment) {
+                $(departmentForm).append(`<option value="${textToValue(coworkerDepartment)}">${coworkerDepartment}</option>`);
+              }
+            }
+            break;
+          case 'footer':
+            const viewCoworkers: HTMLElement = document.querySelector('#view-coworkers footer');
+            const viewDepartment: HTMLSelectElement = document.querySelector('#department-form select');
+
+            $(viewCoworkers).empty();
+
+            let department: String = valueToText(viewDepartment.value);
+            let coworkersTotal: Number = GetArray.employees().length;
+            for (let i = 0; i < coworkersTotal; i++) {
+              let firstName = `${GetArray.employees()[i].firstName}`;
+              let lastName = `${GetArray.employees()[i].lastName}`;
+              let employeeName = `${firstName} ${lastName}`;
+
+              if (department === GetArray.employees()[i].department) {
+                let coworkerName: String = `${GetArray.employees()[i].firstName} ${GetArray.employees()[i].lastName}`;
+                if (userName !== coworkerName) {
+                  $(viewCoworkers).append(`<span class="" onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                            <h1 class="notification">0</h1>
+                                            <h1 class="text">${employeeName}</h1>
+                                          </span>`);
+                }
+              }
+            }
+            break;
+        }
+      }
+      function clearContainer() {
+        $('.coworkers-sidebar').css('display', 'none');
+        $('.coworkers-sidebar').empty();
+      }
+      function textToValue(text: String) {
+        let array: String | any = text.split(' ');
+        switch (array[1]) {
+          case undefined:
+            return `${array[0]}`.toLowerCase();
+          default:
+            return `${array[0]}-${array[1]}`.toLowerCase();
+        }
+      }
+      function valueToText(text: String) {
+        let array: String | any = text.split('-');
+        switch (array[1]) {
+          case undefined:
+            return `${array[0].charAt(0).toUpperCase()}${array[0].slice(1)}`;
+          default:
+            return `${array[0].charAt(0).toUpperCase()}${array[0].slice(1)} ${array[1].charAt(0).toUpperCase()}${array[1].slice(1)}`;
+        }
+      }
+
+      /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+    }
   }
 }
