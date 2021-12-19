@@ -72,7 +72,7 @@ export namespace GetEvent {
         break;
     }
   }
-  export function loadSidebar(pageName: String | 'default-sidebar') {
+  export function loadSidebar(pageName: String | 'coworker-sidebar' | 'default-sidebar' | 'employees-sidebar') {
     //--► Sidebar <aside> ◄--//
     switch (pageName) {
       case 'coworker-sidebar':
@@ -228,7 +228,7 @@ export namespace GetEvent {
           $.get(`${pagePath}/${pageName}.html`, function (data) {
             let sidebarBlock: HTMLElement = document.querySelector('#index-sidebar');
             let overlayBlock: HTMLElement = document.querySelector('#index-overlay');
-
+            /*
             sidebarBlock.className = '';
             sidebarBlock.className = `${pageName}`;
             if ('default-overlay' === overlayBlock.className) {
@@ -236,6 +236,8 @@ export namespace GetEvent {
             } else {
               sidebarBlock.style.display = 'grid';
             }
+            */
+            sidebarBlock.style.display = 'grid';
 
             $(sidebarBlock).html(data);
             GetEvent.loadSidebar(pageName);

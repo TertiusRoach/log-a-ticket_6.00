@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/GetArray"], function (require, exports, GetArray_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataRead = void 0;
@@ -170,6 +170,72 @@ define(["require", "exports"], function (require, exports) {
         DataRead.forMain = forMain;
         var forSidebar = (function () {
             function forSidebar(page) {
+                function build(type) {
+                    var userName = $('#testing-form select option:selected').text();
+                    switch (type) {
+                        case 'header':
+                            var departmentForm = document.querySelector('#department-form select');
+                            var activeUser = $('#testing-form select option:selected').text();
+                            var employeesTotal = GetArray_1.GetArray.employees().length;
+                            var userDepartment = void 0;
+                            for (var i = 0; i < employeesTotal; i++) {
+                                var employeeName = "".concat(GetArray_1.GetArray.employees()[i].firstName, " ").concat(GetArray_1.GetArray.employees()[i].lastName);
+                                if (activeUser === employeeName) {
+                                    userDepartment = GetArray_1.GetArray.employees()[i].department;
+                                }
+                            }
+                            $(departmentForm).empty();
+                            $(departmentForm).append("<option value=\"".concat(textToValue(userDepartment), "\">").concat(userDepartment, "</option>"));
+                            var departmentsTotal = GetArray_1.GetArray.departments().length;
+                            for (var i = 0; i < departmentsTotal; i++) {
+                                var coworkerDepartment = GetArray_1.GetArray.departments()[i].department;
+                                if (userDepartment !== coworkerDepartment) {
+                                    $(departmentForm).append("<option value=\"".concat(textToValue(coworkerDepartment), "\">").concat(coworkerDepartment, "</option>"));
+                                }
+                            }
+                            break;
+                        case 'footer':
+                            var viewCoworkers = document.querySelector('#view-coworkers footer');
+                            var viewDepartment = document.querySelector('#department-form select');
+                            $(viewCoworkers).empty();
+                            var department = valueToText(viewDepartment.value);
+                            var coworkersTotal = GetArray_1.GetArray.employees().length;
+                            for (var i = 0; i < coworkersTotal; i++) {
+                                var firstName = "".concat(GetArray_1.GetArray.employees()[i].firstName);
+                                var lastName = "".concat(GetArray_1.GetArray.employees()[i].lastName);
+                                var employeeName = "".concat(firstName, " ").concat(lastName);
+                                if (department === GetArray_1.GetArray.employees()[i].department) {
+                                    var coworkerName = "".concat(GetArray_1.GetArray.employees()[i].firstName, " ").concat(GetArray_1.GetArray.employees()[i].lastName);
+                                    if (userName !== coworkerName) {
+                                        $(viewCoworkers).append("<span class=\"\" onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                            <h1 class=\"notification\">0</h1>\n                                            <h1 class=\"text\">".concat(employeeName, "</h1>\n                                          </span>"));
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+                function clearContainer() {
+                    $('.coworkers-sidebar').css('display', 'none');
+                    $('.coworkers-sidebar').empty();
+                }
+                function textToValue(text) {
+                    var array = text.split(' ');
+                    switch (array[1]) {
+                        case undefined:
+                            return "".concat(array[0]).toLowerCase();
+                        default:
+                            return "".concat(array[0], "-").concat(array[1]).toLowerCase();
+                    }
+                }
+                function valueToText(text) {
+                    var array = text.split('-');
+                    switch (array[1]) {
+                        case undefined:
+                            return "".concat(array[0].charAt(0).toUpperCase()).concat(array[0].slice(1));
+                        default:
+                            return "".concat(array[0].charAt(0).toUpperCase()).concat(array[0].slice(1), " ").concat(array[1].charAt(0).toUpperCase()).concat(array[1].slice(1));
+                    }
+                }
             }
             return forSidebar;
         }());

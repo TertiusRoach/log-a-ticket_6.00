@@ -65,8 +65,7 @@ export namespace ManageMain {
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       new DataRead.forMain('manage-main', 'pending');
-
-      console.log('--ManageMain.js Loaded');
+      /*--► console.log('--ManageMain.js Loaded'); ◄--*/
     }
   }
 }

@@ -22,6 +22,8 @@ export namespace UserMain {
       new DataRead.forMain('user-main', 'assigned');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const openEmployees = document.querySelector('#open-employees');
+
       const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
       const resolvedTab: HTMLButtonElement = document.querySelector('#resolved-tab');
       const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
@@ -29,6 +31,16 @@ export namespace UserMain {
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(openEmployees).on('mouseenter', () => {
+        let openSidebar: Element = openEmployees.children[0];
+        $(openSidebar).on('click', () => {
+          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
+        });
+      });
+
       $(assignedTab)
         .on('click', () => {
           new DataRead.forMain('user-main', 'assigned');
@@ -51,7 +63,7 @@ export namespace UserMain {
         .on('mouseleave', () => {});
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      console.log('--UserMain.js Loaded');
+      /*--► console.log('--UserMain.js Loaded'); ◄--*/
     }
   }
 }

@@ -156,14 +156,7 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                         $.get("".concat(pagePath, "/").concat(pageName, ".html"), function (data) {
                             var sidebarBlock = document.querySelector('#index-sidebar');
                             var overlayBlock = document.querySelector('#index-overlay');
-                            sidebarBlock.className = '';
-                            sidebarBlock.className = "".concat(pageName);
-                            if ('default-overlay' === overlayBlock.className) {
-                                sidebarBlock.style.display = 'none';
-                            }
-                            else {
-                                sidebarBlock.style.display = 'grid';
-                            }
+                            sidebarBlock.style.display = 'grid';
                             $(sidebarBlock).html(data);
                             GetEvent.loadSidebar(pageName);
                         });

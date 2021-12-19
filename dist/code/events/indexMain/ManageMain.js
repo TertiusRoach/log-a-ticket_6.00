@@ -37,7 +37,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });
                 new DataRead_1.DataRead.forMain('manage-main', 'pending');
-                console.log('--ManageMain.js Loaded');
             }
             return initiateEvents;
         }());

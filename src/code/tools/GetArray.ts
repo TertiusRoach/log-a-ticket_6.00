@@ -1,5 +1,11 @@
 //--|►| GetArray (Tool) |◄|--//
 export namespace GetArray {
+  export function departments(): departmentReference[] {
+    return [];
+  }
+  class departmentReference {
+    department: String;
+  }
   export function employees(): employeeReference[] {
     return [
       {
