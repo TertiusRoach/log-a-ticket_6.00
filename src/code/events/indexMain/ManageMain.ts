@@ -17,14 +17,30 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace ManageMain {
   export class initiateEvents {
     constructor() {
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const openEmployees: HTMLButtonElement = document.querySelector('#open-employees');
+
+      const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
+      const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
+      const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
+
       const userSelect: HTMLSelectElement = document.querySelector('#user-form select');
       const userName: String = userSelect.selectedOptions[0].textContent;
       const ticketsMain: HTMLDivElement = document.querySelector('#tickets-container');
       const ticketsData: HTMLDivElement = document.querySelector('#tickets-data');
 
-      const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
-      const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
-      const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(openEmployees).on('mouseenter', () => {
+        let openSidebar: Element = openEmployees.children[0];
+        $(openSidebar).on('click', () => {
+          document.querySelector('.active-page').className = '';
+          new GetEvent.forPage('user-main', GetPath.forHTML('main'));
+        });
+      });
 
       $(pendingTab)
         .on('click', () => {
@@ -35,17 +51,15 @@ export namespace ManageMain {
 
       $(deletedTab)
         .on('click', () => {
-          console.log('test');
           new DataRead.forMain('manage-main', 'deleted');
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
-      /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       new DataRead.forMain('manage-main', 'pending');
 
       console.log('--ManageMain.js Loaded');
-      /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
     }
   }
 }

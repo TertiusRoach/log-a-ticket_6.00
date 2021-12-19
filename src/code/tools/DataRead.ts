@@ -19,6 +19,11 @@ export namespace DataRead {
       const userSelect: HTMLSelectElement = document.querySelector('#user-form select');
       const employeesData: HTMLDivElement = document.querySelector('#employees-data');
       const ticketsData: HTMLDivElement = document.querySelector('#tickets-data');
+      let userName: String = userSelect.selectedOptions[0].textContent;
+      let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+      let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
+      let ticketsTotal: Number = ticketsCollection.length;
+      let userDepartment: String = findDepartment(userName);
 
       function findDepartment(userName: String) {
         let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
@@ -34,12 +39,6 @@ export namespace DataRead {
           }
         }
       }
-
-      let userName: String = userSelect.selectedOptions[0].textContent;
-      let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
-      let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
-      let ticketsTotal: Number = ticketsCollection.length;
-      let userDepartment: String = findDepartment(userName);
 
       switch (page) {
         case 'colleague-main':

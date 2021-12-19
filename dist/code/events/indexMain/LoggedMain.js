@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, DataRead_1, GetEvent_1, GetPath_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LoggedMain = void 0;
@@ -7,9 +7,18 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
         var initiateEvents = (function () {
             function initiateEvents() {
                 new DataRead_1.DataRead.forMain('logged-main', 'pending');
+                var defaultHeader = document.querySelector('#index-header');
+                var openCoworkers = document.querySelector('#open-coworkers');
                 var pendingTab = document.querySelector('#pending-tab');
                 var assignedTab = document.querySelector('#assigned-tab');
                 var deletedTab = document.querySelector('#deleted-tab');
+                $(openCoworkers).on('mouseenter', function () {
+                    var openSidebar = openCoworkers.children[0];
+                    $(openSidebar).on('click', function () {
+                        document.querySelector('.active-page').className = '';
+                        new GetEvent_1.GetEvent.forPage('coworker-main', GetPath_1.GetPath.forHTML('main'));
+                    });
+                });
                 $(pendingTab)
                     .on('click', function () {
                     new DataRead_1.DataRead.forMain('logged-main', 'pending');
