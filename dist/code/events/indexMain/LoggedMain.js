@@ -39,7 +39,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 })
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });
-                console.log('--LoggedMain.js Loaded');
             }
             return initiateEvents;
         }());
