@@ -79,12 +79,31 @@ export namespace DataRead {
             };
 
             if (senderName === userName && ticketStatus.toLowerCase() === status) {
+              //--▼ Logged Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
-                    <p class="shortdate">${dateShort}</p>
-                    <p class="subject">${subjectText}</p>
-                    <p class="receiver">${receiverDefault()}</p>
-                  </article>`
+                  <p class="shortdate">${dateShort}</p>
+                  <p class="subject">${subjectText}</p>
+                  <p class="receiver">${receiverDefault()}</p>
+                  
+                  <div style="display: none">
+                    <p class="ticket-status">${ticketStatus}</p>
+                    <p class="ticket-rating">${ticketRating}</p>
+                    <p class="subject-text">${subjectText}</p>
+                    <p class="description-text">${descriptionText}</p>
+                    <p class="sender-name">${senderName}</p>
+                    <p class="sender-department">${senderDepartment}</p>
+                    <p class="receiver-name">${receiverName}</p>
+                    <p class="receiver-department">${receiverDepartment}</p>
+                    <p class="date-short">${dateShort}</p>
+                    <p class="date-pending">${datePending}</p>
+                    <p class="date-assigned">${dateAssigned}</p>
+                    <p class="date-resolved">${dateResolved}</p>
+                    <p class="note-resolved">${noteResolved}</p>
+                    <p class="date-deleted">${dateDeleted}</p>
+                    <p class="note-deleted">${noteDeleted}</p>
+                  </div>
+                </article>`
               );
             }
           }
@@ -113,13 +132,31 @@ export namespace DataRead {
             let noteDeleted: String = ticketInfo.children[14].textContent;
 
             if (userDepartment === receiverDepartment && receiverName === `${undefined}`) {
-              //manage-main
+              //--▼ Manage Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
-                      <p class="shortdate">${dateShort}</p>
-                      <p class="subject">${subjectText}</p>
-                      <p class="sender">${senderName}</p>
-                    </article>`
+                  <p class="shortdate">${dateShort}</p>
+                  <p class="subject">${subjectText}</p>
+                  <p class="sender">${senderName}</p>
+                  
+                  <div style="display: none">
+                    <p class="ticket-status">${ticketStatus}</p>
+                    <p class="ticket-rating">${ticketRating}</p>
+                    <p class="subject-text">${subjectText}</p>
+                    <p class="description-text">${descriptionText}</p>
+                    <p class="sender-name">${senderName}</p>
+                    <p class="sender-department">${senderDepartment}</p>
+                    <p class="receiver-name">${receiverName}</p>
+                    <p class="receiver-department">${receiverDepartment}</p>
+                    <p class="date-short">${dateShort}</p>
+                    <p class="date-pending">${datePending}</p>
+                    <p class="date-assigned">${dateAssigned}</p>
+                    <p class="date-resolved">${dateResolved}</p>
+                    <p class="note-resolved">${noteResolved}</p>
+                    <p class="date-deleted">${dateDeleted}</p>
+                    <p class="note-deleted">${noteDeleted}</p>
+                  </div>
+                </article>`
               );
             }
           }
