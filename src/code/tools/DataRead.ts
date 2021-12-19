@@ -16,22 +16,22 @@ export namespace DataRead {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const ticketsMain: HTMLDivElement = document.querySelector('#tickets-container');
       const userSelect: HTMLSelectElement = document.querySelector('#user-form select');
+      const ticketsMain: HTMLDivElement = document.querySelector('#tickets-container');
       const employeesData: HTMLDivElement = document.querySelector('#employees-data');
       const ticketsData: HTMLDivElement = document.querySelector('#tickets-data');
+      const userName: String = userSelect.selectedOptions[0].textContent;
 
-      let userName: String = userSelect.selectedOptions[0].textContent;
       let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
       let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
-      let ticketsTotal: Number = ticketsCollection.length;
       let userDepartment: String = findDepartment(userName);
+      let ticketsTotal: Number = ticketsCollection.length;
 
       let loggedHeader: HTMLElement = document.querySelector('#logged-header h1');
       let manageHeader: HTMLElement = document.querySelector('#manage-header h1');
       let coworkerHeader: HTMLElement = document.querySelector('#coworker-header h1');
       let colleagueHeader: HTMLElement = document.querySelector('#colleague-header h1');
-      // let userHeader: HTMLElement = document.querySelector('#user-header');
+      let userHeader: HTMLElement = document.querySelector('#user-name');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function findDepartment(userName: String) {
@@ -48,21 +48,19 @@ export namespace DataRead {
           }
         }
       }
+      function clearTickets(container: HTMLDivElement, status: String | 'pending' | 'assigned' | 'resolved' | 'deleted' | 'everything') {
+        container.innerHTML = '';
+        container.className = '';
+        container.className = `${status}-tickets`;
+      }
 
-      /* Switch Case ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      clearTickets(ticketsMain, status);
       switch (page) {
         case 'colleague-main':
-          document.querySelector('#tickets-container').innerHTML = '';
-          document.querySelector('#tickets-container').className = '';
-          document.querySelector('#tickets-container').className = `${status}-tickets`;
-
           break;
         case 'coworker-main':
-          document.querySelector('#tickets-container').innerHTML = '';
-          document.querySelector('#tickets-container').className = '';
-          document.querySelector('#tickets-container').className = `${status}-tickets`;
-
-          document.querySelector('#coworker-header h1').innerHTML = `${userName}`;
+          coworkerHeader.innerHTML = `${userName}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -121,10 +119,6 @@ export namespace DataRead {
           }
           break;
         case 'logged-main':
-          document.querySelector('#tickets-container').innerHTML = '';
-          document.querySelector('#tickets-container').className = '';
-          document.querySelector('#tickets-container').className = `${status}-tickets`;
-
           loggedHeader.innerHTML = `${userName}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
@@ -184,10 +178,6 @@ export namespace DataRead {
           }
           break;
         case 'manage-main':
-          document.querySelector('#tickets-container').innerHTML = '';
-          document.querySelector('#tickets-container').className = '';
-          document.querySelector('#tickets-container').className = `${status}-tickets`;
-
           manageHeader.innerHTML = `${findDepartment(userName)}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo = ticketsCollection[i].children[1];
@@ -238,10 +228,11 @@ export namespace DataRead {
           }
           break;
         case 'user-main':
-          document.querySelector('#tickets-container').innerHTML = '';
-          document.querySelector('#tickets-container').className = '';
-          document.querySelector('#tickets-container').className = `${status}-tickets`;
+          ticketsMain.innerHTML = '';
+          ticketsMain.className = '';
+          ticketsMain.className = `${status}-tickets`;
 
+          userHeader.innerHTML = `${userName}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -291,6 +282,8 @@ export namespace DataRead {
           }
           break;
       }
+
+      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
     }
   }
   export class forSidebar {
