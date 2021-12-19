@@ -12,6 +12,11 @@ define(["require", "exports"], function (require, exports) {
                 var userSelect = document.querySelector('#user-form select');
                 var employeesData = document.querySelector('#employees-data');
                 var ticketsData = document.querySelector('#tickets-data');
+                var userName = userSelect.selectedOptions[0].textContent;
+                var employeesCollection = employeesData.getElementsByTagName('article');
+                var ticketsCollection = ticketsData.getElementsByTagName('article');
+                var ticketsTotal = ticketsCollection.length;
+                var userDepartment = findDepartment(userName);
                 function findDepartment(userName) {
                     var employeesTotal = employeesData.getElementsByTagName('article').length;
                     for (var i = 0; i < employeesTotal; i++) {
@@ -25,11 +30,6 @@ define(["require", "exports"], function (require, exports) {
                         }
                     }
                 }
-                var userName = userSelect.selectedOptions[0].textContent;
-                var employeesCollection = employeesData.getElementsByTagName('article');
-                var ticketsCollection = ticketsData.getElementsByTagName('article');
-                var ticketsTotal = ticketsCollection.length;
-                var userDepartment = findDepartment(userName);
                 switch (page) {
                     case 'colleague-main':
                         break;

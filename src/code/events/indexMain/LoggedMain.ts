@@ -18,11 +18,28 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace LoggedMain {
   export class initiateEvents {
     constructor() {
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       new DataRead.forMain('logged-main', 'pending');
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const defaultHeader: HTMLElement = document.querySelector('#index-header');
+
+      const openCoworkers: HTMLButtonElement = document.querySelector('#open-coworkers');
 
       const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
       const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
       const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
+
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(openCoworkers).on('mouseenter', () => {
+        let openSidebar: Element = openCoworkers.children[0];
+        $(openSidebar).on('click', () => {
+          document.querySelector('.active-page').className = '';
+          new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
+        });
+      });
 
       $(pendingTab)
         .on('click', () => {
@@ -45,9 +62,8 @@ export namespace LoggedMain {
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
-      /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       console.log('--LoggedMain.js Loaded');
-      /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
     }
   }
 }

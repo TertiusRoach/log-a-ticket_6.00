@@ -6,7 +6,6 @@ define(["require", "exports"], function (require, exports) {
     (function (UserMain) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                $('#index-main').css('display', 'none');
                 console.log('--UserMain.js Loaded');
             }
             return initiateEvents;

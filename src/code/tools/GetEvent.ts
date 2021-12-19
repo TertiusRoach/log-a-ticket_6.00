@@ -4,6 +4,7 @@ import { DefaultBody } from 'code/events/indexBody/defaultBody';
 import { DefaultHeader } from 'code/events/indexHeader/DefaultHeader';
 
 import { ColleagueMain } from 'code/events/indexMain/ColleagueMain';
+import { CoworkerMain } from 'code/events/indexMain/CoworkerMain';
 import { LoggedMain } from 'code/events/indexMain/LoggedMain';
 import { ManageMain } from 'code/events/indexMain/ManageMain';
 import { UserMain } from 'code/events/indexMain/UserMain';
@@ -51,7 +52,7 @@ export namespace GetEvent {
         break;
     }
   }
-  export function loadMain(pageName: String | 'logged-main' | 'manage-main' | 'user-main' | 'colleague-main') {
+  export function loadMain(pageName: String | 'logged-main' | 'manage-main' | 'user-main' | 'colleague-main' | 'coworker-main') {
     //--► Main <main> ◄--//
     switch (pageName) {
       case 'logged-main':
@@ -65,6 +66,9 @@ export namespace GetEvent {
         break;
       case 'colleague-main':
         new ColleagueMain.initiateEvents();
+        break;
+      case 'coworker-main':
+        new CoworkerMain.initiateEvents();
         break;
     }
   }
