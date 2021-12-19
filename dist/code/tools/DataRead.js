@@ -6,19 +6,20 @@ define(["require", "exports"], function (require, exports) {
     (function (DataRead) {
         var forMain = (function () {
             function forMain(page, status) {
-                var ticketsMain = document.querySelector('#tickets-container');
                 var userSelect = document.querySelector('#user-form select');
+                var ticketsMain = document.querySelector('#tickets-container');
                 var employeesData = document.querySelector('#employees-data');
                 var ticketsData = document.querySelector('#tickets-data');
                 var userName = userSelect.selectedOptions[0].textContent;
                 var employeesCollection = employeesData.getElementsByTagName('article');
                 var ticketsCollection = ticketsData.getElementsByTagName('article');
-                var ticketsTotal = ticketsCollection.length;
                 var userDepartment = findDepartment(userName);
+                var ticketsTotal = ticketsCollection.length;
                 var loggedHeader = document.querySelector('#logged-header h1');
                 var manageHeader = document.querySelector('#manage-header h1');
                 var coworkerHeader = document.querySelector('#coworker-header h1');
                 var colleagueHeader = document.querySelector('#colleague-header h1');
+                var userHeader = document.querySelector('#user-name');
                 function findDepartment(userName) {
                     var employeesTotal = employeesData.getElementsByTagName('article').length;
                     for (var i = 0; i < employeesTotal; i++) {
@@ -32,17 +33,17 @@ define(["require", "exports"], function (require, exports) {
                         }
                     }
                 }
+                function clearTickets(container, status) {
+                    container.innerHTML = '';
+                    container.className = '';
+                    container.className = "".concat(status, "-tickets");
+                }
+                clearTickets(ticketsMain, status);
                 switch (page) {
                     case 'colleague-main':
-                        document.querySelector('#tickets-container').innerHTML = '';
-                        document.querySelector('#tickets-container').className = '';
-                        document.querySelector('#tickets-container').className = "".concat(status, "-tickets");
                         break;
                     case 'coworker-main':
-                        document.querySelector('#tickets-container').innerHTML = '';
-                        document.querySelector('#tickets-container').className = '';
-                        document.querySelector('#tickets-container').className = "".concat(status, "-tickets");
-                        document.querySelector('#coworker-header h1').innerHTML = "".concat(userName);
+                        coworkerHeader.innerHTML = "".concat(userName);
                         var _loop_1 = function (i) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
@@ -77,9 +78,6 @@ define(["require", "exports"], function (require, exports) {
                         }
                         break;
                     case 'logged-main':
-                        document.querySelector('#tickets-container').innerHTML = '';
-                        document.querySelector('#tickets-container').className = '';
-                        document.querySelector('#tickets-container').className = "".concat(status, "-tickets");
                         loggedHeader.innerHTML = "".concat(userName);
                         var _loop_2 = function (i) {
                             var ticketInfo = ticketsCollection[i].children[1];
@@ -115,9 +113,6 @@ define(["require", "exports"], function (require, exports) {
                         }
                         break;
                     case 'manage-main':
-                        document.querySelector('#tickets-container').innerHTML = '';
-                        document.querySelector('#tickets-container').className = '';
-                        document.querySelector('#tickets-container').className = "".concat(status, "-tickets");
                         manageHeader.innerHTML = "".concat(findDepartment(userName));
                         for (var i = 0; i < ticketsTotal; i++) {
                             var ticketInfo = ticketsCollection[i].children[1];
@@ -142,9 +137,10 @@ define(["require", "exports"], function (require, exports) {
                         }
                         break;
                     case 'user-main':
-                        document.querySelector('#tickets-container').innerHTML = '';
-                        document.querySelector('#tickets-container').className = '';
-                        document.querySelector('#tickets-container').className = "".concat(status, "-tickets");
+                        ticketsMain.innerHTML = '';
+                        ticketsMain.className = '';
+                        ticketsMain.className = "".concat(status, "-tickets");
+                        userHeader.innerHTML = "".concat(userName);
                         for (var i = 0; i < ticketsTotal; i++) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
