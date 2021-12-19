@@ -7,6 +7,47 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
         var initiateEvents = (function () {
             function initiateEvents() {
                 new GetEvent_1.GetEvent.forPage('default-data', GetPath_1.GetPath.forHTML('data'));
+                var userSelect = document.querySelector('#user-form select');
+                var defaultOverlay = document.querySelector('.default-overlay');
+                function findRole(userName) {
+                    var employeesData = document.querySelector('.default-data #employees-data');
+                    var employeesCollection = employeesData.getElementsByTagName('article');
+                    var employeesTotal = employeesData.getElementsByTagName('article').length;
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var firstName = employeesCollection[i].children[0].textContent;
+                        var middleName = employeesCollection[i].children[1].textContent;
+                        var lastName = employeesCollection[i].children[2].textContent;
+                        var department = employeesCollection[i].children[3].textContent;
+                        var occupation = employeesCollection[i].children[4].textContent;
+                        var role = employeesCollection[i].children[5].textContent;
+                        var email = employeesCollection[i].children[6].textContent;
+                        var phone = employeesCollection[i].children[7].textContent;
+                        var employeeName = "".concat(firstName, " ").concat(lastName);
+                        if (employeeName === userName) {
+                            return role.toLowerCase();
+                        }
+                    }
+                }
+                function refreshMain(role) {
+                    var managerButton = defaultOverlay.parentElement.children[2].children[0].children[0];
+                    var employeeButton = defaultOverlay.parentElement.children[2].children[2].children[0];
+                    switch (role) {
+                        case 'manager':
+                            new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
+                            managerButton.className = 'active-page';
+                            employeeButton.className = '';
+                            break;
+                        case 'employee':
+                            new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
+                            managerButton.className = '';
+                            employeeButton.className = 'active-page';
+                            break;
+                    }
+                }
+                $(userSelect).on('change', function () {
+                    var userName = userSelect.selectedOptions[0].textContent;
+                    refreshMain(findRole(userName));
+                });
             }
             return initiateEvents;
         }());

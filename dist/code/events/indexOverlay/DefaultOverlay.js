@@ -7,10 +7,30 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
         var initiateEvents = (function () {
             function initiateEvents() {
                 var preloader = document.querySelector('#preloader');
+                var userForm = document.querySelector('#user-form select');
                 var defaultOverlay = document.querySelector('.default-overlay');
                 var managerButton = document.querySelector('#manager-tickets button');
                 var employeeButton = document.querySelector('#employee-tickets button');
-                function highlight(button) {
+                function buildEmployees(userName) {
+                    userForm.innerHTML = '';
+                    var employeesTotal = GetArray_1.GetArray.employees().length;
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var employeeName = "".concat(GetArray_1.GetArray.employees()[i].firstName, " ").concat(GetArray_1.GetArray.employees()[i].lastName);
+                        var employeeValue = "".concat(GetArray_1.GetArray.employees()[i].firstName.toLowerCase(), "-").concat(GetArray_1.GetArray.employees()[i].lastName.toLowerCase());
+                        if (employeeName === userName) {
+                            $('#user-form select').append("<option value=\"".concat(employeeValue, "\" selected>").concat(userName, "</option>"));
+                        }
+                        else if (employeeName !== userName) {
+                            $('#user-form select').append("<option value=\"".concat(employeeValue, "\">").concat(employeeName, "</option>"));
+                        }
+                    }
+                }
+                function closeContainer() {
+                    defaultOverlay.innerHTML = '';
+                    userForm.style.display = 'flex';
+                    defaultOverlay.style.display = 'none';
+                }
+                function highlightButton(button) {
                     var managerButton = defaultOverlay.parentElement.children[2].children[0].children[0];
                     var employeeButton = defaultOverlay.parentElement.children[2].children[2].children[0];
                     switch (button) {
@@ -51,41 +71,25 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
                     }
                     return userSelected;
                 }
-                function buildEmployees(userName) {
-                    var employeesTotal = GetArray_1.GetArray.employees().length;
-                    var userForm = document.querySelector('#user-form select');
-                    userForm.innerHTML = '';
-                    for (var i = 0; i < employeesTotal; i++) {
-                        var employeeName = "".concat(GetArray_1.GetArray.employees()[i].firstName, " ").concat(GetArray_1.GetArray.employees()[i].lastName);
-                        var employeeValue = "".concat(GetArray_1.GetArray.employees()[i].firstName.toLowerCase(), "-").concat(GetArray_1.GetArray.employees()[i].lastName.toLowerCase());
-                        if (employeeName === userName) {
-                            $('#user-form select').append("<option value=\"".concat(employeeValue, "\" selected>").concat(userName, "</option>"));
-                        }
-                        else if (employeeName !== userName) {
-                            $('#user-form select').append("<option value=\"".concat(employeeValue, "\">").concat(employeeName, "</option>"));
-                        }
-                    }
-                }
                 $(managerButton)
-                    .on('click', function () {
-                    defaultOverlay.innerHTML = '';
-                    defaultOverlay.style.display = 'none';
-                })
                     .on('mouseenter', function () {
                     new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
                     buildEmployees(selectUser('Manager'));
-                    highlight('manager-button');
+                    highlightButton('manager-button');
+                })
+                    .on('click', function () {
+                    closeContainer();
                 });
                 $(employeeButton)
-                    .on('click', function () {
-                    defaultOverlay.innerHTML = '';
-                    defaultOverlay.style.display = 'none';
-                })
                     .on('mouseenter', function () {
                     new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
                     buildEmployees(selectUser('Employee'));
-                    highlight('employee-button');
+                    highlightButton('employee-button');
+                })
+                    .on('click', function () {
+                    closeContainer();
                 });
+                userForm.style.display = 'none';
                 preloader.style.display = 'none';
             }
             return initiateEvents;

@@ -13,18 +13,40 @@ import { GetPath } from 'code/tools/GetPath';
 import { UseCapify } from 'code/tools/UseCapify';
 import { UseDatefy } from 'code/tools/UseDatefy';
 import { UseValufy } from 'code/tools/UseValufy';
+import { type } from 'jquery';
 
 export namespace DefaultOverlay {
   export class initiateEvents {
     constructor() {
       const preloader: HTMLDivElement = document.querySelector('#preloader');
+      const userForm: HTMLElement = document.querySelector('#user-form select');
       const defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
       const managerButton: HTMLElement = document.querySelector('#manager-tickets button');
       const employeeButton: HTMLElement = document.querySelector('#employee-tickets button');
 
-      function highlight(button: 'manager-button' | 'employee-button') {
-        let managerButton = defaultOverlay.parentElement.children[2].children[0].children[0];
-        let employeeButton = defaultOverlay.parentElement.children[2].children[2].children[0];
+      function buildEmployees(userName: String) {
+        userForm.innerHTML = '';
+
+        let employeesTotal = GetArray.employees().length;
+        for (let i = 0; i < employeesTotal; i++) {
+          let employeeName = `${GetArray.employees()[i].firstName} ${GetArray.employees()[i].lastName}`;
+          let employeeValue = `${GetArray.employees()[i].firstName.toLowerCase()}-${GetArray.employees()[i].lastName.toLowerCase()}`;
+
+          if (employeeName === userName) {
+            $('#user-form select').append(`<option value="${employeeValue}" selected>${userName}</option>`);
+          } else if (employeeName !== userName) {
+            $('#user-form select').append(`<option value="${employeeValue}">${employeeName}</option>`);
+          }
+        }
+      }
+      function closeContainer() {
+        defaultOverlay.innerHTML = '';
+        userForm.style.display = 'flex';
+        defaultOverlay.style.display = 'none';
+      }
+      function highlightButton(button: 'manager-button' | 'employee-button') {
+        let managerButton: Element = defaultOverlay.parentElement.children[2].children[0].children[0];
+        let employeeButton: Element = defaultOverlay.parentElement.children[2].children[2].children[0];
 
         switch (button) {
           case 'manager-button':
@@ -66,46 +88,29 @@ export namespace DefaultOverlay {
         }
         return userSelected;
       }
-      function buildEmployees(userName: String) {
-        let employeesTotal = GetArray.employees().length;
-        let userForm: HTMLElement = document.querySelector('#user-form select');
-
-        userForm.innerHTML = '';
-        for (let i = 0; i < employeesTotal; i++) {
-          let employeeName = `${GetArray.employees()[i].firstName} ${GetArray.employees()[i].lastName}`;
-          let employeeValue = `${GetArray.employees()[i].firstName.toLowerCase()}-${GetArray.employees()[i].lastName.toLowerCase()}`;
-
-          if (employeeName === userName) {
-            $('#user-form select').append(`<option value="${employeeValue}" selected>${userName}</option>`);
-          } else if (employeeName !== userName) {
-            $('#user-form select').append(`<option value="${employeeValue}">${employeeName}</option>`);
-          }
-        }
-      }
 
       $(managerButton)
-        .on('click', () => {
-          defaultOverlay.innerHTML = '';
-          defaultOverlay.style.display = 'none';
-        })
         .on('mouseenter', () => {
           new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
 
           buildEmployees(selectUser('Manager'));
-          highlight('manager-button');
+          highlightButton('manager-button');
+        })
+        .on('click', () => {
+          closeContainer();
         });
       $(employeeButton)
-        .on('click', () => {
-          defaultOverlay.innerHTML = '';
-          defaultOverlay.style.display = 'none';
-        })
         .on('mouseenter', () => {
           new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
 
           buildEmployees(selectUser('Employee'));
-          highlight('employee-button');
+          highlightButton('employee-button');
+        })
+        .on('click', () => {
+          closeContainer();
         });
       /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+      userForm.style.display = 'none';
       preloader.style.display = 'none';
       /*--► console.log('--DefaultOverlay.js Loaded'); ◄--*/
       /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
