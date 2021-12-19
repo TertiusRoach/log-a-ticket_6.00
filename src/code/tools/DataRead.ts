@@ -13,18 +13,27 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace DataRead {
   export class forMain {
     constructor(page: 'colleague-main' | 'coworker-main' | 'logged-main' | 'manage-main' | 'user-main', status: 'pending' | 'assigned' | 'resolved' | 'deleted' | 'everything') {
-      const loggedHeader: HTMLElement = document.querySelector('#logged-header h1');
-      const manageHeader: HTMLElement = document.querySelector('#manage-header h1');
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const ticketsMain: HTMLDivElement = document.querySelector('#tickets-container');
       const userSelect: HTMLSelectElement = document.querySelector('#user-form select');
       const employeesData: HTMLDivElement = document.querySelector('#employees-data');
       const ticketsData: HTMLDivElement = document.querySelector('#tickets-data');
+
       let userName: String = userSelect.selectedOptions[0].textContent;
       let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
       let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
       let ticketsTotal: Number = ticketsCollection.length;
       let userDepartment: String = findDepartment(userName);
 
+      let loggedHeader: HTMLElement = document.querySelector('#logged-header h1');
+      let manageHeader: HTMLElement = document.querySelector('#manage-header h1');
+      let coworkerHeader: HTMLElement = document.querySelector('#coworker-header h1');
+      let colleagueHeader: HTMLElement = document.querySelector('#colleague-header h1');
+      // let userHeader: HTMLElement = document.querySelector('#user-header');
+
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function findDepartment(userName: String) {
         let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
         for (let i = 0; i < employeesTotal; i++) {
@@ -40,15 +49,82 @@ export namespace DataRead {
         }
       }
 
+      /* Switch Case ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
         case 'colleague-main':
+          document.querySelector('#tickets-container').innerHTML = '';
+          document.querySelector('#tickets-container').className = '';
+          document.querySelector('#tickets-container').className = `${status}-tickets`;
+
           break;
         case 'coworker-main':
+          document.querySelector('#tickets-container').innerHTML = '';
+          document.querySelector('#tickets-container').className = '';
+          document.querySelector('#tickets-container').className = `${status}-tickets`;
+
+          document.querySelector('#coworker-header h1').innerHTML = `${userName}`;
+          for (let i = 0; i < ticketsTotal; i++) {
+            const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
+            let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
+            let ticketRating: String = ticketInfo.children[1].textContent;
+            let subjectText: String = ticketInfo.children[2].textContent;
+            let descriptionText: String = ticketInfo.children[3].textContent;
+            let senderName: String = ticketInfo.children[4].textContent;
+            let senderDepartment: String = ticketInfo.children[5].textContent;
+            let receiverName: String = ticketInfo.children[6].textContent;
+            let receiverDepartment: String = ticketInfo.children[7].textContent;
+            let dateShort: String = ticketInfo.children[8].textContent;
+            let datePending: String = ticketInfo.children[9].textContent;
+            let dateAssigned: String = ticketInfo.children[10].textContent;
+            let dateResolved: String = ticketInfo.children[11].textContent;
+            let noteResolved: String = ticketInfo.children[12].textContent;
+            let dateDeleted: String = ticketInfo.children[13].textContent;
+            let noteDeleted: String = ticketInfo.children[14].textContent;
+
+            let receiverDefault = () => {
+              switch (receiverName) {
+                case `${undefined}`:
+                  return receiverDepartment;
+                default:
+                  return receiverName;
+              }
+            };
+
+            if (senderName === userName && ticketStatus === status) {
+              //--▼ Coworker Main ▼--//
+              $(ticketsMain).append(
+                `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
+                  <p class="shortdate">${dateShort}</p>
+                  <p class="subject">${subjectText}</p>
+                  <p class="receiver">${receiverDefault()}</p>
+                  
+                  <div style="display: none">
+                    <p class="ticket-status">${ticketStatus}</p>
+                    <p class="ticket-rating">${ticketRating}</p>
+                    <p class="subject-text">${subjectText}</p>
+                    <p class="description-text">${descriptionText}</p>
+                    <p class="sender-name">${senderName}</p>
+                    <p class="sender-department">${senderDepartment}</p>
+                    <p class="receiver-name">${receiverName}</p>
+                    <p class="receiver-department">${receiverDepartment}</p>
+                    <p class="date-short">${dateShort}</p>
+                    <p class="date-pending">${datePending}</p>
+                    <p class="date-assigned">${dateAssigned}</p>
+                    <p class="date-resolved">${dateResolved}</p>
+                    <p class="note-resolved">${noteResolved}</p>
+                    <p class="date-deleted">${dateDeleted}</p>
+                    <p class="note-deleted">${noteDeleted}</p>
+                  </div>
+                </article>`
+              );
+            }
+          }
           break;
         case 'logged-main':
-          ticketsMain.innerHTML = '';
-          ticketsMain.className = '';
-          ticketsMain.className = `${status}-tickets`;
+          document.querySelector('#tickets-container').innerHTML = '';
+          document.querySelector('#tickets-container').className = '';
+          document.querySelector('#tickets-container').className = `${status}-tickets`;
+
           loggedHeader.innerHTML = `${userName}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
@@ -77,7 +153,7 @@ export namespace DataRead {
               }
             };
 
-            if (senderName === userName && ticketStatus.toLowerCase() === status) {
+            if (senderName === userName && ticketStatus === status) {
               //--▼ Logged Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -108,10 +184,11 @@ export namespace DataRead {
           }
           break;
         case 'manage-main':
+          document.querySelector('#tickets-container').innerHTML = '';
+          document.querySelector('#tickets-container').className = '';
+          document.querySelector('#tickets-container').className = `${status}-tickets`;
+
           manageHeader.innerHTML = `${findDepartment(userName)}`;
-          ticketsMain.innerHTML = '';
-          ticketsMain.className = '';
-          ticketsMain.className = `${status}-tickets`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -161,6 +238,57 @@ export namespace DataRead {
           }
           break;
         case 'user-main':
+          document.querySelector('#tickets-container').innerHTML = '';
+          document.querySelector('#tickets-container').className = '';
+          document.querySelector('#tickets-container').className = `${status}-tickets`;
+
+          for (let i = 0; i < ticketsTotal; i++) {
+            const ticketInfo = ticketsCollection[i].children[1];
+            let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
+            let ticketRating: String = ticketInfo.children[1].textContent;
+            let subjectText: String = ticketInfo.children[2].textContent;
+            let descriptionText: String = ticketInfo.children[3].textContent;
+            let senderName: String = ticketInfo.children[4].textContent;
+            let senderDepartment: String = ticketInfo.children[5].textContent;
+            let receiverName: String = ticketInfo.children[6].textContent;
+            let receiverDepartment: String = ticketInfo.children[7].textContent;
+            let dateShort: String = ticketInfo.children[8].textContent;
+            let datePending: String = ticketInfo.children[9].textContent;
+            let dateAssigned: String = ticketInfo.children[10].textContent;
+            let dateResolved: String = ticketInfo.children[11].textContent;
+            let noteResolved: String = ticketInfo.children[12].textContent;
+            let dateDeleted: String = ticketInfo.children[13].textContent;
+            let noteDeleted: String = ticketInfo.children[14].textContent;
+
+            if (userDepartment === receiverDepartment && receiverName === userName) {
+              //--▼ Manage Main ▼--//
+              $(ticketsMain).append(
+                `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
+                  <p class="shortdate">${dateShort}</p>
+                  <p class="subject">${subjectText}</p>
+                  <p class="sender">${senderName}</p>
+                  
+                  <div style="display: none">
+                    <p class="ticket-status">${ticketStatus}</p>
+                    <p class="ticket-rating">${ticketRating}</p>
+                    <p class="subject-text">${subjectText}</p>
+                    <p class="description-text">${descriptionText}</p>
+                    <p class="sender-name">${senderName}</p>
+                    <p class="sender-department">${senderDepartment}</p>
+                    <p class="receiver-name">${receiverName}</p>
+                    <p class="receiver-department">${receiverDepartment}</p>
+                    <p class="date-short">${dateShort}</p>
+                    <p class="date-pending">${datePending}</p>
+                    <p class="date-assigned">${dateAssigned}</p>
+                    <p class="date-resolved">${dateResolved}</p>
+                    <p class="note-resolved">${noteResolved}</p>
+                    <p class="date-deleted">${dateDeleted}</p>
+                    <p class="note-deleted">${noteDeleted}</p>
+                  </div>
+                </article>`
+              );
+            }
+          }
           break;
       }
     }

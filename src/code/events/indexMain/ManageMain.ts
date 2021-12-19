@@ -20,6 +20,9 @@ export namespace ManageMain {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const loggedButton: HTMLElement = document.querySelector('#logged-tickets button');
+      const manageButton: HTMLElement = document.querySelector('#manage-tickets button');
+
       const openEmployees: HTMLButtonElement = document.querySelector('#open-employees');
 
       const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
@@ -37,7 +40,11 @@ export namespace ManageMain {
       $(openEmployees).on('mouseenter', () => {
         let openSidebar: Element = openEmployees.children[0];
         $(openSidebar).on('click', () => {
-          document.querySelector('.active-page').className = '';
+          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          loggedButton.className = '';
+          manageButton.className = '';
+
+          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
           new GetEvent.forPage('user-main', GetPath.forHTML('main'));
         });
       });

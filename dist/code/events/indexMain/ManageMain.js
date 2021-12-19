@@ -6,6 +6,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
     (function (ManageMain) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                var loggedButton = document.querySelector('#logged-tickets button');
+                var manageButton = document.querySelector('#manage-tickets button');
                 var openEmployees = document.querySelector('#open-employees');
                 var pendingTab = document.querySelector('#pending-tab');
                 var assignedTab = document.querySelector('#assigned-tab');
@@ -17,7 +19,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 $(openEmployees).on('mouseenter', function () {
                     var openSidebar = openEmployees.children[0];
                     $(openSidebar).on('click', function () {
-                        document.querySelector('.active-page').className = '';
+                        loggedButton.className = '';
+                        manageButton.className = '';
                         new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
                     });
                 });
