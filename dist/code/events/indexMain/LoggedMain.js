@@ -7,6 +7,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
         var initiateEvents = (function () {
             function initiateEvents() {
                 new DataRead_1.DataRead.forMain('logged-main', 'pending');
+                var loggedButton = document.querySelector('#logged-tickets button');
+                var manageButton = document.querySelector('#manage-tickets button');
                 var openCoworkers = document.querySelector('#open-coworkers');
                 var pendingTab = document.querySelector('#pending-tab');
                 var assignedTab = document.querySelector('#assigned-tab');
@@ -14,8 +16,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 $(openCoworkers).on('mouseenter', function () {
                     var openSidebar = openCoworkers.children[0];
                     $(openSidebar).on('click', function () {
+                        loggedButton.className = '';
+                        manageButton.className = '';
                         new GetEvent_1.GetEvent.forPage('coworker-main', GetPath_1.GetPath.forHTML('main'));
-                        document.querySelector('.active-page').className = '';
                     });
                 });
                 $(pendingTab)

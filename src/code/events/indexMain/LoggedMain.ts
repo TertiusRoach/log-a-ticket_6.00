@@ -22,6 +22,9 @@ export namespace LoggedMain {
       new DataRead.forMain('logged-main', 'pending');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const loggedButton: HTMLElement = document.querySelector('#logged-tickets button');
+      const manageButton: HTMLElement = document.querySelector('#manage-tickets button');
+
       const openCoworkers: HTMLButtonElement = document.querySelector('#open-coworkers');
 
       const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
@@ -34,8 +37,12 @@ export namespace LoggedMain {
       $(openCoworkers).on('mouseenter', () => {
         let openSidebar: Element = openCoworkers.children[0];
         $(openSidebar).on('click', () => {
+          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          loggedButton.className = '';
+          manageButton.className = '';
+
+          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
           new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
-          document.querySelector('.active-page').className = '';
         });
       });
 
