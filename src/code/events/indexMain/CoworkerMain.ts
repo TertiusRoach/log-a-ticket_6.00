@@ -22,7 +22,8 @@ export namespace CoworkerMain {
       new DataRead.forMain('coworker-main', 'resolved');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const openCoworkers = document.querySelector('#open-coworkers');
+      const openCoworkers: HTMLElement = document.querySelector('#open-coworkers');
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const resolvedTab: HTMLButtonElement = document.querySelector('#resolved-tab');
       const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
@@ -31,8 +32,7 @@ export namespace CoworkerMain {
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(openCoworkers).on('click', () => {
-        /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-        /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+        indexSidebar.style.display = 'grid';
       });
 
       $(resolvedTab)
@@ -50,7 +50,6 @@ export namespace CoworkerMain {
         .on('mouseleave', () => {});
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
       /*--► console.log('--CoworkerMain.js Loaded'); ◄--*/
     }
   }

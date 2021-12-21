@@ -43,7 +43,7 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
         GetEvent.loadMain = loadMain;
         function loadSidebar(pageName) {
             switch (pageName) {
-                case 'coworker-sidebar':
+                case 'coworkers-sidebar':
                     new CoworkersSidebar_1.CoworkersSidebar.initiateEvents();
                     break;
                 case 'default-sidebar':
@@ -136,7 +136,6 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                             var overlayBlock = document.querySelector('#index-overlay');
                             headerBlock.className = '';
                             headerBlock.className = "".concat(pageName);
-                            headerBlock.style.display = 'grid';
                             $(headerBlock).html(data);
                             GetEvent.loadHeader(pageName);
                         });
@@ -147,7 +146,6 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                             var overlayBlock = document.querySelector('#index-overlay');
                             mainBlock.className = '';
                             mainBlock.className = "".concat(pageName);
-                            mainBlock.style.display = 'grid';
                             $(mainBlock).html(data);
                             GetEvent.loadMain(pageName);
                         });
@@ -156,7 +154,8 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                         $.get("".concat(pagePath, "/").concat(pageName, ".html"), function (data) {
                             var sidebarBlock = document.querySelector('#index-sidebar');
                             var overlayBlock = document.querySelector('#index-overlay');
-                            sidebarBlock.style.display = 'grid';
+                            sidebarBlock.className = '';
+                            sidebarBlock.className = "".concat(pageName);
                             $(sidebarBlock).html(data);
                             GetEvent.loadSidebar(pageName);
                         });
@@ -166,7 +165,6 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
                             var overlayBlock = document.querySelector('#index-overlay');
                             overlayBlock.className = '';
                             overlayBlock.className = "".concat(pageName);
-                            overlayBlock.style.display = 'grid';
                             $(overlayBlock).html(data);
                             GetEvent.loadOverlay(pageName);
                         });

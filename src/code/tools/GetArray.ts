@@ -1,11 +1,54 @@
 //--|►| GetArray (Tool) |◄|--//
 export namespace GetArray {
   export function departments(): departmentReference[] {
-    return [];
+    return [
+      {
+        department: 'Technical',
+        employeesTotal: 4,
+        employeeA: 'Jane Lester',
+        employeeB: 'Hammad Dean',
+        employeeC: 'Saffron Hansen',
+        employeeD: 'Dale Sutton',
+      },
+      {
+        department: 'Admin',
+        employeesTotal: 3,
+        employeeA: 'Eshan Booker',
+        employeeB: 'Theodore Russell',
+        employeeC: 'Kady Deacon',
+      },
+      {
+        department: 'Maintenance',
+        employeesTotal: 2,
+        employeeA: 'Tasneem Kemp',
+        employeeB: 'Conrad Guy',
+      },
+      {
+        department: 'Human Resources',
+        employeesTotal: 1,
+        employeeA: 'Danish Copeland',
+      },
+    ];
   }
   class departmentReference {
-    department: String;
+    department: String | 'Technical' | 'Admin' | 'Maintenance' | 'Human Resources';
+    employeesTotal: Number;
+    employeeA:
+      | 'Jane Lester'
+      | 'Hammad Dean'
+      | 'Saffron Hansen'
+      | 'Dale Sutton'
+      | 'Eshan Booker'
+      | 'Theodore Russell'
+      | 'Kady Deacon'
+      | 'Tasneem Kemp'
+      | 'Conrad Guy'
+      | 'Danish Copeland';
+    employeeB?: String;
+    employeeC?: String;
+    employeeD?: String;
   }
+
   export function employees(): employeeReference[] {
     return [
       {
@@ -120,6 +163,7 @@ export namespace GetArray {
     email: undefined | String;
     phone: undefined | Number;
   }
+
   export function tickets(): ticketReference[] {
     return [
       {

@@ -6,9 +6,16 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
     (function (DefaultBody) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new GetEvent_1.GetEvent.forPage('default-overlay', GetPath_1.GetPath.forHTML('overlay'));
                 new GetEvent_1.GetEvent.forPage('default-data', GetPath_1.GetPath.forHTML('data'));
+                var indexBody = document.querySelector('#index-body');
                 var userSelect = document.querySelector('#user-form select');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
                 var defaultOverlay = document.querySelector('.default-overlay');
+                var indexData = document.querySelector('#index-data');
                 function findRole(userName) {
                     var employeesData = document.querySelector('.default-data #employees-data');
                     var employeesCollection = employeesData.getElementsByTagName('article');
@@ -33,14 +40,16 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
                     var employeeButton = defaultOverlay.parentElement.children[2].children[2].children[0];
                     switch (role) {
                         case 'manager':
-                            new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
-                            managerButton.className = 'active-page';
                             employeeButton.className = '';
+                            managerButton.className = 'active-page';
+                            new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
+                            new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                             break;
                         case 'employee':
-                            new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
                             managerButton.className = '';
                             employeeButton.className = 'active-page';
+                            new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
+                            new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                             break;
                     }
                 }

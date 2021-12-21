@@ -14,6 +14,7 @@ import { GetPath } from 'code/tools/GetPath';
 export namespace DefaultData {
   export class initiateEvents {
     constructor() {
+      new DataCreate.forBlock('departments');
       new DataCreate.forBlock('employees');
       new DataCreate.forBlock('tickets');
 

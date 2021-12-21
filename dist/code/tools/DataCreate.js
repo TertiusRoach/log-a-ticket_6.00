@@ -6,12 +6,29 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
     (function (DataCreate) {
         var forBlock = (function () {
             function forBlock(container) {
+                var indexBody = document.querySelector('#index-body');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
+                var departmentsContainer = document.querySelector('#departments-data');
                 var employeesContainer = document.querySelector('#employees-data');
                 var ticketsContainer = document.querySelector('#tickets-data');
                 switch (container) {
+                    case 'departments':
+                        departmentsContainer.innerHTML = '';
+                        var activeDepartment = userDepartment();
+                        var departmentsTotal = GetArray_1.GetArray.departments().length;
+                        for (var i = 0; i < departmentsTotal; i++) {
+                            var GetDepartment = GetArray_1.GetArray.departments()[i];
+                            var departmentName = GetDepartment.department;
+                            var employeesTotal_1 = GetArray_1.GetArray.departments()[i].employeesTotal;
+                            $(departmentsContainer).append("<article id=\"".concat(departmentName.toLowerCase(), "\">\n                                            </article>"));
+                        }
+                        break;
                     case 'employees':
-                        $(employeesContainer).empty();
+                        employeesContainer.innerHTML = '';
                         var employeesTotal = GetArray_1.GetArray.employees().length;
                         for (var i = 0; i < employeesTotal; i++) {
                             var GetEmployees = GetArray_1.GetArray.employees()[i];
@@ -37,9 +54,9 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
                                 '-' +
                                 lastName.toLowerCase() +
                                 '-' +
-                                UseValufy_1.UseValufy.forSentence("".concat(department)) +
+                                UseValufy_1.UseValufy.forString("".concat(department)) +
                                 '-' +
-                                UseValufy_1.UseValufy.forSentence("".concat(occupation)) +
+                                UseValufy_1.UseValufy.forString("".concat(occupation)) +
                                 '-' +
                                 role.toLowerCase(), "\">\n                <p class=\"first-name\">").concat(firstName, "</p>\n                <p class=\"middle-name\">").concat(middleName, "</p>\n                <p class=\"last-name\">").concat(lastName, "</p>\n                <p class=\"department\">").concat(department, "</p>\n                <p class=\"occupation\">").concat(occupation, "</p>\n                <p class=\"role\">").concat(role, "</p>\n                <p class=\"email\">").concat(email, "</p>\n                <p class=\"phone\">").concat(phone, "</p>\n              </article>"));
                         }
@@ -83,6 +100,50 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
             return forBlock;
         }());
         DataCreate.forBlock = forBlock;
+        function findUser() {
+            var indexBody = document.querySelector('#index-body');
+            var userSelect = indexBody.querySelector('#user-form select');
+            var userIndex = userSelect.selectedIndex;
+            var userName = userSelect.children[userIndex].textContent;
+            return "".concat(userName);
+        }
+        function findDepartment(userName) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            for (var i = 0; i < employeesTotal; i++) {
+                var firstName = employeesCollection[i].children[0].textContent;
+                var middleName = employeesCollection[i].children[1].textContent;
+                var lastName = employeesCollection[i].children[2].textContent;
+                var department = employeesCollection[i].children[3].textContent;
+                var occupation = employeesCollection[i].children[4].textContent;
+                var role = employeesCollection[i].children[5].textContent;
+                var employeeName = "".concat(firstName, " ").concat(lastName);
+                if (employeeName === userName) {
+                    return department;
+                }
+            }
+        }
+        function userDepartment() {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            var userSelect = document.querySelector('#user-form select');
+            var userName = userSelect.selectedOptions[0].textContent;
+            for (var i = 0; i < employeesTotal; i++) {
+                var firstName = employeesCollection[i].children[0].textContent;
+                var middleName = employeesCollection[i].children[1].textContent;
+                var lastName = employeesCollection[i].children[2].textContent;
+                var department = employeesCollection[i].children[3].textContent;
+                var occupation = employeesCollection[i].children[4].textContent;
+                var role = employeesCollection[i].children[5].textContent;
+                var employeeName = "".concat(firstName, " ").concat(lastName);
+                if (employeeName === userName) {
+                    return department;
+                }
+            }
+        }
+        DataCreate.userDepartment = userDepartment;
     })(DataCreate = exports.DataCreate || (exports.DataCreate = {}));
 });
 

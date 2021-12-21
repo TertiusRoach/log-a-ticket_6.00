@@ -4,25 +4,23 @@ define(["require", "exports"], function (require, exports) {
     exports.UseValufy = void 0;
     var UseValufy;
     (function (UseValufy) {
-        function forSentence(departmentName) {
-            var department = departmentName.split(' ');
-            var arrayTotal = department.length;
+        function forString(text) {
+            var arrayString = text.split(' ');
+            var arrayTotal = arrayString.length;
             switch (arrayTotal) {
                 case 1:
-                    return "".concat(department[0].toLowerCase());
+                    return "".concat(arrayString[0].toLowerCase());
                 case 2:
-                    return "".concat(department[0].toLowerCase(), "-").concat(department[1].toLowerCase());
+                    return "".concat(arrayString[0].toLowerCase(), "-").concat(arrayString[1].toLowerCase());
                 case 3:
-                    return "".concat(department[0].toLowerCase(), "-").concat(department[1].toLowerCase(), "-").concat(department[2].toLowerCase());
+                    return "".concat(arrayString[0].toLowerCase(), "-").concat(arrayString[1].toLowerCase(), "-").concat(arrayString[2].toLowerCase());
                 case 4:
-                    return "".concat(department[0].toLowerCase(), "-").concat(department[1].toLowerCase(), "-").concat(department[2].toLowerCase(), "-").concat(department[3].toLowerCase());
+                    return "".concat(arrayString[0].toLowerCase(), "-").concat(arrayString[1].toLowerCase(), "-").concat(arrayString[2].toLowerCase(), "-").concat(arrayString[3].toLowerCase());
                 case 5:
-                    return "".concat(department[0].toLowerCase(), "-").concat(department[1].toLowerCase(), "-").concat(department[2].toLowerCase(), "-").concat(department[4].toLowerCase());
+                    return "".concat(arrayString[0].toLowerCase(), "-").concat(arrayString[1].toLowerCase(), "-").concat(arrayString[2].toLowerCase(), "-").concat(arrayString[3].toLowerCase(), "-").concat(arrayString[4].toLowerCase());
             }
         }
-        UseValufy.forSentence = forSentence;
-        function forName(fullName) { }
-        UseValufy.forName = forName;
+        UseValufy.forString = forString;
     })(UseValufy = exports.UseValufy || (exports.UseValufy = {}));
 });
 

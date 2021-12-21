@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, DataRead_1, GetEvent_1, GetPath_1) {
+define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserMain = void 0;
@@ -7,15 +7,18 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
         var initiateEvents = (function () {
             function initiateEvents() {
                 new DataRead_1.DataRead.forMain('user-main', 'assigned');
-                var openEmployees = document.querySelector('#open-employees');
-                var assignedTab = document.querySelector('#assigned-tab');
-                var resolvedTab = document.querySelector('#resolved-tab');
-                var deletedTab = document.querySelector('#deleted-tab');
-                $(openEmployees).on('mouseenter', function () {
-                    var openSidebar = openEmployees.children[0];
-                    $(openSidebar).on('click', function () {
-                        new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
-                    });
+                var indexBody = document.querySelector('#index-body');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var openEmployees = indexMain.querySelector('#open-employees');
+                var assignedTab = indexMain.querySelector('#assigned-tab');
+                var resolvedTab = indexMain.querySelector('#resolved-tab');
+                var deletedTab = indexMain.querySelector('#deleted-tab');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
+                var indexData = document.querySelector('#index-data');
+                $(openEmployees).on('click', function () {
+                    indexSidebar.style.display = 'grid';
                 });
                 $(assignedTab)
                     .on('click', function () {

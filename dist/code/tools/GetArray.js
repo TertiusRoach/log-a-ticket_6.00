@@ -5,7 +5,34 @@ define(["require", "exports"], function (require, exports) {
     var GetArray;
     (function (GetArray) {
         function departments() {
-            return [];
+            return [
+                {
+                    department: 'Technical',
+                    employeesTotal: 4,
+                    employeeA: 'Jane Lester',
+                    employeeB: 'Hammad Dean',
+                    employeeC: 'Saffron Hansen',
+                    employeeD: 'Dale Sutton',
+                },
+                {
+                    department: 'Admin',
+                    employeesTotal: 3,
+                    employeeA: 'Eshan Booker',
+                    employeeB: 'Theodore Russell',
+                    employeeC: 'Kady Deacon',
+                },
+                {
+                    department: 'Maintenance',
+                    employeesTotal: 2,
+                    employeeA: 'Tasneem Kemp',
+                    employeeB: 'Conrad Guy',
+                },
+                {
+                    department: 'Human Resources',
+                    employeesTotal: 1,
+                    employeeA: 'Danish Copeland',
+                },
+            ];
         }
         GetArray.departments = departments;
         var departmentReference = (function () {

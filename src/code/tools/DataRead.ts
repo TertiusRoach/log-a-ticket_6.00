@@ -16,38 +16,34 @@ export namespace DataRead {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const userSelect: HTMLSelectElement = document.querySelector('#user-form select');
-      const ticketsMain: HTMLDivElement = document.querySelector('#tickets-container');
-      const employeesData: HTMLDivElement = document.querySelector('#employees-data');
-      const ticketsData: HTMLDivElement = document.querySelector('#tickets-data');
-      const userName: String = userSelect.selectedOptions[0].textContent;
-
-      let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
-      let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+      let userName: String = userSelect.selectedOptions[0].textContent;
       let userDepartment: String = findDepartment(userName);
+
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      let ticketsMain: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      let loggedHeader: HTMLElement = indexMain.querySelector('#logged-header h1');
+      let manageHeader: HTMLElement = indexMain.querySelector('#manage-header h1');
+      let coworkerHeader: HTMLElement = indexMain.querySelector('#coworker-header h1');
+      let colleagueHeader: HTMLElement = indexMain.querySelector('#colleague-header h1');
+      let userHeader: HTMLElement = indexMain.querySelector('#user-name');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
+      let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
+      let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+      let employeesTotal: Number = employeesCollection.length;
+      let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
+      let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
       let ticketsTotal: Number = ticketsCollection.length;
 
-      let loggedHeader: HTMLElement = document.querySelector('#logged-header h1');
-      let manageHeader: HTMLElement = document.querySelector('#manage-header h1');
-      let coworkerHeader: HTMLElement = document.querySelector('#coworker-header h1');
-      let colleagueHeader: HTMLElement = document.querySelector('#colleague-header h1');
-      let userHeader: HTMLElement = document.querySelector('#user-name');
-
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      function findDepartment(userName: String) {
-        let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
-        for (let i = 0; i < employeesTotal; i++) {
-          let firstName: String = employeesCollection[i].children[0].textContent;
-          let middleName: String = employeesCollection[i].children[1].textContent;
-          let lastName: String = employeesCollection[i].children[2].textContent;
-          let department: String = employeesCollection[i].children[3].textContent;
-
-          let employeeName: String = `${firstName} ${lastName}`;
-          if (employeeName === userName) {
-            return department;
-          }
-        }
-      }
       function clearTickets(container: HTMLDivElement, status: String | 'pending' | 'assigned' | 'resolved' | 'deleted' | 'everything') {
         container.innerHTML = '';
         container.className = '';
@@ -285,89 +281,158 @@ export namespace DataRead {
     }
   }
   export class forSidebar {
-    constructor(page: 'coworker-sidebar' | 'employees-sidebar') {
+    constructor(page: 'coworkers-sidebar' | 'default-sidebar' | 'employees-sidebar') {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+      let userTotal: Number = userSelect.getElementsByTagName('option').length;
+
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+      let coworkerHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
+      let coworkerFooter: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers footer');
+      let departmentSelect: HTMLSelectElement = indexSidebar.querySelector('#department-form select');
+      let selectedDepartment: HTMLOptionElement = departmentSelect.selectedOptions[0];
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
+      let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
+      let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
+      let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      function build(type: 'header' | 'footer') {
-        const userName = $('#testing-form select option:selected').text();
-        switch (type) {
-          case 'header':
-            const departmentForm: HTMLSelectElement = document.querySelector('#department-form select');
-            let activeUser: String = $('#testing-form select option:selected').text();
-            let employeesTotal: Number = GetArray.employees().length;
-            let userDepartment: String;
+      function buildCoworkers() {}
+      function buildHeader(userDepartment?: String) {
+        departmentSelect.innerHTML = '';
 
-            for (let i = 0; i < employeesTotal; i++) {
-              let employeeName = `${GetArray.employees()[i].firstName} ${GetArray.employees()[i].lastName}`;
-              if (activeUser === employeeName) {
-                userDepartment = GetArray.employees()[i].department;
-              }
-            }
-
-            $(departmentForm).empty();
-            $(departmentForm).append(`<option value="${textToValue(userDepartment)}">${userDepartment}</option>`);
-
-            let departmentsTotal = GetArray.departments().length;
-            for (let i = 0; i < departmentsTotal; i++) {
-              let coworkerDepartment = GetArray.departments()[i].department;
-              if (userDepartment !== coworkerDepartment) {
-                $(departmentForm).append(`<option value="${textToValue(coworkerDepartment)}">${coworkerDepartment}</option>`);
-              }
-            }
-            break;
-          case 'footer':
-            const viewCoworkers: HTMLElement = document.querySelector('#view-coworkers footer');
-            const viewDepartment: HTMLSelectElement = document.querySelector('#department-form select');
-
-            $(viewCoworkers).empty();
-
-            let department: String = valueToText(viewDepartment.value);
-            let coworkersTotal: Number = GetArray.employees().length;
-            for (let i = 0; i < coworkersTotal; i++) {
-              let firstName = `${GetArray.employees()[i].firstName}`;
-              let lastName = `${GetArray.employees()[i].lastName}`;
-              let employeeName = `${firstName} ${lastName}`;
-
-              if (department === GetArray.employees()[i].department) {
-                let coworkerName: String = `${GetArray.employees()[i].firstName} ${GetArray.employees()[i].lastName}`;
-                if (userName !== coworkerName) {
-                  $(viewCoworkers).append(`<span class="" onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                            <h1 class="notification">0</h1>
-                                            <h1 class="text">${employeeName}</h1>
-                                          </span>`);
-                }
-              }
-            }
-            break;
+        let departmentsTotal = departmentsData.children.length;
+        for (let i = 0; i < departmentsTotal; i++) {
+          let department: String = `${departmentsData.children[i].id}`;
+          let option = document.createElement('option');
+          option.value = UseValufy.forString(department);
+          option.textContent = UseCapify.forString(' ', department);
+          if (userDepartment === UseCapify.forString(' ', department)) {
+            option.selected = true;
+          } else {
+            option.selected = false;
+          }
+          departmentSelect.append(option);
         }
+        buildFooter(departmentSelect.selectedOptions[0].value);
       }
-      function clearContainer() {
-        $('.coworkers-sidebar').css('display', 'none');
-        $('.coworkers-sidebar').empty();
-      }
-      function textToValue(text: String) {
-        let array: String | any = text.split(' ');
-        switch (array[1]) {
-          case undefined:
-            return `${array[0]}`.toLowerCase();
-          default:
-            return `${array[0]}-${array[1]}`.toLowerCase();
-        }
-      }
-      function valueToText(text: String) {
-        let array: String | any = text.split('-');
-        switch (array[1]) {
-          case undefined:
-            return `${array[0].charAt(0).toUpperCase()}${array[0].slice(1)}`;
-          default:
-            return `${array[0].charAt(0).toUpperCase()}${array[0].slice(1)} ${array[1].charAt(0).toUpperCase()}${array[1].slice(1)}`;
+      function buildFooter(selectedDepartment: String) {
+        coworkerFooter.innerHTML = '';
+
+        let employeesTotal = employeesData.children.length;
+        for (let i = 0; i < employeesTotal; i++) {
+          let firstName: String = get(i, 'first-name');
+          let middleName: String = get(i, 'middle-name');
+          /*
+          let middleName: String;
+          switch (get(i, 'middle-name')) {
+            case `${undefined}`:
+              middleName = ' ';
+            default:
+              middleName = ` ${get(i, 'middle-name')} `;
+          }
+          */
+          let lastName: String = get(i, 'last-name');
+          let department: String = get(i, 'department');
+          let occupation: String = get(i, 'occupation');
+          let role: String = get(i, 'role');
+
+          var nameClass: String = UseCapify.forString(' ', `${firstName} ${lastName}`);
+          if (UseValufy.forString(department) === `${selectedDepartment}`) {
+            $(coworkerFooter).append(`<span class="${nameClass}" onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                              <h1 class="notification">0</h1>
+                                              <h1 class="text">${firstName} ${lastName}</h1>
+                                            </span>`);
+          }
         }
       }
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      switch (page) {
+        case 'coworkers-sidebar':
+          let userName = findUser();
+          let userDepartment = findDepartment(userName);
+          buildHeader(userDepartment);
+          $(departmentSelect).on('change', () => {
+            buildFooter(departmentSelect.selectedOptions[0].value);
+          });
+
+          break;
+        case 'default-sidebar':
+          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          break;
+        case 'employees-sidebar':
+          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          break;
+      }
+    }
+  }
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
+  }
+
+  function get(index: number, data: String | 'first-name' | 'middle-name' | 'last-name' | 'department' | 'occupation' | 'role') {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+
+    let firstName: String = employeesCollection[index].children[0].textContent;
+    let middleName: String = employeesCollection[index].children[1].textContent;
+    let lastName: String = employeesCollection[index].children[2].textContent;
+    let department: String = employeesCollection[index].children[3].textContent;
+    let occupation: String = employeesCollection[index].children[4].textContent;
+    let role: String = employeesCollection[index].children[5].textContent;
+    switch (data) {
+      case 'first-name':
+        return firstName;
+      case 'middle-name':
+        return middleName;
+      case 'last-name':
+        return lastName;
+      case 'department':
+        return department;
+      case 'occupation':
+        return occupation;
+      case 'role':
+        return role;
+    }
+  }
+  function findDepartment(userName: String) {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+    for (let i = 0; i < employeesTotal; i++) {
+      let firstName: String = employeesCollection[i].children[0].textContent;
+      let middleName: String = employeesCollection[i].children[1].textContent;
+      let lastName: String = employeesCollection[i].children[2].textContent;
+      let department: String = employeesCollection[i].children[3].textContent;
+      let occupation: String = employeesCollection[i].children[4].textContent;
+      let role: String = employeesCollection[i].children[5].textContent;
+
+      let employeeName: String = `${firstName} ${lastName}`;
+      if (employeeName === userName) {
+        return department;
+      }
     }
   }
 }

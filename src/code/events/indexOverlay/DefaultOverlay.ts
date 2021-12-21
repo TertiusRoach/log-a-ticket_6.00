@@ -18,11 +18,22 @@ import { type } from 'jquery';
 export namespace DefaultOverlay {
   export class initiateEvents {
     constructor() {
-      const preloader: HTMLDivElement = document.querySelector('#preloader');
-      const userForm: HTMLElement = document.querySelector('#user-form select');
-      const defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
-      const managerButton: HTMLElement = document.querySelector('#manager-tickets button');
-      const employeeButton: HTMLElement = document.querySelector('#employee-tickets button');
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      let preloader: HTMLDivElement = indexBody.querySelector('#preloader');
+      let userForm: HTMLElement = document.querySelector('#user-form select');
+
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
+      let managerButton: HTMLElement = document.querySelector('#manager-tickets button');
+      let employeeButton: HTMLElement = document.querySelector('#employee-tickets button');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
 
       function buildEmployees(userName: String) {
         userForm.innerHTML = '';
@@ -92,24 +103,35 @@ export namespace DefaultOverlay {
       $(managerButton)
         .on('mouseenter', () => {
           new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
+          new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
 
           buildEmployees(selectUser('Manager'));
           highlightButton('manager-button');
         })
         .on('click', () => {
+          indexHeader.style.display = 'grid';
+          indexMain.style.display = 'grid';
+          indexSidebar.style.display = 'none';
+
           closeContainer();
         });
       $(employeeButton)
         .on('mouseenter', () => {
           new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
+          new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
 
           buildEmployees(selectUser('Employee'));
           highlightButton('employee-button');
         })
         .on('click', () => {
+          indexHeader.style.display = 'grid';
+          indexMain.style.display = 'grid';
+          indexSidebar.style.display = 'none';
+
           closeContainer();
         });
       /* ►=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=◄ */
+      indexOverlay.style.display = 'grid';
       userForm.style.display = 'none';
       preloader.style.display = 'none';
       /*--► console.log('--DefaultOverlay.js Loaded'); ◄--*/

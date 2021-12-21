@@ -6,11 +6,17 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
     (function (DefaultOverlay) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                var preloader = document.querySelector('#preloader');
+                var indexBody = document.querySelector('#index-body');
+                var preloader = indexBody.querySelector('#preloader');
                 var userForm = document.querySelector('#user-form select');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
                 var defaultOverlay = document.querySelector('.default-overlay');
                 var managerButton = document.querySelector('#manager-tickets button');
                 var employeeButton = document.querySelector('#employee-tickets button');
+                var indexData = document.querySelector('#index-data');
                 function buildEmployees(userName) {
                     userForm.innerHTML = '';
                     var employeesTotal = GetArray_1.GetArray.employees().length;
@@ -74,21 +80,30 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
                 $(managerButton)
                     .on('mouseenter', function () {
                     new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
+                    new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     buildEmployees(selectUser('Manager'));
                     highlightButton('manager-button');
                 })
                     .on('click', function () {
+                    indexHeader.style.display = 'grid';
+                    indexMain.style.display = 'grid';
+                    indexSidebar.style.display = 'none';
                     closeContainer();
                 });
                 $(employeeButton)
                     .on('mouseenter', function () {
                     new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
+                    new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     buildEmployees(selectUser('Employee'));
                     highlightButton('employee-button');
                 })
                     .on('click', function () {
+                    indexHeader.style.display = 'grid';
+                    indexMain.style.display = 'grid';
+                    indexSidebar.style.display = 'none';
                     closeContainer();
                 });
+                indexOverlay.style.display = 'grid';
                 userForm.style.display = 'none';
                 preloader.style.display = 'none';
             }
