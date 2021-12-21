@@ -8,7 +8,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
             function initiateEvents() {
                 var loggedButton = document.querySelector('#logged-tickets button');
                 var manageButton = document.querySelector('#manage-tickets button');
-                var openEmployees = document.querySelector('#open-employees');
+                var openUser = document.querySelector('#open-employees');
+                var employeesSidebar = document.querySelector('.employees-sidebar');
                 var pendingTab = document.querySelector('#pending-tab');
                 var assignedTab = document.querySelector('#assigned-tab');
                 var deletedTab = document.querySelector('#deleted-tab');
@@ -16,13 +17,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 var userName = userSelect.selectedOptions[0].textContent;
                 var ticketsMain = document.querySelector('#tickets-container');
                 var ticketsData = document.querySelector('#tickets-data');
-                $(openEmployees).on('mouseenter', function () {
-                    var openSidebar = openEmployees.children[0];
-                    $(openSidebar).on('click', function () {
-                        loggedButton.className = '';
-                        manageButton.className = '';
-                        new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
-                    });
+                $(openUser).on('click', function () {
+                    loggedButton.className = '';
+                    manageButton.className = '';
+                    new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
                 });
                 $(pendingTab)
                     .on('click', function () {

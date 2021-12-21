@@ -22,23 +22,27 @@ export namespace UserMain {
       new DataRead.forMain('user-main', 'assigned');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const openEmployees = document.querySelector('#open-employees');
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
-      const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
-      const resolvedTab: HTMLButtonElement = document.querySelector('#resolved-tab');
-      const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      let openEmployees: HTMLElement = indexMain.querySelector('#open-employees');
+      let assignedTab: HTMLButtonElement = indexMain.querySelector('#assigned-tab');
+      let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
+      let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(openEmployees).on('mouseenter', () => {
-        let openSidebar: Element = openEmployees.children[0];
-        $(openSidebar).on('click', () => {
-          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-
-          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
-        });
+      $(openEmployees).on('click', () => {
+        indexSidebar.style.display = 'grid';
       });
 
       $(assignedTab)

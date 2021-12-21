@@ -16,17 +16,8 @@ import { UseValufy } from 'code/tools/UseValufy';
 
 //--|►| Main (Log a Ticket) |◄|--//
 export namespace Start {
-  /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
   new GetEvent.forPage('default-body', GetPath.forHTML('body'));
   new GetEvent.forPage('default-header', GetPath.forHTML('header'));
 
-  /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-
-  /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-
-  /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-
-  /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-  new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
   /*--► console.log('--main.js Loaded'); ◄--*/
 }

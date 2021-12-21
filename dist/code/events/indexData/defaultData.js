@@ -6,6 +6,7 @@ define(["require", "exports", "code/tools/DataCreate"], function (require, expor
     (function (DefaultData) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataCreate_1.DataCreate.forBlock('departments');
                 new DataCreate_1.DataCreate.forBlock('employees');
                 new DataCreate_1.DataCreate.forBlock('tickets');
             }

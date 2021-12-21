@@ -19,11 +19,23 @@ export namespace DefaultBody {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
       new GetEvent.forPage('default-data', GetPath.forHTML('data'));
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const userSelect: HTMLSelectElement = document.querySelector('#user-form select');
-      const defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      let userSelect: HTMLSelectElement = document.querySelector('#user-form select');
+
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function findRole(userName: String) {
@@ -53,16 +65,18 @@ export namespace DefaultBody {
 
         switch (role) {
           case 'manager':
-            new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
-
-            managerButton.className = 'active-page';
             employeeButton.className = '';
+            managerButton.className = 'active-page';
+
+            new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
+            new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
             break;
           case 'employee':
-            new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
-
             managerButton.className = '';
             employeeButton.className = 'active-page';
+
+            new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
+            new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
             break;
         }
       }

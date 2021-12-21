@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/GetArray"], function (require, exports, GetArray_1) {
+define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, UseCapify_1, UseValufy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataRead = void 0;
@@ -6,33 +6,27 @@ define(["require", "exports", "code/tools/GetArray"], function (require, exports
     (function (DataRead) {
         var forMain = (function () {
             function forMain(page, status) {
-                var userSelect = document.querySelector('#user-form select');
-                var ticketsMain = document.querySelector('#tickets-container');
-                var employeesData = document.querySelector('#employees-data');
-                var ticketsData = document.querySelector('#tickets-data');
+                var indexBody = document.querySelector('#index-body');
+                var userSelect = indexBody.querySelector('#user-form select');
                 var userName = userSelect.selectedOptions[0].textContent;
-                var employeesCollection = employeesData.getElementsByTagName('article');
-                var ticketsCollection = ticketsData.getElementsByTagName('article');
                 var userDepartment = findDepartment(userName);
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
+                var loggedHeader = indexMain.querySelector('#logged-header h1');
+                var manageHeader = indexMain.querySelector('#manage-header h1');
+                var coworkerHeader = indexMain.querySelector('#coworker-header h1');
+                var colleagueHeader = indexMain.querySelector('#colleague-header h1');
+                var userHeader = indexMain.querySelector('#user-name');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
+                var indexData = document.querySelector('#index-data');
+                var employeesData = indexData.querySelector('#employees-data');
+                var employeesCollection = employeesData.getElementsByTagName('article');
+                var employeesTotal = employeesCollection.length;
+                var ticketsData = indexData.querySelector('#tickets-data');
+                var ticketsCollection = ticketsData.getElementsByTagName('article');
                 var ticketsTotal = ticketsCollection.length;
-                var loggedHeader = document.querySelector('#logged-header h1');
-                var manageHeader = document.querySelector('#manage-header h1');
-                var coworkerHeader = document.querySelector('#coworker-header h1');
-                var colleagueHeader = document.querySelector('#colleague-header h1');
-                var userHeader = document.querySelector('#user-name');
-                function findDepartment(userName) {
-                    var employeesTotal = employeesData.getElementsByTagName('article').length;
-                    for (var i = 0; i < employeesTotal; i++) {
-                        var firstName = employeesCollection[i].children[0].textContent;
-                        var middleName = employeesCollection[i].children[1].textContent;
-                        var lastName = employeesCollection[i].children[2].textContent;
-                        var department = employeesCollection[i].children[3].textContent;
-                        var employeeName = "".concat(firstName, " ").concat(lastName);
-                        if (employeeName === userName) {
-                            return department;
-                        }
-                    }
-                }
                 function clearTickets(container, status) {
                     container.innerHTML = '';
                     container.className = '';
@@ -170,76 +164,123 @@ define(["require", "exports", "code/tools/GetArray"], function (require, exports
         DataRead.forMain = forMain;
         var forSidebar = (function () {
             function forSidebar(page) {
-                function build(type) {
-                    var userName = $('#testing-form select option:selected').text();
-                    switch (type) {
-                        case 'header':
-                            var departmentForm = document.querySelector('#department-form select');
-                            var activeUser = $('#testing-form select option:selected').text();
-                            var employeesTotal = GetArray_1.GetArray.employees().length;
-                            var userDepartment = void 0;
-                            for (var i = 0; i < employeesTotal; i++) {
-                                var employeeName = "".concat(GetArray_1.GetArray.employees()[i].firstName, " ").concat(GetArray_1.GetArray.employees()[i].lastName);
-                                if (activeUser === employeeName) {
-                                    userDepartment = GetArray_1.GetArray.employees()[i].department;
-                                }
-                            }
-                            $(departmentForm).empty();
-                            $(departmentForm).append("<option value=\"".concat(textToValue(userDepartment), "\">").concat(userDepartment, "</option>"));
-                            var departmentsTotal = GetArray_1.GetArray.departments().length;
-                            for (var i = 0; i < departmentsTotal; i++) {
-                                var coworkerDepartment = GetArray_1.GetArray.departments()[i].department;
-                                if (userDepartment !== coworkerDepartment) {
-                                    $(departmentForm).append("<option value=\"".concat(textToValue(coworkerDepartment), "\">").concat(coworkerDepartment, "</option>"));
-                                }
-                            }
-                            break;
-                        case 'footer':
-                            var viewCoworkers = document.querySelector('#view-coworkers footer');
-                            var viewDepartment = document.querySelector('#department-form select');
-                            $(viewCoworkers).empty();
-                            var department = valueToText(viewDepartment.value);
-                            var coworkersTotal = GetArray_1.GetArray.employees().length;
-                            for (var i = 0; i < coworkersTotal; i++) {
-                                var firstName = "".concat(GetArray_1.GetArray.employees()[i].firstName);
-                                var lastName = "".concat(GetArray_1.GetArray.employees()[i].lastName);
-                                var employeeName = "".concat(firstName, " ").concat(lastName);
-                                if (department === GetArray_1.GetArray.employees()[i].department) {
-                                    var coworkerName = "".concat(GetArray_1.GetArray.employees()[i].firstName, " ").concat(GetArray_1.GetArray.employees()[i].lastName);
-                                    if (userName !== coworkerName) {
-                                        $(viewCoworkers).append("<span class=\"\" onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                            <h1 class=\"notification\">0</h1>\n                                            <h1 class=\"text\">".concat(employeeName, "</h1>\n                                          </span>"));
-                                    }
-                                }
-                            }
-                            break;
+                var indexBody = document.querySelector('#index-body');
+                var userSelect = indexBody.querySelector('#user-form select');
+                var userTotal = userSelect.getElementsByTagName('option').length;
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var coworkerHeader = indexSidebar.querySelector('#view-coworkers header');
+                var coworkerFooter = indexSidebar.querySelector('#view-coworkers footer');
+                var departmentSelect = indexSidebar.querySelector('#department-form select');
+                var selectedDepartment = departmentSelect.selectedOptions[0];
+                var indexOverlay = document.querySelector('#index-overlay');
+                var indexData = document.querySelector('#index-data');
+                var departmentsData = indexData.querySelector('#departments-data');
+                var employeesData = indexData.querySelector('#employees-data');
+                var ticketsData = indexData.querySelector('#tickets-data');
+                function buildCoworkers() { }
+                function buildHeader(userDepartment) {
+                    departmentSelect.innerHTML = '';
+                    var departmentsTotal = departmentsData.children.length;
+                    for (var i = 0; i < departmentsTotal; i++) {
+                        var department = "".concat(departmentsData.children[i].id);
+                        var option = document.createElement('option');
+                        option.value = UseValufy_1.UseValufy.forString(department);
+                        option.textContent = UseCapify_1.UseCapify.forString(' ', department);
+                        if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
+                            option.selected = true;
+                        }
+                        else {
+                            option.selected = false;
+                        }
+                        departmentSelect.append(option);
+                    }
+                    buildFooter(departmentSelect.selectedOptions[0].value);
+                }
+                function buildFooter(selectedDepartment) {
+                    coworkerFooter.innerHTML = '';
+                    var employeesTotal = employeesData.children.length;
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var firstName = get(i, 'first-name');
+                        var middleName = get(i, 'middle-name');
+                        var lastName = get(i, 'last-name');
+                        var department = get(i, 'department');
+                        var occupation = get(i, 'occupation');
+                        var role = get(i, 'role');
+                        var nameClass = UseCapify_1.UseCapify.forString(' ', "".concat(firstName, " ").concat(lastName));
+                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                            $(coworkerFooter).append("<span class=\"".concat(nameClass, "\" onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
+                        }
                     }
                 }
-                function clearContainer() {
-                    $('.coworkers-sidebar').css('display', 'none');
-                    $('.coworkers-sidebar').empty();
-                }
-                function textToValue(text) {
-                    var array = text.split(' ');
-                    switch (array[1]) {
-                        case undefined:
-                            return "".concat(array[0]).toLowerCase();
-                        default:
-                            return "".concat(array[0], "-").concat(array[1]).toLowerCase();
-                    }
-                }
-                function valueToText(text) {
-                    var array = text.split('-');
-                    switch (array[1]) {
-                        case undefined:
-                            return "".concat(array[0].charAt(0).toUpperCase()).concat(array[0].slice(1));
-                        default:
-                            return "".concat(array[0].charAt(0).toUpperCase()).concat(array[0].slice(1), " ").concat(array[1].charAt(0).toUpperCase()).concat(array[1].slice(1));
-                    }
+                switch (page) {
+                    case 'coworkers-sidebar':
+                        var userName = findUser();
+                        var userDepartment = findDepartment(userName);
+                        buildHeader(userDepartment);
+                        $(departmentSelect).on('change', function () {
+                            buildFooter(departmentSelect.selectedOptions[0].value);
+                        });
+                        break;
+                    case 'default-sidebar':
+                        break;
+                    case 'employees-sidebar':
+                        break;
                 }
             }
             return forSidebar;
         }());
         DataRead.forSidebar = forSidebar;
+        function findUser() {
+            var indexBody = document.querySelector('#index-body');
+            var userSelect = indexBody.querySelector('#user-form select');
+            var userIndex = userSelect.selectedIndex;
+            var userName = userSelect.children[userIndex].textContent;
+            return "".concat(userName);
+        }
+        function get(index, data) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            var firstName = employeesCollection[index].children[0].textContent;
+            var middleName = employeesCollection[index].children[1].textContent;
+            var lastName = employeesCollection[index].children[2].textContent;
+            var department = employeesCollection[index].children[3].textContent;
+            var occupation = employeesCollection[index].children[4].textContent;
+            var role = employeesCollection[index].children[5].textContent;
+            switch (data) {
+                case 'first-name':
+                    return firstName;
+                case 'middle-name':
+                    return middleName;
+                case 'last-name':
+                    return lastName;
+                case 'department':
+                    return department;
+                case 'occupation':
+                    return occupation;
+                case 'role':
+                    return role;
+            }
+        }
+        function findDepartment(userName) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            for (var i = 0; i < employeesTotal; i++) {
+                var firstName = employeesCollection[i].children[0].textContent;
+                var middleName = employeesCollection[i].children[1].textContent;
+                var lastName = employeesCollection[i].children[2].textContent;
+                var department = employeesCollection[i].children[3].textContent;
+                var occupation = employeesCollection[i].children[4].textContent;
+                var role = employeesCollection[i].children[5].textContent;
+                var employeeName = "".concat(firstName, " ").concat(lastName);
+                if (employeeName === userName) {
+                    return department;
+                }
+            }
+        }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
 });
 

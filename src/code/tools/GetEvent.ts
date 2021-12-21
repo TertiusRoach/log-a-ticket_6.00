@@ -72,10 +72,10 @@ export namespace GetEvent {
         break;
     }
   }
-  export function loadSidebar(pageName: String | 'coworker-sidebar' | 'default-sidebar' | 'employees-sidebar') {
+  export function loadSidebar(pageName: String | 'coworkers-sidebar' | 'default-sidebar' | 'employees-sidebar') {
     //--► Sidebar <aside> ◄--//
     switch (pageName) {
-      case 'coworker-sidebar':
+      case 'coworkers-sidebar':
         new CoworkersSidebar.initiateEvents();
         break;
       case 'default-sidebar':
@@ -191,14 +191,6 @@ export namespace GetEvent {
 
             headerBlock.className = '';
             headerBlock.className = `${pageName}`;
-            /*
-            if ('default-overlay' === overlayBlock.className) {
-              headerBlock.style.display = 'none';
-            } else {
-              headerBlock.style.display = 'grid';
-            }
-            */
-            headerBlock.style.display = 'grid';
 
             $(headerBlock).html(data);
             GetEvent.loadHeader(pageName);
@@ -211,14 +203,6 @@ export namespace GetEvent {
 
             mainBlock.className = '';
             mainBlock.className = `${pageName}`;
-            /*
-            if ('default-overlay' === overlayBlock.className) {
-              mainBlock.style.display = 'none';
-            } else {
-              mainBlock.style.display = 'grid';
-            }
-            */
-            mainBlock.style.display = 'grid';
 
             $(mainBlock).html(data);
             GetEvent.loadMain(pageName);
@@ -228,16 +212,9 @@ export namespace GetEvent {
           $.get(`${pagePath}/${pageName}.html`, function (data) {
             let sidebarBlock: HTMLElement = document.querySelector('#index-sidebar');
             let overlayBlock: HTMLElement = document.querySelector('#index-overlay');
-            /*
+
             sidebarBlock.className = '';
             sidebarBlock.className = `${pageName}`;
-            if ('default-overlay' === overlayBlock.className) {
-              sidebarBlock.style.display = 'none';
-            } else {
-              sidebarBlock.style.display = 'grid';
-            }
-            */
-            sidebarBlock.style.display = 'grid';
 
             $(sidebarBlock).html(data);
             GetEvent.loadSidebar(pageName);
@@ -249,7 +226,6 @@ export namespace GetEvent {
 
             overlayBlock.className = '';
             overlayBlock.className = `${pageName}`;
-            overlayBlock.style.display = 'grid';
 
             $(overlayBlock).html(data);
             GetEvent.loadOverlay(pageName);

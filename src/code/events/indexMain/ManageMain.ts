@@ -23,7 +23,8 @@ export namespace ManageMain {
       const loggedButton: HTMLElement = document.querySelector('#logged-tickets button');
       const manageButton: HTMLElement = document.querySelector('#manage-tickets button');
 
-      const openEmployees: HTMLButtonElement = document.querySelector('#open-employees');
+      const openUser: HTMLButtonElement = document.querySelector('#open-employees');
+      const employeesSidebar: HTMLElement = document.querySelector('.employees-sidebar');
 
       const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
       const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
@@ -37,16 +38,13 @@ export namespace ManageMain {
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(openEmployees).on('mouseenter', () => {
-        let openSidebar: Element = openEmployees.children[0];
-        $(openSidebar).on('click', () => {
-          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          loggedButton.className = '';
-          manageButton.className = '';
+      $(openUser).on('click', () => {
+        /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+        loggedButton.className = '';
+        manageButton.className = '';
 
-          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          new GetEvent.forPage('user-main', GetPath.forHTML('main'));
-        });
+        /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+        new GetEvent.forPage('user-main', GetPath.forHTML('main'));
       });
 
       $(pendingTab)

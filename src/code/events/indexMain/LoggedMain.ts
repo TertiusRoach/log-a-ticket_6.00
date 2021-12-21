@@ -13,6 +13,7 @@ import { GetPath } from 'code/tools/GetPath';
 import { UseCapify } from 'code/tools/UseCapify';
 import { UseDatefy } from 'code/tools/UseDatefy';
 import { UseValufy } from 'code/tools/UseValufy';
+import { getScript } from 'jquery';
 
 //--|►| LoggedMain |◄|--//
 export namespace LoggedMain {
@@ -22,28 +23,31 @@ export namespace LoggedMain {
       new DataRead.forMain('logged-main', 'pending');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const loggedButton: HTMLElement = document.querySelector('#logged-tickets button');
-      const manageButton: HTMLElement = document.querySelector('#manage-tickets button');
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
-      const openCoworkers: HTMLButtonElement = document.querySelector('#open-coworkers');
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+      let loggedButton: HTMLElement = indexHeader.querySelector('#logged-tickets button');
+      let manageButton: HTMLElement = indexHeader.querySelector('#manage-tickets button');
 
-      const pendingTab: HTMLButtonElement = document.querySelector('#pending-tab');
-      const assignedTab: HTMLButtonElement = document.querySelector('#assigned-tab');
-      const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      let openCoworkers: HTMLButtonElement = indexMain.querySelector('#open-coworkers');
+      let pendingTab: HTMLButtonElement = indexMain.querySelector('#pending-tab');
+      let assignedTab: HTMLButtonElement = indexMain.querySelector('#assigned-tab');
+      let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(openCoworkers).on('mouseenter', () => {
-        let openSidebar: Element = openCoworkers.children[0];
-        $(openSidebar).on('click', () => {
-          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          loggedButton.className = '';
-          manageButton.className = '';
-
-          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
-        });
+      $(openCoworkers).on('click', () => {
+        loggedButton.className = '';
+        manageButton.className = '';
+        new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
       });
 
       $(pendingTab)

@@ -12,14 +12,41 @@ import { UseValufy } from 'code/tools/UseValufy';
 //--|►| DataCreate (Tool) |◄|--//
 export namespace DataCreate {
   export class forBlock {
-    constructor(container: 'employees' | 'tickets') {
-      const indexData: HTMLDivElement = document.querySelector('#index-data');
-      const employeesContainer: HTMLDivElement = document.querySelector('#employees-data');
-      const ticketsContainer: HTMLDivElement = document.querySelector('#tickets-data');
+    constructor(container: 'departments' | 'employees' | 'tickets') {
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
+      let departmentsContainer: HTMLDivElement = document.querySelector('#departments-data');
+      let employeesContainer: HTMLDivElement = document.querySelector('#employees-data');
+      let ticketsContainer: HTMLDivElement = document.querySelector('#tickets-data');
 
       switch (container) {
+        case 'departments':
+          departmentsContainer.innerHTML = '';
+
+          let activeDepartment: String = userDepartment();
+          let departmentsTotal: Number = GetArray.departments().length;
+          for (let i = 0; i < departmentsTotal; i++) {
+            const GetDepartment = GetArray.departments()[i];
+            let departmentName: String = GetDepartment.department;
+            let employeesTotal: Number = GetArray.departments()[i].employeesTotal;
+
+            $(departmentsContainer).append(`<article id="${departmentName.toLowerCase()}">
+                                            </article>`);
+          }
+
+          //--► console.log(departmentsContainer); ◄--//
+          break;
         case 'employees':
-          $(employeesContainer).empty();
+          employeesContainer.innerHTML = '';
 
           let employeesTotal: Number = GetArray.employees().length;
           for (let i = 0; i < employeesTotal; i++) {
@@ -52,9 +79,9 @@ export namespace DataCreate {
                 '-' +
                 lastName.toLowerCase() +
                 '-' +
-                UseValufy.forSentence(`${department}`) +
+                UseValufy.forString(`${department}`) +
                 '-' +
-                UseValufy.forSentence(`${occupation}`) +
+                UseValufy.forString(`${occupation}`) +
                 '-' +
                 role.toLowerCase()
               }">
@@ -132,6 +159,53 @@ export namespace DataCreate {
           }
           //--► console.log(ticketsContainer); ◄--//
           break;
+      }
+    }
+  }
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
+  }
+  function findDepartment(userName: String) {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+    for (let i = 0; i < employeesTotal; i++) {
+      let firstName: String = employeesCollection[i].children[0].textContent;
+      let middleName: String = employeesCollection[i].children[1].textContent;
+      let lastName: String = employeesCollection[i].children[2].textContent;
+      let department: String = employeesCollection[i].children[3].textContent;
+      let occupation: String = employeesCollection[i].children[4].textContent;
+      let role: String = employeesCollection[i].children[5].textContent;
+
+      let employeeName: String = `${firstName} ${lastName}`;
+      if (employeeName === userName) {
+        return department;
+      }
+    }
+  }
+
+  export function userDepartment() {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+    let userSelect: HTMLSelectElement = document.querySelector('#user-form select');
+    let userName: String = userSelect.selectedOptions[0].textContent;
+
+    for (let i = 0; i < employeesTotal; i++) {
+      let firstName: String = employeesCollection[i].children[0].textContent;
+      let middleName: String = employeesCollection[i].children[1].textContent;
+      let lastName: String = employeesCollection[i].children[2].textContent;
+      let department: String = employeesCollection[i].children[3].textContent;
+      let occupation: String = employeesCollection[i].children[4].textContent;
+      let role: String = employeesCollection[i].children[5].textContent;
+
+      let employeeName: String = `${firstName} ${lastName}`;
+      if (employeeName === userName) {
+        return department;
       }
     }
   }
