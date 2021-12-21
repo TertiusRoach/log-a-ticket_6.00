@@ -18,17 +18,33 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace CoworkerMain {
   export class initiateEvents {
     constructor() {
-      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      new DataRead.forMain('coworker-main', 'resolved');
-
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      const openCoworkers: HTMLElement = document.querySelector('#open-coworkers');
-      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
-      const resolvedTab: HTMLButtonElement = document.querySelector('#resolved-tab');
-      const deletedTab: HTMLButtonElement = document.querySelector('#deleted-tab');
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      const mainHeader: HTMLElement = indexMain.querySelector('#coworker-header');
+      let openCoworkers: HTMLElement = indexMain.querySelector('#open-coworkers');
+
+      let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
+      let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+      let activeColleague: HTMLElement = indexSidebar.querySelector('.active-colleague .text');
+      mainHeader.innerHTML = `<span class="notification">
+                                <h2 style="background: #08870c">0</h2>
+                              </span>
+                              <h1 class="text ${UseValufy.forString(activeColleague.innerText)}">${activeColleague.innerText}</h1>`;
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forMain('coworker-main', 'resolved');
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(openCoworkers).on('click', () => {
@@ -50,6 +66,7 @@ export namespace CoworkerMain {
         .on('mouseleave', () => {});
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
       /*--► console.log('--CoworkerMain.js Loaded'); ◄--*/
     }
   }
