@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, UseCapify_1, UseValufy_1) {
+define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, GetEvent_1, GetPath_1, UseCapify_1, UseValufy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataRead = void 0;
@@ -37,7 +37,7 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
                     case 'colleague-main':
                         break;
                     case 'coworker-main':
-                        coworkerHeader.innerHTML = "".concat(userName);
+                        var activeEmployee = document.querySelector('#coworker-header').lastChild.textContent;
                         var _loop_1 = function (i) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
@@ -63,7 +63,7 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
                                         return receiverName;
                                 }
                             };
-                            if (senderName === userName && ticketStatus === status) {
+                            if (senderName === activeEmployee && ticketStatus === status) {
                                 $(ticketsMain).append("<article class=\"".concat(ticketStatus, "\" onClick=\"$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');\">\n                  <p class=\"shortdate\">").concat(dateShort, "</p>\n                  <p class=\"subject\">").concat(subjectText, "</p>\n                  <p class=\"receiver\">").concat(receiverDefault(), "</p>\n                  \n                  <div style=\"display: none\">\n                    <p class=\"ticket-status\">").concat(ticketStatus, "</p>\n                    <p class=\"ticket-rating\">").concat(ticketRating, "</p>\n                    <p class=\"subject-text\">").concat(subjectText, "</p>\n                    <p class=\"description-text\">").concat(descriptionText, "</p>\n                    <p class=\"sender-name\">").concat(senderName, "</p>\n                    <p class=\"sender-department\">").concat(senderDepartment, "</p>\n                    <p class=\"receiver-name\">").concat(receiverName, "</p>\n                    <p class=\"receiver-department\">").concat(receiverDepartment, "</p>\n                    <p class=\"date-short\">").concat(dateShort, "</p>\n                    <p class=\"date-pending\">").concat(datePending, "</p>\n                    <p class=\"date-assigned\">").concat(dateAssigned, "</p>\n                    <p class=\"date-resolved\">").concat(dateResolved, "</p>\n                    <p class=\"note-resolved\">").concat(noteResolved, "</p>\n                    <p class=\"date-deleted\">").concat(dateDeleted, "</p>\n                    <p class=\"note-deleted\">").concat(noteDeleted, "</p>\n                  </div>\n                </article>"));
                             }
                         };
@@ -179,7 +179,6 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
                 var departmentsData = indexData.querySelector('#departments-data');
                 var employeesData = indexData.querySelector('#employees-data');
                 var ticketsData = indexData.querySelector('#tickets-data');
-                function buildCoworkers() { }
                 function buildHeader(userDepartment) {
                     departmentSelect.innerHTML = '';
                     var departmentsTotal = departmentsData.children.length;
@@ -208,9 +207,16 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
                         var department = get(i, 'department');
                         var occupation = get(i, 'occupation');
                         var role = get(i, 'role');
-                        var nameClass = UseCapify_1.UseCapify.forString(' ', "".concat(firstName, " ").concat(lastName));
                         if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
-                            $(coworkerFooter).append("<span class=\"".concat(nameClass, "\" onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
+                            var nameClass = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                            var employeeName = "".concat(firstName, " ").concat(lastName);
+                            var userName = findUser();
+                            if (userName === employeeName) {
+                                $(coworkerFooter).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                              onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                          <h1 class=\"notification\">0</h1>\n                                          <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                        </span>"));
+                            }
+                            else {
+                                $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                              onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                          <h1 class=\"notification\">0</h1>\n                                          <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                        </span>"));
+                            }
                         }
                     }
                 }
@@ -218,10 +224,19 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
                     case 'coworkers-sidebar':
                         var userName = findUser();
                         var userDepartment = findDepartment(userName);
+                        var coworkerButtons = coworkerFooter.getElementsByTagName('span');
                         buildHeader(userDepartment);
+                        var recallEvents_1 = function (coworkerButtons) {
+                            $(coworkerButtons).on('click', function () {
+                                new GetEvent_1.GetEvent.forPage('coworker-main', GetPath_1.GetPath.forHTML('main'));
+                            });
+                        };
                         $(departmentSelect).on('change', function () {
                             buildFooter(departmentSelect.selectedOptions[0].value);
+                            var coworkerButtons = coworkerFooter.getElementsByTagName('span');
+                            recallEvents_1(coworkerButtons);
                         });
+                        recallEvents_1(coworkerButtons);
                         break;
                     case 'default-sidebar':
                         break;
@@ -232,6 +247,23 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
             return forSidebar;
         }());
         DataRead.forSidebar = forSidebar;
+        function findDepartment(userName) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            for (var i = 0; i < employeesTotal; i++) {
+                var firstName = employeesCollection[i].children[0].textContent;
+                var middleName = employeesCollection[i].children[1].textContent;
+                var lastName = employeesCollection[i].children[2].textContent;
+                var department = employeesCollection[i].children[3].textContent;
+                var occupation = employeesCollection[i].children[4].textContent;
+                var role = employeesCollection[i].children[5].textContent;
+                var employeeName = "".concat(firstName, " ").concat(lastName);
+                if (employeeName === userName) {
+                    return department;
+                }
+            }
+        }
         function findUser() {
             var indexBody = document.querySelector('#index-body');
             var userSelect = indexBody.querySelector('#user-form select');
@@ -262,23 +294,6 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseValufy"], f
                     return occupation;
                 case 'role':
                     return role;
-            }
-        }
-        function findDepartment(userName) {
-            var employeesData = document.querySelector('#employees-data');
-            var employeesCollection = employeesData.getElementsByTagName('article');
-            var employeesTotal = employeesData.getElementsByTagName('article').length;
-            for (var i = 0; i < employeesTotal; i++) {
-                var firstName = employeesCollection[i].children[0].textContent;
-                var middleName = employeesCollection[i].children[1].textContent;
-                var lastName = employeesCollection[i].children[2].textContent;
-                var department = employeesCollection[i].children[3].textContent;
-                var occupation = employeesCollection[i].children[4].textContent;
-                var role = employeesCollection[i].children[5].textContent;
-                var employeeName = "".concat(firstName, " ").concat(lastName);
-                if (employeeName === userName) {
-                    return department;
-                }
             }
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));

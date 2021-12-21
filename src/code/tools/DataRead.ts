@@ -56,7 +56,7 @@ export namespace DataRead {
         case 'colleague-main':
           break;
         case 'coworker-main':
-          coworkerHeader.innerHTML = `${userName}`;
+          let activeEmployee = document.querySelector('#coworker-header').lastChild.textContent;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -84,7 +84,7 @@ export namespace DataRead {
               }
             };
 
-            if (senderName === userName && ticketStatus === status) {
+            if (senderName === activeEmployee && ticketStatus === status) {
               //--▼ Coworker Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -307,8 +307,7 @@ export namespace DataRead {
       let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      function buildCoworkers() {}
-      function buildHeader(userDepartment?: String) {
+      function buildHeader(userDepartment: String) {
         departmentSelect.innerHTML = '';
 
         let departmentsTotal = departmentsData.children.length;
@@ -347,12 +346,23 @@ export namespace DataRead {
           let occupation: String = get(i, 'occupation');
           let role: String = get(i, 'role');
 
-          var nameClass: String = UseCapify.forString(' ', `${firstName} ${lastName}`);
           if (UseValufy.forString(department) === `${selectedDepartment}`) {
-            $(coworkerFooter).append(`<span class="${nameClass}" onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                              <h1 class="notification">0</h1>
-                                              <h1 class="text">${firstName} ${lastName}</h1>
-                                            </span>`);
+            var nameClass: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
+            var employeeName: String = `${firstName} ${lastName}`;
+            var userName: String = findUser();
+            if (userName === employeeName) {
+              $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                                              onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                          <h1 class="notification">0</h1>
+                                          <h1 class="text">${firstName} ${lastName}</h1>
+                                        </span>`);
+            } else {
+              $(coworkerFooter).append(`<span class="${nameClass}"
+                                              onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                          <h1 class="notification">0</h1>
+                                          <h1 class="text">${firstName} ${lastName}</h1>
+                                        </span>`);
+            }
           }
         }
       }
@@ -362,24 +372,45 @@ export namespace DataRead {
         case 'coworkers-sidebar':
           let userName = findUser();
           let userDepartment = findDepartment(userName);
+          let coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
           buildHeader(userDepartment);
+
+          let recallEvents = (coworkerButtons: HTMLCollection) => {
+            $(coworkerButtons).on('click', () => {
+              new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
+            });
+          };
           $(departmentSelect).on('change', () => {
             buildFooter(departmentSelect.selectedOptions[0].value);
-          });
 
+            var coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
+            recallEvents(coworkerButtons);
+          });
+          recallEvents(coworkerButtons);
           break;
         case 'default-sidebar':
-          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
           break;
         case 'employees-sidebar':
-          /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-          /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
           break;
+      }
+    }
+  }
+
+  function findDepartment(userName: String) {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+    for (let i = 0; i < employeesTotal; i++) {
+      let firstName: String = employeesCollection[i].children[0].textContent;
+      let middleName: String = employeesCollection[i].children[1].textContent;
+      let lastName: String = employeesCollection[i].children[2].textContent;
+      let department: String = employeesCollection[i].children[3].textContent;
+      let occupation: String = employeesCollection[i].children[4].textContent;
+      let role: String = employeesCollection[i].children[5].textContent;
+
+      let employeeName: String = `${firstName} ${lastName}`;
+      if (employeeName === userName) {
+        return department;
       }
     }
   }
@@ -390,7 +421,6 @@ export namespace DataRead {
     let userName: String = userSelect.children[userIndex].textContent;
     return `${userName}`;
   }
-
   function get(index: number, data: String | 'first-name' | 'middle-name' | 'last-name' | 'department' | 'occupation' | 'role') {
     const employeesData: HTMLDivElement = document.querySelector('#employees-data');
     let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
@@ -415,24 +445,6 @@ export namespace DataRead {
         return occupation;
       case 'role':
         return role;
-    }
-  }
-  function findDepartment(userName: String) {
-    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
-    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
-    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
-    for (let i = 0; i < employeesTotal; i++) {
-      let firstName: String = employeesCollection[i].children[0].textContent;
-      let middleName: String = employeesCollection[i].children[1].textContent;
-      let lastName: String = employeesCollection[i].children[2].textContent;
-      let department: String = employeesCollection[i].children[3].textContent;
-      let occupation: String = employeesCollection[i].children[4].textContent;
-      let role: String = employeesCollection[i].children[5].textContent;
-
-      let employeeName: String = `${firstName} ${lastName}`;
-      if (employeeName === userName) {
-        return department;
-      }
     }
   }
 }
