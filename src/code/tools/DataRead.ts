@@ -307,6 +307,13 @@ export namespace DataRead {
       let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      function appendCoworker(coworkerFooter: HTMLSelectElement, nameClass: String, firstName: String, lastName: String) {
+        $(coworkerFooter).append(`<span class="${nameClass}"
+                                        onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                    <h1 class="notification">0</h1>
+                                    <h1 class="text">${firstName} ${lastName}</h1>
+                                  </span>`);
+      }
       function buildHeader(userDepartment: String) {
         departmentSelect.innerHTML = '';
 
@@ -323,9 +330,9 @@ export namespace DataRead {
           }
           departmentSelect.append(option);
         }
-        buildFooter(departmentSelect.selectedOptions[0].value);
+        buildFooter(departmentSelect.selectedOptions[0].value, false);
       }
-      function buildFooter(selectedDepartment: String) {
+      function buildFooter(selectedDepartment: String, recall: boolean) {
         coworkerFooter.innerHTML = '';
 
         let employeesTotal = employeesData.children.length;
@@ -347,21 +354,34 @@ export namespace DataRead {
           let role: String = get(i, 'role');
 
           if (UseValufy.forString(department) === `${selectedDepartment}`) {
+            var coworkerName: String = indexMain.querySelector('header .text').textContent;
             var nameClass: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
             var employeeName: String = `${firstName} ${lastName}`;
             var userName: String = findUser();
-            if (userName === employeeName) {
-              $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
-                                              onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                          <h1 class="notification">0</h1>
-                                          <h1 class="text">${firstName} ${lastName}</h1>
-                                        </span>`);
-            } else {
-              $(coworkerFooter).append(`<span class="${nameClass}"
-                                              onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                          <h1 class="notification">0</h1>
-                                          <h1 class="text">${firstName} ${lastName}</h1>
-                                        </span>`);
+
+            switch (recall) {
+              case true:
+                if (coworkerName === employeeName) {
+                  $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                                                  onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                              <h1 class="notification">0</h1>
+                                              <h1 class="text">${firstName} ${lastName}</h1>
+                                            </span>`);
+                } else {
+                  appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                }
+                break;
+              case false:
+                if (userName === employeeName) {
+                  $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                                                  onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                              <h1 class="notification">0</h1>
+                                              <h1 class="text">${firstName} ${lastName}</h1>
+                                            </span>`);
+                } else {
+                  appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                }
+                break;
             }
           }
         }
@@ -375,18 +395,19 @@ export namespace DataRead {
           let coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
           buildHeader(userDepartment);
 
-          let recallEvents = (coworkerButtons: HTMLCollection) => {
+          let recall = (coworkerButtons: HTMLCollection) => {
             $(coworkerButtons).on('click', () => {
+              indexSidebar.style.display = 'none';
               new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
             });
           };
           $(departmentSelect).on('change', () => {
-            buildFooter(departmentSelect.selectedOptions[0].value);
+            buildFooter(departmentSelect.selectedOptions[0].value, true);
 
             var coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
-            recallEvents(coworkerButtons);
+            recall(coworkerButtons);
           });
-          recallEvents(coworkerButtons);
+          recall(coworkerButtons);
           break;
         case 'default-sidebar':
           break;

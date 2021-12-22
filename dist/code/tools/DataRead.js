@@ -179,6 +179,9 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var departmentsData = indexData.querySelector('#departments-data');
                 var employeesData = indexData.querySelector('#employees-data');
                 var ticketsData = indexData.querySelector('#tickets-data');
+                function appendCoworker(coworkerFooter, nameClass, firstName, lastName) {
+                    $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                        onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                    <h1 class=\"notification\">0</h1>\n                                    <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                  </span>"));
+                }
                 function buildHeader(userDepartment) {
                     departmentSelect.innerHTML = '';
                     var departmentsTotal = departmentsData.children.length;
@@ -195,9 +198,9 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         }
                         departmentSelect.append(option);
                     }
-                    buildFooter(departmentSelect.selectedOptions[0].value);
+                    buildFooter(departmentSelect.selectedOptions[0].value, false);
                 }
-                function buildFooter(selectedDepartment) {
+                function buildFooter(selectedDepartment, recall) {
                     coworkerFooter.innerHTML = '';
                     var employeesTotal = employeesData.children.length;
                     for (var i = 0; i < employeesTotal; i++) {
@@ -208,14 +211,27 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         var occupation = get(i, 'occupation');
                         var role = get(i, 'role');
                         if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                            var coworkerName = indexMain.querySelector('header .text').textContent;
                             var nameClass = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
                             var employeeName = "".concat(firstName, " ").concat(lastName);
                             var userName = findUser();
-                            if (userName === employeeName) {
-                                $(coworkerFooter).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                              onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                          <h1 class=\"notification\">0</h1>\n                                          <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                        </span>"));
-                            }
-                            else {
-                                $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                              onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                          <h1 class=\"notification\">0</h1>\n                                          <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                        </span>"));
+                            switch (recall) {
+                                case true:
+                                    if (coworkerName === employeeName) {
+                                        $(coworkerFooter).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                                  onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
+                                    }
+                                    else {
+                                        appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                                    }
+                                    break;
+                                case false:
+                                    if (userName === employeeName) {
+                                        $(coworkerFooter).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                                  onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
+                                    }
+                                    else {
+                                        appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -226,17 +242,18 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         var userDepartment = findDepartment(userName);
                         var coworkerButtons = coworkerFooter.getElementsByTagName('span');
                         buildHeader(userDepartment);
-                        var recallEvents_1 = function (coworkerButtons) {
+                        var recall_1 = function (coworkerButtons) {
                             $(coworkerButtons).on('click', function () {
+                                indexSidebar.style.display = 'none';
                                 new GetEvent_1.GetEvent.forPage('coworker-main', GetPath_1.GetPath.forHTML('main'));
                             });
                         };
                         $(departmentSelect).on('change', function () {
-                            buildFooter(departmentSelect.selectedOptions[0].value);
+                            buildFooter(departmentSelect.selectedOptions[0].value, true);
                             var coworkerButtons = coworkerFooter.getElementsByTagName('span');
-                            recallEvents_1(coworkerButtons);
+                            recall_1(coworkerButtons);
                         });
-                        recallEvents_1(coworkerButtons);
+                        recall_1(coworkerButtons);
                         break;
                     case 'default-sidebar':
                         break;

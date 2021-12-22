@@ -18,11 +18,7 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace DefaultBody {
   export class initiateEvents {
     constructor() {
-      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
-      new GetEvent.forPage('default-data', GetPath.forHTML('data'));
-
-      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      // Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
       let userSelect: HTMLSelectElement = document.querySelector('#user-form select');
 
@@ -36,8 +32,7 @@ export namespace DefaultBody {
       let defaultOverlay: HTMLElement = document.querySelector('.default-overlay');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
-
-      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      // Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function findRole(userName: String) {
         let employeesData: HTMLDivElement = document.querySelector('.default-data #employees-data');
         let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
@@ -81,13 +76,17 @@ export namespace DefaultBody {
         }
       }
 
-      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      // Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
+      new GetEvent.forPage('default-data', GetPath.forHTML('data'));
+
+      // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(userSelect).on('change', () => {
         let userName: String = userSelect.selectedOptions[0].textContent;
         refreshMain(findRole(userName));
       });
 
-      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      // Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       /*--► console.log('--DefaultBody.js Loaded'); ◄--*/
     }
   }

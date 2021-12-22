@@ -16,8 +16,27 @@ import { UseValufy } from 'code/tools/UseValufy';
 
 //--|►| Main (Log a Ticket) |◄|--//
 export namespace Start {
+  // Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+  const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+
+  const indexHeader: HTMLElement = document.querySelector('#index-header');
+
+  const indexMain: HTMLElement = document.querySelector('#index-main');
+
+  const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+  const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
+  const indexData: HTMLElement = document.querySelector('#index-data');
+
+  // Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+
+  // Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
   new GetEvent.forPage('default-body', GetPath.forHTML('body'));
   new GetEvent.forPage('default-header', GetPath.forHTML('header'));
+
+  // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+  // Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
 
   /*--► console.log('--main.js Loaded'); ◄--*/
 }
