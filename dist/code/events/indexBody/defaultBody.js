@@ -6,8 +6,6 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
     (function (DefaultBody) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                new GetEvent_1.GetEvent.forPage('default-overlay', GetPath_1.GetPath.forHTML('overlay'));
-                new GetEvent_1.GetEvent.forPage('default-data', GetPath_1.GetPath.forHTML('data'));
                 var indexBody = document.querySelector('#index-body');
                 var userSelect = document.querySelector('#user-form select');
                 var indexHeader = document.querySelector('#index-header');
@@ -53,6 +51,8 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
                             break;
                     }
                 }
+                new GetEvent_1.GetEvent.forPage('default-overlay', GetPath_1.GetPath.forHTML('overlay'));
+                new GetEvent_1.GetEvent.forPage('default-data', GetPath_1.GetPath.forHTML('data'));
                 $(userSelect).on('change', function () {
                     var userName = userSelect.selectedOptions[0].textContent;
                     refreshMain(findRole(userName));

@@ -6,9 +6,9 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
     (function (EmployeesSidebar) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                new DataRead_1.DataRead.forSidebar('employees-sidebar');
                 var closeEmployees = document.querySelector('#close-employees');
                 var indexSidebar = document.querySelector('#index-sidebar');
+                new DataRead_1.DataRead.forSidebar('employees-sidebar');
                 $(closeEmployees).on('click', function () {
                     indexSidebar.style.display = 'none';
                 });
