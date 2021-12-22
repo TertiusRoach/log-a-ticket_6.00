@@ -285,40 +285,41 @@ export namespace DataRead {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+      let userTotal: Number = userSelect.getElementsByTagName('option').length;
+
       const indexHeader: HTMLElement = document.querySelector('#index-header');
+
       const indexMain: HTMLElement = document.querySelector('#index-main');
+
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
+      /* Events ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
         case 'coworkers-sidebar':
-          /* Body ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-          let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
-          let userTotal: Number = userSelect.getElementsByTagName('option').length;
+          /* Declarations ▼ =-=-=-=-=-=-=-=-=-= ◄ */
+          let userName = findUser();
+          let userDepartment = findDepartment(userName);
 
-          /* Header ▼ =-=-=-=-=-=-=-=-=-=- ◄ */
-
-          /* Main ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-
-          /* Overlay ▼ =-=-=-=-=-=-=-=-=-= ◄ */
-
-          /* Sidebar ▼ =-=-=-=-=-=-=-=-=-= ◄ */
           let coworkerHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
-          let coworkerFooter: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers footer');
+          let coworkerFooter: HTMLElement = indexSidebar.querySelector('#view-coworkers footer');
           let departmentSelect: HTMLSelectElement = indexSidebar.querySelector('#department-form select');
-          let coworkerDepartment: HTMLOptionElement = departmentSelect.selectedOptions[0];
 
-          /* Data ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
           let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
-          let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
 
-          let appendCoworker = (coworkerFooter: HTMLSelectElement, nameClass: String, firstName: String, lastName: String) => {
+          /* Functions ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          let appendCoworker = (coworkerFooter: HTMLElement, nameClass: String, firstName: String, lastName: String) => {
             $(coworkerFooter).append(`<span class="${nameClass}"
                                             onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
                                         <h1 class="notification">0</h1>
@@ -398,8 +399,6 @@ export namespace DataRead {
             buildCoworkers(departmentSelect.selectedOptions[0].value, false);
           };
 
-          let userName = findUser();
-          let userDepartment = findDepartment(userName);
           let coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
           buildDropdown(userDepartment);
 
@@ -420,6 +419,24 @@ export namespace DataRead {
         case 'default-sidebar':
           break;
         case 'employees-sidebar':
+          /* Body ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+          let userTotal: Number = userSelect.getElementsByTagName('option').length;
+          /* Header ▼ =-=-=-=-=-=-=-=-=-=- ◄ */
+          /* Main ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          /* Overlay ▼ =-=-=-=-=-=-=-=-=-= ◄ */
+          /* Sidebar ▼ =-=-=-=-=-=-=-=-=-= ◄ */
+          // let employeeHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
+          // let employeeFooter: HTMLSelectElement = indexSidebar.querySelector('#view-employees footer');
+
+          /* Data ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          // let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
+          // let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
+          // let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
+
+          let appendEmployee = () => {};
+          let buildEmployees = () => {};
+          let buildHeader = () => {};
           break;
       }
     }
