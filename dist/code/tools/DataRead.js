@@ -165,92 +165,92 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
         var forSidebar = (function () {
             function forSidebar(page) {
                 var indexBody = document.querySelector('#index-body');
-                var userSelect = indexBody.querySelector('#user-form select');
-                var userTotal = userSelect.getElementsByTagName('option').length;
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
-                var coworkerHeader = indexSidebar.querySelector('#view-coworkers header');
-                var coworkerFooter = indexSidebar.querySelector('#view-coworkers footer');
-                var departmentSelect = indexSidebar.querySelector('#department-form select');
-                var selectedDepartment = departmentSelect.selectedOptions[0];
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
-                var departmentsData = indexData.querySelector('#departments-data');
-                var employeesData = indexData.querySelector('#employees-data');
-                var ticketsData = indexData.querySelector('#tickets-data');
-                function appendCoworker(coworkerFooter, nameClass, firstName, lastName) {
-                    $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                        onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                    <h1 class=\"notification\">0</h1>\n                                    <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                  </span>"));
-                }
-                function buildHeader(userDepartment) {
-                    departmentSelect.innerHTML = '';
-                    var departmentsTotal = departmentsData.children.length;
-                    for (var i = 0; i < departmentsTotal; i++) {
-                        var department = "".concat(departmentsData.children[i].id);
-                        var option = document.createElement('option');
-                        option.value = UseValufy_1.UseValufy.forString(department);
-                        option.textContent = UseCapify_1.UseCapify.forString(' ', department);
-                        if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
-                            option.selected = true;
-                        }
-                        else {
-                            option.selected = false;
-                        }
-                        departmentSelect.append(option);
-                    }
-                    buildFooter(departmentSelect.selectedOptions[0].value, false);
-                }
-                function buildFooter(selectedDepartment, recall) {
-                    coworkerFooter.innerHTML = '';
-                    var employeesTotal = employeesData.children.length;
-                    for (var i = 0; i < employeesTotal; i++) {
-                        var firstName = get(i, 'first-name');
-                        var middleName = get(i, 'middle-name');
-                        var lastName = get(i, 'last-name');
-                        var department = get(i, 'department');
-                        var occupation = get(i, 'occupation');
-                        var role = get(i, 'role');
-                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
-                            var coworkerName = indexMain.querySelector('header .text').textContent;
-                            var nameClass = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
-                            var employeeName = "".concat(firstName, " ").concat(lastName);
-                            var userName = findUser();
-                            switch (recall) {
-                                case true:
-                                    if (coworkerName === employeeName) {
-                                        $(coworkerFooter).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                                  onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
-                                    }
-                                    else {
-                                        appendCoworker(coworkerFooter, nameClass, firstName, lastName);
-                                    }
-                                    break;
-                                case false:
-                                    if (userName === employeeName) {
-                                        $(coworkerFooter).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                                  onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
-                                    }
-                                    else {
-                                        appendCoworker(coworkerFooter, nameClass, firstName, lastName);
-                                    }
-                                    break;
-                            }
-                        }
-                    }
-                }
                 switch (page) {
                     case 'coworkers-sidebar':
+                        var userSelect = indexBody.querySelector('#user-form select');
+                        var userTotal = userSelect.getElementsByTagName('option').length;
+                        var coworkerHeader = indexSidebar.querySelector('#view-coworkers header');
+                        var coworkerFooter_1 = indexSidebar.querySelector('#view-coworkers footer');
+                        var departmentSelect_1 = indexSidebar.querySelector('#department-form select');
+                        var coworkerDepartment = departmentSelect_1.selectedOptions[0];
+                        var departmentsData_1 = indexData.querySelector('#departments-data');
+                        var employeesData_1 = indexData.querySelector('#employees-data');
+                        var ticketsData = indexData.querySelector('#tickets-data');
+                        var appendCoworker_1 = function (coworkerFooter, nameClass, firstName, lastName) {
+                            $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                            onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                        <h1 class=\"notification\">0</h1>\n                                        <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                      </span>"));
+                        };
+                        var buildCoworkers_1 = function (selectedDepartment, recall) {
+                            coworkerFooter_1.innerHTML = '';
+                            var employeesTotal = employeesData_1.children.length;
+                            for (var i = 0; i < employeesTotal; i++) {
+                                var firstName = get(i, 'first-name');
+                                var middleName = get(i, 'middle-name');
+                                var lastName = get(i, 'last-name');
+                                var department = get(i, 'department');
+                                var occupation = get(i, 'occupation');
+                                var role = get(i, 'role');
+                                if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                                    var coworkerName = indexMain.querySelector('header .text').textContent;
+                                    var nameClass = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                                    var employeeName = "".concat(firstName, " ").concat(lastName);
+                                    var userName = findUser();
+                                    switch (recall) {
+                                        case true:
+                                            if (coworkerName === employeeName) {
+                                                $(coworkerFooter_1).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">0</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
+                                            }
+                                            else {
+                                                appendCoworker_1(coworkerFooter_1, nameClass, firstName, lastName);
+                                            }
+                                            break;
+                                        case false:
+                                            if (userName === employeeName) {
+                                                $(coworkerFooter_1).append("<span class=\"".concat(nameClass, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">0</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
+                                            }
+                                            else {
+                                                appendCoworker_1(coworkerFooter_1, nameClass, firstName, lastName);
+                                            }
+                                            break;
+                                    }
+                                }
+                            }
+                        };
+                        var buildDropdown = function (userDepartment) {
+                            departmentSelect_1.innerHTML = '';
+                            var departmentsTotal = departmentsData_1.children.length;
+                            for (var i = 0; i < departmentsTotal; i++) {
+                                var department = "".concat(departmentsData_1.children[i].id);
+                                var option = document.createElement('option');
+                                option.value = UseValufy_1.UseValufy.forString(department);
+                                option.textContent = UseCapify_1.UseCapify.forString(' ', department);
+                                if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
+                                    option.selected = true;
+                                }
+                                else {
+                                    option.selected = false;
+                                }
+                                departmentSelect_1.append(option);
+                            }
+                            buildCoworkers_1(departmentSelect_1.selectedOptions[0].value, false);
+                        };
                         var userName = findUser();
                         var userDepartment = findDepartment(userName);
-                        var coworkerButtons = coworkerFooter.getElementsByTagName('span');
-                        buildHeader(userDepartment);
+                        var coworkerButtons = coworkerFooter_1.getElementsByTagName('span');
+                        buildDropdown(userDepartment);
                         var recall_1 = function (coworkerButtons) {
                             $(coworkerButtons).on('click', function () {
                                 indexSidebar.style.display = 'none';
                                 new GetEvent_1.GetEvent.forPage('coworker-main', GetPath_1.GetPath.forHTML('main'));
                             });
                         };
-                        $(departmentSelect).on('change', function () {
-                            buildFooter(departmentSelect.selectedOptions[0].value, true);
-                            var coworkerButtons = coworkerFooter.getElementsByTagName('span');
+                        $(departmentSelect_1).on('change', function () {
+                            buildCoworkers_1(departmentSelect_1.selectedOptions[0].value, true);
+                            var coworkerButtons = coworkerFooter_1.getElementsByTagName('span');
                             recall_1(coworkerButtons);
                         });
                         recall_1(coworkerButtons);
