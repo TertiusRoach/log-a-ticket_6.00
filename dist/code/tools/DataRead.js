@@ -165,6 +165,8 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
         var forSidebar = (function () {
             function forSidebar(page) {
                 var indexBody = document.querySelector('#index-body');
+                var userSelect = indexBody.querySelector('#user-form select');
+                var userTotal = userSelect.getElementsByTagName('option').length;
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
@@ -172,15 +174,13 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var indexData = document.querySelector('#index-data');
                 switch (page) {
                     case 'coworkers-sidebar':
-                        var userSelect = indexBody.querySelector('#user-form select');
-                        var userTotal = userSelect.getElementsByTagName('option').length;
+                        var userName = findUser();
+                        var userDepartment = findDepartment(userName);
                         var coworkerHeader = indexSidebar.querySelector('#view-coworkers header');
                         var coworkerFooter_1 = indexSidebar.querySelector('#view-coworkers footer');
                         var departmentSelect_1 = indexSidebar.querySelector('#department-form select');
-                        var coworkerDepartment = departmentSelect_1.selectedOptions[0];
                         var departmentsData_1 = indexData.querySelector('#departments-data');
                         var employeesData_1 = indexData.querySelector('#employees-data');
-                        var ticketsData = indexData.querySelector('#tickets-data');
                         var appendCoworker_1 = function (coworkerFooter, nameClass, firstName, lastName) {
                             $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                            onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                        <h1 class=\"notification\">0</h1>\n                                        <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                      </span>"));
                         };
@@ -238,8 +238,6 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                             }
                             buildCoworkers_1(departmentSelect_1.selectedOptions[0].value, false);
                         };
-                        var userName = findUser();
-                        var userDepartment = findDepartment(userName);
                         var coworkerButtons = coworkerFooter_1.getElementsByTagName('span');
                         buildDropdown(userDepartment);
                         var recall_1 = function (coworkerButtons) {
@@ -258,6 +256,11 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                     case 'default-sidebar':
                         break;
                     case 'employees-sidebar':
+                        var userSelect_1 = indexBody.querySelector('#user-form select');
+                        var userTotal_1 = userSelect_1.getElementsByTagName('option').length;
+                        var appendEmployee = function () { };
+                        var buildEmployees = function () { };
+                        var buildHeader = function () { };
                         break;
                 }
             }
