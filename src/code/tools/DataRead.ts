@@ -282,118 +282,126 @@ export namespace DataRead {
   }
   export class forSidebar {
     constructor(page: 'coworkers-sidebar' | 'default-sidebar' | 'employees-sidebar') {
-      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
-      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
-      let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
-      let userTotal: Number = userSelect.getElementsByTagName('option').length;
-
       const indexHeader: HTMLElement = document.querySelector('#index-header');
-
       const indexMain: HTMLElement = document.querySelector('#index-main');
-
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
-      let coworkerHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
-      let coworkerFooter: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers footer');
-      let departmentSelect: HTMLSelectElement = indexSidebar.querySelector('#department-form select');
-      let selectedDepartment: HTMLOptionElement = departmentSelect.selectedOptions[0];
-
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
-
       const indexData: HTMLElement = document.querySelector('#index-data');
-      let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
-      let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
-      let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
 
-      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      function appendCoworker(coworkerFooter: HTMLSelectElement, nameClass: String, firstName: String, lastName: String) {
-        $(coworkerFooter).append(`<span class="${nameClass}"
-                                        onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                    <h1 class="notification">0</h1>
-                                    <h1 class="text">${firstName} ${lastName}</h1>
-                                  </span>`);
-      }
-      function buildHeader(userDepartment: String) {
-        departmentSelect.innerHTML = '';
-
-        let departmentsTotal = departmentsData.children.length;
-        for (let i = 0; i < departmentsTotal; i++) {
-          let department: String = `${departmentsData.children[i].id}`;
-          let option = document.createElement('option');
-          option.value = UseValufy.forString(department);
-          option.textContent = UseCapify.forString(' ', department);
-          if (userDepartment === UseCapify.forString(' ', department)) {
-            option.selected = true;
-          } else {
-            option.selected = false;
-          }
-          departmentSelect.append(option);
-        }
-        buildFooter(departmentSelect.selectedOptions[0].value, false);
-      }
-      function buildFooter(selectedDepartment: String, recall: boolean) {
-        coworkerFooter.innerHTML = '';
-
-        let employeesTotal = employeesData.children.length;
-        for (let i = 0; i < employeesTotal; i++) {
-          let firstName: String = get(i, 'first-name');
-          let middleName: String = get(i, 'middle-name');
-          /*
-          let middleName: String;
-          switch (get(i, 'middle-name')) {
-            case `${undefined}`:
-              middleName = ' ';
-            default:
-              middleName = ` ${get(i, 'middle-name')} `;
-          }
-          */
-          let lastName: String = get(i, 'last-name');
-          let department: String = get(i, 'department');
-          let occupation: String = get(i, 'occupation');
-          let role: String = get(i, 'role');
-
-          if (UseValufy.forString(department) === `${selectedDepartment}`) {
-            var coworkerName: String = indexMain.querySelector('header .text').textContent;
-            var nameClass: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
-            var employeeName: String = `${firstName} ${lastName}`;
-            var userName: String = findUser();
-
-            switch (recall) {
-              case true:
-                if (coworkerName === employeeName) {
-                  $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
-                                                  onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                              <h1 class="notification">0</h1>
-                                              <h1 class="text">${firstName} ${lastName}</h1>
-                                            </span>`);
-                } else {
-                  appendCoworker(coworkerFooter, nameClass, firstName, lastName);
-                }
-                break;
-              case false:
-                if (userName === employeeName) {
-                  $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
-                                                  onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                              <h1 class="notification">0</h1>
-                                              <h1 class="text">${firstName} ${lastName}</h1>
-                                            </span>`);
-                } else {
-                  appendCoworker(coworkerFooter, nameClass, firstName, lastName);
-                }
-                break;
-            }
-          }
-        }
-      }
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
         case 'coworkers-sidebar':
+          /* Body ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+          let userTotal: Number = userSelect.getElementsByTagName('option').length;
+
+          /* Header ▼ =-=-=-=-=-=-=-=-=-=- ◄ */
+
+          /* Main ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+
+          /* Overlay ▼ =-=-=-=-=-=-=-=-=-= ◄ */
+
+          /* Sidebar ▼ =-=-=-=-=-=-=-=-=-= ◄ */
+          let coworkerHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
+          let coworkerFooter: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers footer');
+          let departmentSelect: HTMLSelectElement = indexSidebar.querySelector('#department-form select');
+          let coworkerDepartment: HTMLOptionElement = departmentSelect.selectedOptions[0];
+
+          /* Data ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
+          let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
+          let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
+
+          let appendCoworker = (coworkerFooter: HTMLSelectElement, nameClass: String, firstName: String, lastName: String) => {
+            $(coworkerFooter).append(`<span class="${nameClass}"
+                                            onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                        <h1 class="notification">0</h1>
+                                        <h1 class="text">${firstName} ${lastName}</h1>
+                                      </span>`);
+          };
+          let buildCoworkers = (selectedDepartment: String, recall: boolean) => {
+            coworkerFooter.innerHTML = '';
+
+            let employeesTotal = employeesData.children.length;
+            for (let i = 0; i < employeesTotal; i++) {
+              let firstName: String = get(i, 'first-name');
+              let middleName: String = get(i, 'middle-name');
+              /*
+              let middleName: String;
+              switch (get(i, 'middle-name')) {
+                case `${undefined}`:
+                  middleName = ' ';
+                default:
+                  middleName = ` ${get(i, 'middle-name')} `;
+              }
+              */
+              let lastName: String = get(i, 'last-name');
+              let department: String = get(i, 'department');
+              let occupation: String = get(i, 'occupation');
+              let role: String = get(i, 'role');
+
+              if (UseValufy.forString(department) === `${selectedDepartment}`) {
+                var coworkerName: String = indexMain.querySelector('header .text').textContent;
+                var nameClass: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
+                var employeeName: String = `${firstName} ${lastName}`;
+                var userName: String = findUser();
+
+                switch (recall) {
+                  case true:
+                    if (coworkerName === employeeName) {
+                      $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                                                      onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                                  <h1 class="notification">0</h1>
+                                                  <h1 class="text">${firstName} ${lastName}</h1>
+                                                </span>`);
+                    } else {
+                      appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                    }
+                    break;
+                  case false:
+                    if (userName === employeeName) {
+                      $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                                                      onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                                  <h1 class="notification">0</h1>
+                                                  <h1 class="text">${firstName} ${lastName}</h1>
+                                                </span>`);
+                    } else {
+                      appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                    }
+                    break;
+                }
+              }
+            }
+          };
+          let buildDropdown = (userDepartment: String) => {
+            departmentSelect.innerHTML = '';
+
+            let departmentsTotal = departmentsData.children.length;
+            for (let i = 0; i < departmentsTotal; i++) {
+              let department: String = `${departmentsData.children[i].id}`;
+              let option = document.createElement('option');
+              option.value = UseValufy.forString(department);
+              option.textContent = UseCapify.forString(' ', department);
+              if (userDepartment === UseCapify.forString(' ', department)) {
+                option.selected = true;
+              } else {
+                option.selected = false;
+              }
+              departmentSelect.append(option);
+            }
+            buildCoworkers(departmentSelect.selectedOptions[0].value, false);
+          };
+
           let userName = findUser();
           let userDepartment = findDepartment(userName);
           let coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
-          buildHeader(userDepartment);
+          buildDropdown(userDepartment);
 
           let recall = (coworkerButtons: HTMLCollection) => {
             $(coworkerButtons).on('click', () => {
@@ -402,7 +410,7 @@ export namespace DataRead {
             });
           };
           $(departmentSelect).on('change', () => {
-            buildFooter(departmentSelect.selectedOptions[0].value, true);
+            buildCoworkers(departmentSelect.selectedOptions[0].value, true);
 
             var coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
             recall(coworkerButtons);
