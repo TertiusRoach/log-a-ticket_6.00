@@ -6,6 +6,7 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
     (function (CoworkersSidebar) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forSidebar('coworkers-sidebar');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
@@ -14,7 +15,6 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
                 var departmentSelect = document.querySelector('#department-form select');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
-                new DataRead_1.DataRead.forSidebar('coworkers-sidebar');
                 $(closeCoworkers).on('click', function () {
                     indexSidebar.style.display = 'none';
                 });

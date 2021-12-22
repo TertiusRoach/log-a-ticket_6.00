@@ -20,6 +20,13 @@ export namespace ManageMain {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      const indexData: HTMLElement = document.querySelector('#index-data');
+
       const loggedButton: HTMLElement = document.querySelector('#logged-tickets button');
       const manageButton: HTMLElement = document.querySelector('#manage-tickets button');
 

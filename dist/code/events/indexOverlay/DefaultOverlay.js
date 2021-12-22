@@ -79,8 +79,8 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
                 }
                 $(managerButton)
                     .on('mouseenter', function () {
-                    new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
                     buildEmployees(selectUser('Manager'));
                     highlightButton('manager-button');
                 })
@@ -92,8 +92,8 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
                 });
                 $(employeeButton)
                     .on('mouseenter', function () {
-                    new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
                     buildEmployees(selectUser('Employee'));
                     highlightButton('employee-button');
                 })

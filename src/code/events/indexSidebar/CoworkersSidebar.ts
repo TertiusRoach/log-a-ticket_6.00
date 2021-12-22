@@ -18,6 +18,9 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace CoworkersSidebar {
   export class initiateEvents {
     constructor() {
+      // First ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+      new DataRead.forSidebar('coworkers-sidebar');
+
       // Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
@@ -36,7 +39,7 @@ export namespace CoworkersSidebar {
       // Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
 
       // Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
-      new DataRead.forSidebar('coworkers-sidebar');
+
       // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
       $(closeCoworkers).on('click', () => {
         indexSidebar.style.display = 'none';

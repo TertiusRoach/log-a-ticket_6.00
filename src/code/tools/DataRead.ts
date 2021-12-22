@@ -300,6 +300,12 @@ export namespace DataRead {
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
+      let departmentsData: HTMLDivElement;
+      let employeesData: HTMLDivElement;
+      let ticketsData: HTMLDivElement;
+      let userDepartment: String;
+      let userName: String;
+
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Events ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
@@ -308,16 +314,17 @@ export namespace DataRead {
       switch (page) {
         case 'coworkers-sidebar':
           /* Declarations ▼ =-=-=-=-=-=-=-=-=-= ◄ */
-          let userName = findUser();
-          let userDepartment = findDepartment(userName);
+          userName = findUser();
+          userDepartment = findDepartment(userName);
 
           let coworkerHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
           let coworkerFooter: HTMLElement = indexSidebar.querySelector('#view-coworkers footer');
+          let coworkerButtons: HTMLCollection;
           let departmentSelect: HTMLSelectElement = indexSidebar.querySelector('#department-form select');
 
-          let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
-          let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
-
+          departmentsData = indexData.querySelector('#departments-data');
+          employeesData = indexData.querySelector('#employees-data');
+          ticketsData = indexData.querySelector('#tickets-data');
           /* Functions ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           let appendCoworker = (coworkerFooter: HTMLElement, nameClass: String, firstName: String, lastName: String) => {
             $(coworkerFooter).append(`<span class="${nameClass}"
@@ -348,32 +355,32 @@ export namespace DataRead {
               let role: String = get(i, 'role');
 
               if (UseValufy.forString(department) === `${selectedDepartment}`) {
+                var classValue: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
                 var coworkerName: String = indexMain.querySelector('header .text').textContent;
-                var nameClass: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
                 var employeeName: String = `${firstName} ${lastName}`;
                 var userName: String = findUser();
 
                 switch (recall) {
                   case true:
                     if (coworkerName === employeeName) {
-                      $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                      $(coworkerFooter).append(`<span class="${classValue} active-colleague"
                                                       onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
                                                   <h1 class="notification">0</h1>
                                                   <h1 class="text">${firstName} ${lastName}</h1>
                                                 </span>`);
                     } else {
-                      appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                      appendCoworker(coworkerFooter, classValue, firstName, lastName);
                     }
                     break;
                   case false:
                     if (userName === employeeName) {
-                      $(coworkerFooter).append(`<span class="${nameClass} active-colleague"
+                      $(coworkerFooter).append(`<span class="${classValue} active-colleague"
                                                       onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
                                                   <h1 class="notification">0</h1>
                                                   <h1 class="text">${firstName} ${lastName}</h1>
                                                 </span>`);
                     } else {
-                      appendCoworker(coworkerFooter, nameClass, firstName, lastName);
+                      appendCoworker(coworkerFooter, classValue, firstName, lastName);
                     }
                     break;
                 }
@@ -398,45 +405,64 @@ export namespace DataRead {
             }
             buildCoworkers(departmentSelect.selectedOptions[0].value, false);
           };
+          buildDropdown(findDepartment(findUser()));
 
-          let coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
-          buildDropdown(userDepartment);
-
+          coworkerButtons = coworkerFooter.getElementsByTagName('span');
           let recall = (coworkerButtons: HTMLCollection) => {
             $(coworkerButtons).on('click', () => {
               indexSidebar.style.display = 'none';
               new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
             });
           };
+          /* Events ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           $(departmentSelect).on('change', () => {
             buildCoworkers(departmentSelect.selectedOptions[0].value, true);
 
             var coworkerButtons: HTMLCollection = coworkerFooter.getElementsByTagName('span');
             recall(coworkerButtons);
           });
+          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+
           recall(coworkerButtons);
           break;
         case 'default-sidebar':
           break;
         case 'employees-sidebar':
-          /* Body ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-          let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
-          let userTotal: Number = userSelect.getElementsByTagName('option').length;
-          /* Header ▼ =-=-=-=-=-=-=-=-=-=- ◄ */
-          /* Main ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-          /* Overlay ▼ =-=-=-=-=-=-=-=-=-= ◄ */
-          /* Sidebar ▼ =-=-=-=-=-=-=-=-=-= ◄ */
-          // let employeeHeader: HTMLSelectElement = indexSidebar.querySelector('#view-coworkers header');
-          // let employeeFooter: HTMLSelectElement = indexSidebar.querySelector('#view-employees footer');
+          /* First ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          indexSidebar.querySelector('#view-employees header span .text').textContent = `${findUser()}`;
+          indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
+          /* Function ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          let buildEmployees = () => {
+            let employeesFooter: HTMLSelectElement = indexSidebar.querySelector('#view-employees footer');
+            userDepartment = findDepartment(findUser());
+            employeesFooter.innerHTML = '';
 
-          /* Data ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-          // let departmentsData: HTMLDivElement = indexData.querySelector('#departments-data');
-          // let employeesData: HTMLDivElement = indexData.querySelector('#employees-data');
-          // let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
+            employeesData = indexData.querySelector('#employees-data');
+            let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+            for (let i = 0; i < employeesTotal; i++) {
+              let firstName: String = get(i, 'first-name');
+              let middleName: String = get(i, 'middle-name');
+              let lastName: String = get(i, 'last-name');
+              let department: String = get(i, 'department');
+              let occupation: String = get(i, 'occupation');
+              let role: String = get(i, 'role');
 
-          let appendEmployee = () => {};
-          let buildEmployees = () => {};
-          let buildHeader = () => {};
+              var classValue: String = UseValufy.forString(`${firstName} ${lastName}`);
+              if (userDepartment === department) {
+                if (`${firstName} ${lastName}` !== `${findUser()}`) {
+                  $(employeesFooter).append(`<span class="${classValue}"
+                                                  onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
+                                              <h1 class="notification">0</h1>
+                                              <h1 class="text">${firstName} ${lastName}</h1>
+                                            </span>`);
+                }
+              }
+
+              var employeesButton: HTMLSpanElement = employeesFooter.querySelector('span');
+            }
+          };
+          /* Last ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+          buildEmployees();
           break;
       }
     }
