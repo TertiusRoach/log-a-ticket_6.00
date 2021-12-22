@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, DataRead_1, GetEvent_1, GetPath_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.EmployeesSidebar = void 0;
@@ -6,9 +6,21 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
     (function (EmployeesSidebar) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                var closeEmployees = document.querySelector('#close-employees');
-                var indexSidebar = document.querySelector('#index-sidebar');
                 new DataRead_1.DataRead.forSidebar('employees-sidebar');
+                var indexBody = document.querySelector('#index-body');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var closeEmployees = indexSidebar.querySelector('#close-employees');
+                var userButton = indexSidebar.querySelector('#view-employees header span');
+                var employeeFooter = indexSidebar.querySelector('#view-employees footer');
+                var employeeButtons = employeeFooter.getElementsByTagName('span');
+                var indexOverlay = document.querySelector('#index-overlay');
+                var indexData = document.querySelector('#index-data');
+                $(employeeButtons).on('click', function () {
+                    indexSidebar.style.display = 'none';
+                    new GetEvent_1.GetEvent.forPage('colleague-main', GetPath_1.GetPath.forHTML('main'));
+                });
                 $(closeEmployees).on('click', function () {
                     indexSidebar.style.display = 'none';
                 });

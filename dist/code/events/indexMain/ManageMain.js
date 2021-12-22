@@ -6,6 +6,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
     (function (ManageMain) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                var indexBody = document.querySelector('#index-body');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
+                var indexData = document.querySelector('#index-data');
                 var loggedButton = document.querySelector('#logged-tickets button');
                 var manageButton = document.querySelector('#manage-tickets button');
                 var openUser = document.querySelector('#open-employees');
