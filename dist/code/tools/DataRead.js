@@ -203,12 +203,16 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                                 var role = get(i, 'role');
                                 if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
                                     var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
-                                    var coworkerName = indexMain.querySelector('header .text').textContent;
-                                    var employeeName = "".concat(firstName, " ").concat(lastName);
+                                    var mainHeader = indexMain.getElementsByTagName('header');
+                                    var activeName;
+                                    if (typeof mainHeader[0] !== "".concat(undefined)) {
+                                        activeName = mainHeader[0].lastChild.textContent;
+                                    }
+                                    var indexName = "".concat(firstName, " ").concat(lastName);
                                     var userName = findUser();
                                     switch (recall) {
                                         case true:
-                                            if (coworkerName === employeeName) {
+                                            if (activeName === indexName) {
                                                 $(coworkerFooter_1).append("<span class=\"".concat(classValue, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">0</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
                                             }
                                             else {
@@ -216,7 +220,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                                             }
                                             break;
                                         case false:
-                                            if (userName === employeeName) {
+                                            if (userName === indexName) {
                                                 $(coworkerFooter_1).append("<span class=\"".concat(classValue, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">0</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
                                             }
                                             else {

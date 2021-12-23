@@ -356,13 +356,17 @@ export namespace DataRead {
 
               if (UseValufy.forString(department) === `${selectedDepartment}`) {
                 var classValue: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
-                var coworkerName: String = indexMain.querySelector('header .text').textContent;
-                var employeeName: String = `${firstName} ${lastName}`;
+                var mainHeader: HTMLCollection = indexMain.getElementsByTagName('header');
+                var activeName: String;
+                if (typeof mainHeader[0] !== `${undefined}`) {
+                  activeName = mainHeader[0].lastChild.textContent;
+                }
+                var indexName: String = `${firstName} ${lastName}`;
                 var userName: String = findUser();
 
                 switch (recall) {
                   case true:
-                    if (coworkerName === employeeName) {
+                    if (activeName === indexName) {
                       $(coworkerFooter).append(`<span class="${classValue} active-colleague"
                                                       onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
                                                   <h1 class="notification">0</h1>
@@ -373,7 +377,7 @@ export namespace DataRead {
                     }
                     break;
                   case false:
-                    if (userName === employeeName) {
+                    if (userName === indexName) {
                       $(coworkerFooter).append(`<span class="${classValue} active-colleague"
                                                       onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
                                                   <h1 class="notification">0</h1>
