@@ -30,8 +30,9 @@ export namespace EmployeesSidebar {
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
       let closeEmployees: HTMLElement = indexSidebar.querySelector('#close-employees');
-
+      let activeColleague: HTMLElement = indexSidebar.querySelector('.active-colleague');
       let userButton: HTMLElement = indexSidebar.querySelector('#view-employees header span');
+      let employeeHeader: HTMLElement = indexSidebar.querySelector('#view-employees header');
       let employeeFooter: HTMLElement = indexSidebar.querySelector('#view-employees footer');
       let employeeButtons: HTMLCollection = employeeFooter.getElementsByTagName('span');
 
@@ -44,8 +45,19 @@ export namespace EmployeesSidebar {
       // Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(employeeButtons).on('click', () => {
+
+      $(employeeHeader).on('click', () => {
+        /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
         indexSidebar.style.display = 'none';
+
+        /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+        new GetEvent.forPage('user-main', GetPath.forHTML('main'));
+      });
+      $(employeeButtons).on('click', () => {
+        /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+        indexSidebar.style.display = 'none';
+
+        /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
         new GetEvent.forPage('colleague-main', GetPath.forHTML('main'));
       });
       $(closeEmployees).on('click', () => {

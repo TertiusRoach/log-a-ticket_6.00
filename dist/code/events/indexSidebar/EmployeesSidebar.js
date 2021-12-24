@@ -12,11 +12,17 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var closeEmployees = indexSidebar.querySelector('#close-employees');
+                var activeColleague = indexSidebar.querySelector('.active-colleague');
                 var userButton = indexSidebar.querySelector('#view-employees header span');
+                var employeeHeader = indexSidebar.querySelector('#view-employees header');
                 var employeeFooter = indexSidebar.querySelector('#view-employees footer');
                 var employeeButtons = employeeFooter.getElementsByTagName('span');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
+                $(employeeHeader).on('click', function () {
+                    indexSidebar.style.display = 'none';
+                    new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
+                });
                 $(employeeButtons).on('click', function () {
                     indexSidebar.style.display = 'none';
                     new GetEvent_1.GetEvent.forPage('colleague-main', GetPath_1.GetPath.forHTML('main'));
