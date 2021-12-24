@@ -50,7 +50,6 @@ export namespace DefaultHeader {
         new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
         new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
       });
-
       /*--► console.log('--DefaultHeader.js Loaded'); ◄--*/
     }
   }

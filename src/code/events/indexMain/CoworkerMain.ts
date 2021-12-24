@@ -24,16 +24,15 @@ export namespace CoworkerMain {
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      const mainHeader: HTMLElement = indexMain.querySelector('#coworker-header');
+      let mainHeader: HTMLElement = indexMain.querySelector('#coworker-header');
       let openCoworkers: HTMLElement = indexMain.querySelector('#open-coworkers');
-
       let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
       let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
       let activeColleague: HTMLElement = indexSidebar.querySelector('.active-colleague .text');
       mainHeader.innerHTML = `<span class="notification">
-                                <h2 style="background: #08870c">0</h2>
+                                <h2 style="background: #08870c">${0}</h2>
                               </span>
                               <h1 class="text ${UseValufy.forString(activeColleague.innerText)}">${activeColleague.innerText}</h1>`;
 
@@ -47,6 +46,7 @@ export namespace CoworkerMain {
       new DataRead.forMain('coworker-main', 'resolved');
 
       // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+
       $(openCoworkers).on('click', () => {
         indexSidebar.style.display = 'grid';
       });

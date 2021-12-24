@@ -15,7 +15,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/UseValufy"], fu
                 var deletedTab = indexMain.querySelector('#deleted-tab');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var activeColleague = indexSidebar.querySelector('.active-colleague .text');
-                mainHeader.innerHTML = "<span class=\"notification\">\n                                <h2 style=\"background: #08870c\">0</h2>\n                              </span>\n                              <h1 class=\"text ".concat(UseValufy_1.UseValufy.forString(activeColleague.innerText), "\">").concat(activeColleague.innerText, "</h1>");
+                mainHeader.innerHTML = "<span class=\"notification\">\n                                <h2 style=\"background: #08870c\">".concat(0, "</h2>\n                              </span>\n                              <h1 class=\"text ").concat(UseValufy_1.UseValufy.forString(activeColleague.innerText), "\">").concat(activeColleague.innerText, "</h1>");
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
                 new DataRead_1.DataRead.forMain('coworker-main', 'resolved');

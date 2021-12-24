@@ -82,7 +82,10 @@ export namespace DefaultBody {
 
       // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(userSelect).on('change', () => {
-        let userName: String = userSelect.selectedOptions[0].textContent;
+        indexSidebar.style.display = 'none';
+
+        var userName: String = userSelect.selectedOptions[0].textContent;
+
         refreshMain(findRole(userName));
       });
 

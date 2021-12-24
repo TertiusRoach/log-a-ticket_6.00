@@ -54,9 +54,56 @@ export namespace DataRead {
       clearTickets(ticketsMain, status);
       switch (page) {
         case 'colleague-main':
+          let activeColleague = document.querySelector('#colleague-name').textContent;
+          for (let i = 0; i < ticketsTotal; i++) {
+            const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
+            let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
+            let ticketRating: String = ticketInfo.children[1].textContent;
+            let subjectText: String = ticketInfo.children[2].textContent;
+            let descriptionText: String = ticketInfo.children[3].textContent;
+            let senderName: String = ticketInfo.children[4].textContent;
+            let senderDepartment: String = ticketInfo.children[5].textContent;
+            let receiverName: String = ticketInfo.children[6].textContent;
+            let receiverDepartment: String = ticketInfo.children[7].textContent;
+            let dateShort: String = ticketInfo.children[8].textContent;
+            let datePending: String = ticketInfo.children[9].textContent;
+            let dateAssigned: String = ticketInfo.children[10].textContent;
+            let dateResolved: String = ticketInfo.children[11].textContent;
+            let noteResolved: String = ticketInfo.children[12].textContent;
+            let dateDeleted: String = ticketInfo.children[13].textContent;
+            let noteDeleted: String = ticketInfo.children[14].textContent;
+            if (receiverName === activeColleague && ticketStatus === status) {
+              //--▼ Colleague Main ▼--//
+              $(ticketsMain).append(
+                `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
+                  <p class="shortdate">${dateShort}</p>
+                  <p class="subject">${subjectText}</p>
+                  <p class="sender">${senderName}</p>
+                  
+                  <div style="display: none">
+                    <p class="ticket-status">${ticketStatus}</p>
+                    <p class="ticket-rating">${ticketRating}</p>
+                    <p class="subject-text">${subjectText}</p>
+                    <p class="description-text">${descriptionText}</p>
+                    <p class="sender-name">${senderName}</p>
+                    <p class="sender-department">${senderDepartment}</p>
+                    <p class="receiver-name">${receiverName}</p>
+                    <p class="receiver-department">${receiverDepartment}</p>
+                    <p class="date-short">${dateShort}</p>
+                    <p class="date-pending">${datePending}</p>
+                    <p class="date-assigned">${dateAssigned}</p>
+                    <p class="date-resolved">${dateResolved}</p>
+                    <p class="note-resolved">${noteResolved}</p>
+                    <p class="date-deleted">${dateDeleted}</p>
+                    <p class="note-deleted">${noteDeleted}</p>
+                  </div>
+                </article>`
+              );
+            }
+          }
           break;
         case 'coworker-main':
-          let activeEmployee = document.querySelector('#coworker-header').lastChild.textContent;
+          let activeCoworker = document.querySelector('#coworker-header').lastChild.textContent;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -84,7 +131,7 @@ export namespace DataRead {
               }
             };
 
-            if (senderName === activeEmployee && ticketStatus === status) {
+            if (senderName === activeCoworker && ticketStatus === status) {
               //--▼ Coworker Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -285,7 +332,6 @@ export namespace DataRead {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
-
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
       let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
       let userTotal: Number = userSelect.getElementsByTagName('option').length;
@@ -466,6 +512,7 @@ export namespace DataRead {
             }
           };
           /* Last ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
+
           buildEmployees();
           break;
       }
