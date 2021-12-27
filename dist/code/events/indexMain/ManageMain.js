@@ -6,23 +6,29 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
     (function (ManageMain) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forMain('manage-main', 'pending');
                 var indexBody = document.querySelector('#index-body');
+                var userSelect = indexBody.querySelector('#user-form select');
+                var userName = userSelect.selectedOptions[0].textContent;
                 var indexHeader = document.querySelector('#index-header');
+                var loggedButton = indexHeader.querySelector('#logged-tickets button');
+                var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
+                var openUser = indexMain.querySelector('#open-employees');
+                var pendingTab = indexMain.querySelector('#pending-tab');
+                var assignedTab = indexMain.querySelector('#assigned-tab');
+                var deletedTab = indexMain.querySelector('#deleted-tab');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
-                var loggedButton = document.querySelector('#logged-tickets button');
-                var manageButton = document.querySelector('#manage-tickets button');
-                var openUser = document.querySelector('#open-employees');
-                var employeesSidebar = document.querySelector('.employees-sidebar');
-                var pendingTab = document.querySelector('#pending-tab');
-                var assignedTab = document.querySelector('#assigned-tab');
-                var deletedTab = document.querySelector('#deleted-tab');
-                var userSelect = document.querySelector('#user-form select');
-                var userName = userSelect.selectedOptions[0].textContent;
-                var ticketsMain = document.querySelector('#tickets-container');
-                var ticketsData = document.querySelector('#tickets-data');
+                var ticketsData = indexData.querySelector('#tickets-data');
+                $(ticketsMain).on('click', function () {
+                    var activeTicket = document.querySelector('.active-ticket');
+                    var activeStatus = activeTicket.classList[0];
+                    new GetEvent_1.GetEvent.forPage("manage-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
+                    indexOverlay.style.display = 'grid';
+                });
                 $(openUser).on('click', function () {
                     loggedButton.className = '';
                     manageButton.className = '';
@@ -30,17 +36,16 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 });
                 $(pendingTab)
                     .on('click', function () {
-                    new DataRead_1.DataRead.forMain('manage-main', 'pending');
+                    ticketsMain.className = 'pending-tickets';
                 })
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });
                 $(deletedTab)
                     .on('click', function () {
-                    new DataRead_1.DataRead.forMain('manage-main', 'deleted');
+                    ticketsMain.className = 'deleted-tickets';
                 })
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });
-                new DataRead_1.DataRead.forMain('manage-main', 'pending');
             }
             return initiateEvents;
         }());

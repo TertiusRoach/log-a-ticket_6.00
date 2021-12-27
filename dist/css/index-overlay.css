@@ -1083,3 +1083,95 @@
   border-radius: 1rem 1rem 0 1rem;
   background-color: #084887;
 }
+
+/*--▼ .coworker-resolved ▼--*/
+.coworker-resolved {
+  /*
+  @media only screen and (max-width: 1920px) {
+  }
+  @media only screen and (max-width: 1366px) {
+  }
+  @media only screen and (max-width: 1024px) {
+  }
+  */
+}
+.coworker-resolved #close-overlay {
+  grid-column: 2/3;
+  grid-row: 3/5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 40%;
+  border-radius: 1rem 1rem 0 0;
+  color: white;
+  background: #909cc2;
+}
+.coworker-resolved #close-overlay svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+}
+.coworker-resolved #ticket-container {
+  grid-column: 2/9;
+  grid-row: 5/20;
+}
+.coworker-resolved #ticket-container #ticket-bot #resolved-note:read-only {
+  margin-left: 1rem;
+  height: 100%;
+  border: 2px solid #08870c;
+  color: white;
+}
+.coworker-resolved #overlay-canvas {
+  grid-column: 2/9;
+  grid-row: 5/20;
+  z-index: -1;
+  border-radius: 1rem 0 1rem 1rem;
+  background-color: #084887;
+}
+
+/*--▼ .coworker-deleted ▼--*/
+.coworker-deleted {
+  /*
+  @media only screen and (max-width: 1920px) {
+  }
+  @media only screen and (max-width: 1366px) {
+  }
+  @media only screen and (max-width: 1024px) {
+  }
+  */
+}
+.coworker-deleted #close-overlay {
+  grid-column: 2/3;
+  grid-row: 3/5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 40%;
+  border-radius: 1rem 1rem 0 0;
+  color: white;
+  background: #909cc2;
+}
+.coworker-deleted #close-overlay svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+}
+.coworker-deleted #ticket-container {
+  grid-column: 2/9;
+  grid-row: 5/20;
+}
+.coworker-deleted #ticket-container #ticket-bot #deleted-note:read-only {
+  margin-left: 1rem;
+  height: 100%;
+  border: 2px solid #f95555;
+  color: white;
+}
+.coworker-deleted #overlay-canvas {
+  grid-column: 2/9;
+  grid-row: 5/20;
+  z-index: -1;
+  border-radius: 1rem 1rem 0 1rem;
+  background-color: #084887;
+}

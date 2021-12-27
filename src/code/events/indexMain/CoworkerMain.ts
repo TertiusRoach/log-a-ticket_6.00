@@ -18,34 +18,38 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace CoworkerMain {
   export class initiateEvents {
     constructor() {
-      // Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forMain('coworker-main', 'resolved');
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      let mainHeader: HTMLElement = indexMain.querySelector('#coworker-header');
       let openCoworkers: HTMLElement = indexMain.querySelector('#open-coworkers');
       let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
       let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
+      let ticketsMain: HTMLElement = indexMain.querySelector('#tickets-container');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
-      let activeColleague: HTMLElement = indexSidebar.querySelector('.active-colleague .text');
-      mainHeader.innerHTML = `<span class="notification">
-                                <h2 style="background: #08870c">${0}</h2>
-                              </span>
-                              <h1 class="text ${UseValufy.forString(activeColleague.innerText)}">${activeColleague.innerText}</h1>`;
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
-      // Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
-      // Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
-      new DataRead.forMain('coworker-main', 'resolved');
+      /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
-      // Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(ticketsMain).on('click', () => {
+        let activeTicket: HTMLElement = document.querySelector('.active-ticket');
+        let activeStatus: String = activeTicket.classList[0];
+
+        new GetEvent.forPage(`coworker-${activeStatus}`, GetPath.forHTML('overlay'));
+        indexOverlay.style.display = 'grid';
+      });
 
       $(openCoworkers).on('click', () => {
         indexSidebar.style.display = 'grid';
@@ -65,8 +69,7 @@ export namespace CoworkerMain {
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
-      // Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
-
+      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       /*--► console.log('--CoworkerMain.js Loaded'); ◄--*/
     }
   }
