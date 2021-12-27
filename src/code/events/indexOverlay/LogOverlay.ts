@@ -22,17 +22,18 @@ export namespace LogOverlay {
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+
       const indexHeader: HTMLElement = document.querySelector('#index-header');
+      let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
+
       const indexMain: HTMLElement = document.querySelector('#index-main');
+
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+
       const indexData: HTMLElement = document.querySelector('#index-data');
-
-      const logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
-
-      const closeOverlay: HTMLButtonElement = document.querySelector('#close-overlay');
-
-      console.log(logButton);
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
