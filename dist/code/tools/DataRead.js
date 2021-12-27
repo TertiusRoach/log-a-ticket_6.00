@@ -16,7 +16,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var loggedHeader = indexMain.querySelector('#logged-header h1');
                 var manageHeader = indexMain.querySelector('#manage-header h1');
                 var coworkerHeader = indexMain.querySelector('#coworker-header h1');
-                var colleagueHeader = indexMain.querySelector('#colleague-header h1');
+                var colleagueHeader = indexMain.querySelector('#colleague-name');
                 var userHeader = indexMain.querySelector('#user-name');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
@@ -35,7 +35,9 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 clearTickets(ticketsMain, status);
                 switch (page) {
                     case 'colleague-main':
-                        var activeColleague = document.querySelector('#colleague-name').textContent;
+                        var selectedColleague = indexSidebar.querySelector('.active-colleague .text').textContent;
+                        colleagueHeader.textContent = "".concat(selectedColleague);
+                        var activeColleague = indexMain.querySelector('#colleague-name').textContent;
                         for (var i = 0; i < ticketsTotal; i++) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
@@ -53,13 +55,15 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                             var noteResolved = ticketInfo.children[12].textContent;
                             var dateDeleted = ticketInfo.children[13].textContent;
                             var noteDeleted = ticketInfo.children[14].textContent;
-                            if (receiverName === activeColleague && ticketStatus === status) {
+                            if (receiverName === activeColleague) {
                                 $(ticketsMain).append("<article class=\"".concat(ticketStatus, "\" onClick=\"$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');\">\n                  <p class=\"shortdate\">").concat(dateShort, "</p>\n                  <p class=\"subject\">").concat(subjectText, "</p>\n                  <p class=\"sender\">").concat(senderName, "</p>\n                  \n                  <div style=\"display: none\">\n                    <p class=\"ticket-status\">").concat(ticketStatus, "</p>\n                    <p class=\"ticket-rating\">").concat(ticketRating, "</p>\n                    <p class=\"subject-text\">").concat(subjectText, "</p>\n                    <p class=\"description-text\">").concat(descriptionText, "</p>\n                    <p class=\"sender-name\">").concat(senderName, "</p>\n                    <p class=\"sender-department\">").concat(senderDepartment, "</p>\n                    <p class=\"receiver-name\">").concat(receiverName, "</p>\n                    <p class=\"receiver-department\">").concat(receiverDepartment, "</p>\n                    <p class=\"date-short\">").concat(dateShort, "</p>\n                    <p class=\"date-pending\">").concat(datePending, "</p>\n                    <p class=\"date-assigned\">").concat(dateAssigned, "</p>\n                    <p class=\"date-resolved\">").concat(dateResolved, "</p>\n                    <p class=\"note-resolved\">").concat(noteResolved, "</p>\n                    <p class=\"date-deleted\">").concat(dateDeleted, "</p>\n                    <p class=\"note-deleted\">").concat(noteDeleted, "</p>\n                  </div>\n                </article>"));
                             }
                         }
                         break;
                     case 'coworker-main':
-                        var activeCoworker = document.querySelector('#coworker-header').lastChild.textContent;
+                        var activeCoworker = indexSidebar.querySelector('.active-colleague .text');
+                        indexMain.querySelector('#coworker-header').innerHTML = "<span class=\"notification\">\n                                <h2 style=\"background: #08870c\">".concat(0, "</h2>\n                              </span>\n                              <h1 class=\"text ").concat(UseValufy_1.UseValufy.forString(activeCoworker.innerText), "\">").concat(activeCoworker.innerText, "</h1>");
+                        var selectedCoworker = document.querySelector('#coworker-header').lastChild.textContent;
                         var _loop_1 = function (i) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
@@ -85,7 +89,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                                         return receiverName;
                                 }
                             };
-                            if (senderName === activeCoworker && ticketStatus === status) {
+                            if (senderName === selectedCoworker) {
                                 $(ticketsMain).append("<article class=\"".concat(ticketStatus, "\" onClick=\"$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');\">\n                  <p class=\"shortdate\">").concat(dateShort, "</p>\n                  <p class=\"subject\">").concat(subjectText, "</p>\n                  <p class=\"receiver\">").concat(receiverDefault(), "</p>\n                  \n                  <div style=\"display: none\">\n                    <p class=\"ticket-status\">").concat(ticketStatus, "</p>\n                    <p class=\"ticket-rating\">").concat(ticketRating, "</p>\n                    <p class=\"subject-text\">").concat(subjectText, "</p>\n                    <p class=\"description-text\">").concat(descriptionText, "</p>\n                    <p class=\"sender-name\">").concat(senderName, "</p>\n                    <p class=\"sender-department\">").concat(senderDepartment, "</p>\n                    <p class=\"receiver-name\">").concat(receiverName, "</p>\n                    <p class=\"receiver-department\">").concat(receiverDepartment, "</p>\n                    <p class=\"date-short\">").concat(dateShort, "</p>\n                    <p class=\"date-pending\">").concat(datePending, "</p>\n                    <p class=\"date-assigned\">").concat(dateAssigned, "</p>\n                    <p class=\"date-resolved\">").concat(dateResolved, "</p>\n                    <p class=\"note-resolved\">").concat(noteResolved, "</p>\n                    <p class=\"date-deleted\">").concat(dateDeleted, "</p>\n                    <p class=\"note-deleted\">").concat(noteDeleted, "</p>\n                  </div>\n                </article>"));
                             }
                         };
@@ -120,7 +124,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                                         return receiverName;
                                 }
                             };
-                            if (senderName === userName && ticketStatus === status) {
+                            if (senderName === userName) {
                                 $(ticketsMain).append("<article class=\"".concat(ticketStatus, "\" onClick=\"$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');\">\n                  <p class=\"shortdate\">").concat(dateShort, "</p>\n                  <p class=\"subject\">").concat(subjectText, "</p>\n                  <p class=\"receiver\">").concat(receiverDefault(), "</p>\n                  \n                  <div style=\"display: none\">\n                    <p class=\"ticket-status\">").concat(ticketStatus, "</p>\n                    <p class=\"ticket-rating\">").concat(ticketRating, "</p>\n                    <p class=\"subject-text\">").concat(subjectText, "</p>\n                    <p class=\"description-text\">").concat(descriptionText, "</p>\n                    <p class=\"sender-name\">").concat(senderName, "</p>\n                    <p class=\"sender-department\">").concat(senderDepartment, "</p>\n                    <p class=\"receiver-name\">").concat(receiverName, "</p>\n                    <p class=\"receiver-department\">").concat(receiverDepartment, "</p>\n                    <p class=\"date-short\">").concat(dateShort, "</p>\n                    <p class=\"date-pending\">").concat(datePending, "</p>\n                    <p class=\"date-assigned\">").concat(dateAssigned, "</p>\n                    <p class=\"date-resolved\">").concat(dateResolved, "</p>\n                    <p class=\"note-resolved\">").concat(noteResolved, "</p>\n                    <p class=\"date-deleted\">").concat(dateDeleted, "</p>\n                    <p class=\"note-deleted\">").concat(noteDeleted, "</p>\n                  </div>\n                </article>"));
                             }
                         };

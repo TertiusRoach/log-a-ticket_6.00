@@ -1251,3 +1251,108 @@
   }
   */
 }
+
+/*--▼ .coworker-resolved ▼--*/
+.coworker-resolved {
+  #close-overlay {
+    grid-column: 2/3;
+    grid-row: 3/5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 40%;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    background: $primary-light;
+    svg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 4rem;
+    }
+  }
+  #ticket-container {
+    grid-column: 2/9;
+    grid-row: 5/20;
+
+    #ticket-bot {
+      #resolved-note:read-only {
+        margin-left: 1rem;
+        height: 100%;
+        border: 2px solid $resolved-default;
+        color: white;
+      }
+    }
+  }
+  #overlay-canvas {
+    grid-column: 2/9;
+    grid-row: 5/20;
+    z-index: -1;
+
+    border-radius: 1rem 0 1rem 1rem;
+    background-color: $primary-dark;
+  }
+  /*
+  @media only screen and (max-width: 1920px) {
+  }
+  @media only screen and (max-width: 1366px) {
+  }
+  @media only screen and (max-width: 1024px) {
+  }
+  */
+}
+/*--▼ .coworker-deleted ▼--*/
+.coworker-deleted {
+  #close-overlay {
+    grid-column: 2/3;
+    grid-row: 3/5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 40%;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    background: $primary-light;
+    svg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 4rem;
+    }
+  }
+  #ticket-container {
+    grid-column: 2/9;
+    grid-row: 5/20;
+
+    #ticket-bot {
+      #deleted-note:read-only {
+        margin-left: 1rem;
+        height: 100%;
+        border: 2px solid $deleted-default;
+        color: white;
+      }
+    }
+  }
+  #overlay-canvas {
+    grid-column: 2/9;
+    grid-row: 5/20;
+    z-index: -1;
+
+    border-radius: 1rem 1rem 0 1rem;
+    background-color: $primary-dark;
+  }
+  /*
+  @media only screen and (max-width: 1920px) {
+  }
+  @media only screen and (max-width: 1366px) {
+  }
+  @media only screen and (max-width: 1024px) {
+  }
+  */
+}

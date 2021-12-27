@@ -16,6 +16,8 @@ import { EmployeesSidebar } from 'code/events/indexSidebar/EmployeesSidebar';
 import { ColleagueAssigned } from 'code/events/indexOverlay/ColleagueAssigned';
 import { ColleagueDeleted } from 'code/events/indexOverlay/ColleagueDeleted';
 import { ColleagueResolved } from 'code/events/indexOverlay/ColleagueResolved';
+import { CoworkerDeleted } from 'code/events/indexOverlay/CoworkerDeleted';
+import { CoworkerResolved } from 'code/events/indexOverlay/CoworkerResolved';
 import { DefaultOverlay } from 'code/events/indexOverlay/DefaultOverlay';
 import { DeleteOverlay } from 'code/events/indexOverlay/DeleteOverlay';
 import { LoggedAssigned } from 'code/events/indexOverlay/LoggedAssigned';
@@ -92,6 +94,8 @@ export namespace GetEvent {
       | 'colleague-assigned'
       | 'colleague-deleted'
       | 'colleague-resolved'
+      | 'coworker-deleted'
+      | 'coworker-resolved'
       | 'default-overlay'
       | 'delete-overlay'
       | 'log-overlay'
@@ -116,6 +120,12 @@ export namespace GetEvent {
         break;
       case 'colleague-resolved':
         new ColleagueResolved.initiateEvents();
+        break;
+      case 'coworker-deleted':
+        new CoworkerDeleted.initiateEvents();
+        break;
+      case 'coworker-resolved':
+        new CoworkerResolved.initiateEvents();
         break;
       case 'default-overlay':
         new DefaultOverlay.initiateEvents();

@@ -34,6 +34,7 @@ export namespace LoggedMain {
       let pendingTab: HTMLButtonElement = indexMain.querySelector('#pending-tab');
       let assignedTab: HTMLButtonElement = indexMain.querySelector('#assigned-tab');
       let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
+      let ticketsMain: HTMLElement = indexMain.querySelector('#tickets-container');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -44,6 +45,14 @@ export namespace LoggedMain {
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(ticketsMain).on('click', () => {
+        let activeTicket: HTMLElement = document.querySelector('.active-ticket');
+        let activeStatus: String = activeTicket.classList[0];
+
+        new GetEvent.forPage(`logged-${activeStatus}`, GetPath.forHTML('overlay'));
+        indexOverlay.style.display = 'grid';
+      });
+
       $(openCoworkers).on('click', () => {
         loggedButton.className = '';
         manageButton.className = '';
@@ -52,21 +61,21 @@ export namespace LoggedMain {
 
       $(pendingTab)
         .on('click', () => {
-          new DataRead.forMain('logged-main', 'pending');
+          ticketsMain.className = 'pending-tickets';
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
       $(assignedTab)
         .on('click', () => {
-          new DataRead.forMain('logged-main', 'assigned');
+          ticketsMain.className = 'assigned-tickets';
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
       $(deletedTab)
         .on('click', () => {
-          new DataRead.forMain('logged-main', 'deleted');
+          ticketsMain.className = 'deleted-tickets';
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});

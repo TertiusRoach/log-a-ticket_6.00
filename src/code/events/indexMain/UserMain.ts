@@ -27,6 +27,7 @@ export namespace UserMain {
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
+      let ticketsMain: HTMLElement = indexMain.querySelector('#tickets-container');
       let openEmployees: HTMLElement = indexMain.querySelector('#open-employees');
       let assignedTab: HTMLButtonElement = indexMain.querySelector('#assigned-tab');
       let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
@@ -41,27 +42,34 @@ export namespace UserMain {
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(ticketsMain).on('click', () => {
+        let activeTicket: HTMLElement = document.querySelector('.active-ticket');
+        let activeStatus: String = activeTicket.classList[0];
+
+        new GetEvent.forPage(`user-${activeStatus}`, GetPath.forHTML('overlay'));
+        indexOverlay.style.display = 'grid';
+      });
       $(openEmployees).on('click', () => {
         indexSidebar.style.display = 'grid';
       });
 
       $(assignedTab)
         .on('click', () => {
-          new DataRead.forMain('user-main', 'assigned');
+          ticketsMain.className = 'assigned-tickets';
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
       $(resolvedTab)
         .on('click', () => {
-          new DataRead.forMain('user-main', 'resolved');
+          ticketsMain.className = 'resolved-tickets';
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});
 
       $(deletedTab)
         .on('click', () => {
-          new DataRead.forMain('user-main', 'deleted');
+          ticketsMain.className = 'deleted-tickets';
         })
         .on('mouseenter', () => {})
         .on('mouseleave', () => {});

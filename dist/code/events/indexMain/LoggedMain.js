@@ -16,9 +16,16 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 var pendingTab = indexMain.querySelector('#pending-tab');
                 var assignedTab = indexMain.querySelector('#assigned-tab');
                 var deletedTab = indexMain.querySelector('#deleted-tab');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
+                $(ticketsMain).on('click', function () {
+                    var activeTicket = document.querySelector('.active-ticket');
+                    var activeStatus = activeTicket.classList[0];
+                    new GetEvent_1.GetEvent.forPage("logged-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
+                    indexOverlay.style.display = 'grid';
+                });
                 $(openCoworkers).on('click', function () {
                     loggedButton.className = '';
                     manageButton.className = '';
@@ -26,19 +33,19 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 });
                 $(pendingTab)
                     .on('click', function () {
-                    new DataRead_1.DataRead.forMain('logged-main', 'pending');
+                    ticketsMain.className = 'pending-tickets';
                 })
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });
                 $(assignedTab)
                     .on('click', function () {
-                    new DataRead_1.DataRead.forMain('logged-main', 'assigned');
+                    ticketsMain.className = 'assigned-tickets';
                 })
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });
                 $(deletedTab)
                     .on('click', function () {
-                    new DataRead_1.DataRead.forMain('logged-main', 'deleted');
+                    ticketsMain.className = 'deleted-tickets';
                 })
                     .on('mouseenter', function () { })
                     .on('mouseleave', function () { });

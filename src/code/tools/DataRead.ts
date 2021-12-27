@@ -28,7 +28,7 @@ export namespace DataRead {
       let loggedHeader: HTMLElement = indexMain.querySelector('#logged-header h1');
       let manageHeader: HTMLElement = indexMain.querySelector('#manage-header h1');
       let coworkerHeader: HTMLElement = indexMain.querySelector('#coworker-header h1');
-      let colleagueHeader: HTMLElement = indexMain.querySelector('#colleague-header h1');
+      let colleagueHeader: HTMLElement = indexMain.querySelector('#colleague-name');
       let userHeader: HTMLElement = indexMain.querySelector('#user-name');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
@@ -54,7 +54,11 @@ export namespace DataRead {
       clearTickets(ticketsMain, status);
       switch (page) {
         case 'colleague-main':
-          let activeColleague = document.querySelector('#colleague-name').textContent;
+          let selectedColleague: String = indexSidebar.querySelector('.active-colleague .text').textContent;
+          colleagueHeader.textContent = `${selectedColleague}`;
+
+          let activeColleague: String = indexMain.querySelector('#colleague-name').textContent;
+
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -72,7 +76,7 @@ export namespace DataRead {
             let noteResolved: String = ticketInfo.children[12].textContent;
             let dateDeleted: String = ticketInfo.children[13].textContent;
             let noteDeleted: String = ticketInfo.children[14].textContent;
-            if (receiverName === activeColleague && ticketStatus === status) {
+            if (receiverName === activeColleague) {
               //--▼ Colleague Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -103,7 +107,13 @@ export namespace DataRead {
           }
           break;
         case 'coworker-main':
-          let activeCoworker = document.querySelector('#coworker-header').lastChild.textContent;
+          let activeCoworker: HTMLElement = indexSidebar.querySelector('.active-colleague .text');
+          indexMain.querySelector('#coworker-header').innerHTML = `<span class="notification">
+                                <h2 style="background: #08870c">${0}</h2>
+                              </span>
+                              <h1 class="text ${UseValufy.forString(activeCoworker.innerText)}">${activeCoworker.innerText}</h1>`;
+          let selectedCoworker: String = document.querySelector('#coworker-header').lastChild.textContent;
+
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -131,7 +141,7 @@ export namespace DataRead {
               }
             };
 
-            if (senderName === activeCoworker && ticketStatus === status) {
+            if (senderName === selectedCoworker /*&& ticketStatus === status*/) {
               //--▼ Coworker Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -190,7 +200,7 @@ export namespace DataRead {
               }
             };
 
-            if (senderName === userName && ticketStatus === status) {
+            if (senderName === userName) {
               //--▼ Logged Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -512,7 +522,6 @@ export namespace DataRead {
             }
           };
           /* Last ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-
           buildEmployees();
           break;
       }

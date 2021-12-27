@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/UseValufy"], function (require, exports, DataRead_1, UseValufy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "code/tools/GetPath"], function (require, exports, DataRead_1, GetEvent_1, GetPath_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CoworkerMain = void 0;
@@ -6,19 +6,23 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/UseValufy"], fu
     (function (CoworkerMain) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forMain('coworker-main', 'resolved');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
-                var mainHeader = indexMain.querySelector('#coworker-header');
                 var openCoworkers = indexMain.querySelector('#open-coworkers');
                 var resolvedTab = indexMain.querySelector('#resolved-tab');
                 var deletedTab = indexMain.querySelector('#deleted-tab');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
                 var indexSidebar = document.querySelector('#index-sidebar');
-                var activeColleague = indexSidebar.querySelector('.active-colleague .text');
-                mainHeader.innerHTML = "<span class=\"notification\">\n                                <h2 style=\"background: #08870c\">".concat(0, "</h2>\n                              </span>\n                              <h1 class=\"text ").concat(UseValufy_1.UseValufy.forString(activeColleague.innerText), "\">").concat(activeColleague.innerText, "</h1>");
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
-                new DataRead_1.DataRead.forMain('coworker-main', 'resolved');
+                $(ticketsMain).on('click', function () {
+                    var activeTicket = document.querySelector('.active-ticket');
+                    var activeStatus = activeTicket.classList[0];
+                    new GetEvent_1.GetEvent.forPage("coworker-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
+                    indexOverlay.style.display = 'grid';
+                });
                 $(openCoworkers).on('click', function () {
                     indexSidebar.style.display = 'grid';
                 });
