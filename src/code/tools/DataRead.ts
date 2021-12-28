@@ -528,15 +528,20 @@ export namespace DataRead {
     }
   }
   export class forOverlay {
-    constructor(page: 'log-overlay') {
+    constructor(page: 'logged-pending' | 'manage-pending') {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+
       const indexHeader: HTMLElement = document.querySelector('#index-header');
+
       const indexMain: HTMLElement = document.querySelector('#index-main');
+
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -545,9 +550,9 @@ export namespace DataRead {
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
-        case 'log-overlay':
-          console.log(UseDatefy.forToday('00 Weekday, Month YYYY'));
-
+        case 'logged-pending':
+          break;
+        case 'manage-pending':
           break;
       }
     }

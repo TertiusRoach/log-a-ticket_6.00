@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
+define(["require", "exports", "code/tools/UseDatefy"], function (require, exports, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LogOverlay = void 0;
@@ -6,7 +6,6 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
     (function (LogOverlay) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                new DataRead_1.DataRead.forOverlay('log-overlay');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
@@ -15,6 +14,8 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var pendingDate = indexOverlay.querySelector('#pending-date');
+                pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('00 Weekday, Month YYYY');
                 var indexData = document.querySelector('#index-data');
                 function closeContainer(block) {
                     var container = document.querySelector("#".concat(block));

@@ -19,7 +19,6 @@ export namespace LogOverlay {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      new DataRead.forOverlay('log-overlay');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -34,6 +33,12 @@ export namespace LogOverlay {
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+      let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
+      pendingDate.innerText = UseDatefy.forToday('00 Weekday, Month YYYY');
+      /*
+      let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
+      assignedDate.innerText = UseDatefy.forToday('00 Weekday, Month YYYY');
+      */
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
