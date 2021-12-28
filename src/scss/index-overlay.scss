@@ -209,6 +209,11 @@
         [id*='deleted'] {
           color: $deleted-default;
         }
+
+        .disabled-text {
+          color: $disabled-default;
+          opacity: 0.5;
+        }
       }
       button {
         grid-column: 2/3;

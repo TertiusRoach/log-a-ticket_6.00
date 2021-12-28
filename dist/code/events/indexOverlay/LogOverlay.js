@@ -13,9 +13,11 @@ define(["require", "exports", "code/tools/UseDatefy"], function (require, export
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
+                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
+                console.log(ticketSubject);
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
-                pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('00 Weekday, Month YYYY');
+                pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
                 function closeContainer(block) {
                     var container = document.querySelector("#".concat(block));
@@ -24,10 +26,20 @@ define(["require", "exports", "code/tools/UseDatefy"], function (require, export
                     document.querySelector("#".concat(block)).className = "default-".concat(block.split('-')[1]);
                     container.style.display = 'none';
                 }
+                function enableButton(state) {
+                    switch (state) {
+                        case 'log-ticket':
+                            break;
+                    }
+                }
                 $(closeOverlay).on('click', function () {
                     logButton.className = '';
                     closeContainer('index-overlay');
                     indexMain.style.display = 'grid';
+                });
+                $(ticketSubject).on('keyup', function () {
+                    var pressed = "".concat($('#ticket-subject').val()).split('').pop();
+                    console.log(pressed);
                 });
                 console.log('--LogOverlay.js Loaded');
             }
