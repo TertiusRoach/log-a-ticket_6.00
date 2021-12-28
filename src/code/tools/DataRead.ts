@@ -546,6 +546,7 @@ export namespace DataRead {
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
         case 'log-overlay':
+          console.log(UseDatefy.forToday('00 Weekday, Month YYYY'));
           console.log('Read Ticket data');
           break;
       }

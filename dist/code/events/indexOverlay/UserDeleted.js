@@ -10,22 +10,22 @@ define(["require", "exports"], function (require, exports) {
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var activeTicket = indexMain.querySelector('.active-ticket');
+                indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var indexData = document.querySelector('#index-data');
                 function closeContainer(block) {
                     var container = document.querySelector("#".concat(block));
-                    var status = activeTicket.classList[0];
-                    activeTicket.className = "".concat(status);
+                    document.querySelector("#".concat(block)).innerHTML = '';
+                    document.querySelector("#".concat(block)).className = '';
+                    document.querySelector("#".concat(block)).className = "default-".concat(block.split('-')[1]);
                     container.style.display = 'none';
-                    container.innerHTML = '';
-                    container.className = "default-".concat(block.split('-')[1]);
                 }
                 $(closeOverlay).on('click', function () {
                     logButton.className = '';
                     closeContainer('index-overlay');
+                    indexMain.style.display = 'grid';
                 });
                 console.log('--UserDeleted.js Loaded');
             }

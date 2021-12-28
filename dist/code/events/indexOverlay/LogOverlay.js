@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/UseDatefy"], function (require, exports, DataRead_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LogOverlay = void 0;
@@ -25,10 +25,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/UseDatefy"], fu
                 }
                 $(closeOverlay).on('click', function () {
                     logButton.className = '';
-                    indexMain.style.display = 'grid';
                     closeContainer('index-overlay');
+                    indexMain.style.display = 'grid';
                 });
-                console.log(UseDatefy_1.UseDatefy.forToday('00 Weekday, Month YYYY'));
                 console.log('--LogOverlay.js Loaded');
             }
             return initiateEvents;

@@ -50,12 +50,11 @@ export namespace LogOverlay {
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(closeOverlay).on('click', () => {
         logButton.className = '';
-        indexMain.style.display = 'grid';
         closeContainer('index-overlay');
+        indexMain.style.display = 'grid';
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      console.log(UseDatefy.forToday('00 Weekday, Month YYYY'));
       console.log('--LogOverlay.js Loaded');
     }
   }

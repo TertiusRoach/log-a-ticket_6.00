@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, GetEvent_1, GetPath_1, UseCapify_1, UseValufy_1) {
+define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseDatefy", "code/tools/UseValufy"], function (require, exports, GetEvent_1, GetPath_1, UseCapify_1, UseDatefy_1, UseValufy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataRead = void 0;
@@ -334,6 +334,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var indexData = document.querySelector('#index-data');
                 switch (page) {
                     case 'log-overlay':
+                        console.log(UseDatefy_1.UseDatefy.forToday('00 Weekday, Month YYYY'));
                         console.log('Read Ticket data');
                         break;
                 }
