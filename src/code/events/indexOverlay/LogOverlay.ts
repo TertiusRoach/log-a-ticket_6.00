@@ -19,12 +19,14 @@ export namespace LogOverlay {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      console.log(`Subject: ${$('#ticket-subject').val()}`);
+      console.log(`Description: ${$('#ticket-description').val()}`);
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
-      let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
+      let logAticket: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
       indexMain.style.display = 'none';
@@ -32,8 +34,9 @@ export namespace LogOverlay {
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
       let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
-      console.log(ticketSubject);
+      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
 
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
@@ -46,16 +49,21 @@ export namespace LogOverlay {
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
-        let container: HTMLElement = document.querySelector(`#${block}`);
-        document.querySelector(`#${block}`).innerHTML = '';
-        document.querySelector(`#${block}`).className = '';
-        document.querySelector(`#${block}`).className = `default-${block.split('-')[1]}`;
-        container.style.display = 'none';
-      }
-      function enableButton(state: String | 'log-ticket') {
-        switch (state) {
+      function checkState(button: String | 'log-ticket') {
+        var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
+        var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
+
+        switch (button) {
           case 'log-ticket':
+            if (subjectJQ === '' || descriptionJQ === '') {
+              logButton.className = 'disabled-button';
+            } else if (subjectJQ !== '' && descriptionJQ === '') {
+              logButton.className = 'disabled-button';
+            } else if (subjectJQ === '' && descriptionJQ !== '') {
+              logButton.className = 'disabled-button';
+            } else {
+              logButton.className = '';
+            }
             /*
             let logSample: String = `<div id="log-ticket">
                                       <button class="">
@@ -67,17 +75,28 @@ export namespace LogOverlay {
             break;
         }
       }
+      function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
+        let container: HTMLElement = document.querySelector(`#${block}`);
+        document.querySelector(`#${block}`).innerHTML = '';
+        document.querySelector(`#${block}`).className = '';
+        document.querySelector(`#${block}`).className = `default-${block.split('-')[1]}`;
+        container.style.display = 'none';
+      }
+
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      $(ticketSubject).on('keyup', () => {
+        checkState('log-ticket');
+      });
+      $(ticketDescription).on('keyup', () => {
+        checkState('log-ticket');
+      });
+
       $(closeOverlay).on('click', () => {
-        logButton.className = '';
         closeContainer('index-overlay');
         indexMain.style.display = 'grid';
-      });
-      $(ticketSubject).on('keyup', () => {
-        let pressed: String | JQuery<String> = `${$('#ticket-subject').val()}`.split('').pop();
-        console.log(pressed);
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
