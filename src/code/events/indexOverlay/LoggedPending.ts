@@ -1,8 +1,25 @@
+//--|▼| Tools (Import) |▼|--//
+import { DataCreate } from 'code/tools/DataCreate';
+import { DataErase } from 'code/tools/DataErase';
+import { DataRead } from 'code/tools/DataRead';
+import { DataUpdate } from 'code/tools/DataUpdate';
+
+import { GetArray } from 'code/tools/GetArray';
+import { GetColor } from 'code/tools/GetColor';
+import { GetElement } from 'code/tools/GetElement';
+import { GetEvent } from 'code/tools/GetEvent';
+import { GetPath } from 'code/tools/GetPath';
+
+import { UseCapify } from 'code/tools/UseCapify';
+import { UseDatefy } from 'code/tools/UseDatefy';
+import { UseValufy } from 'code/tools/UseValufy';
+
 //--|►| Logged Pending |◄|--//
 export namespace LoggedPending {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('logged-pending');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -11,7 +28,7 @@ export namespace LoggedPending {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      let activeTicket: HTMLElement = indexMain.querySelector('.active-ticket');
+      indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -19,23 +36,24 @@ export namespace LoggedPending {
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
+
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
         let container: HTMLElement = document.querySelector(`#${block}`);
-        let status: String = activeTicket.classList[0];
-
-        activeTicket.className = `${status}`;
+        document.querySelector(`#${block}`).innerHTML = '';
+        document.querySelector(`#${block}`).className = '';
+        document.querySelector(`#${block}`).className = `default-${block.split('-')[1]}`;
         container.style.display = 'none';
-        container.innerHTML = '';
-        container.className = `default-${block.split('-')[1]}`;
       }
-      /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(closeOverlay).on('click', () => {
         logButton.className = '';
         closeContainer('index-overlay');
+        indexMain.style.display = 'grid';
       });
+
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       console.log('--LoggedPending.js Loaded');
     }

@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/UseDatefy"], function (require, exports, DataRead_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/UseDatefy"], function (require, exports, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LogOverlay = void 0;
@@ -6,16 +6,42 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/UseDatefy"], fu
     (function (LogOverlay) {
         var initiateEvents = (function () {
             function initiateEvents() {
-                new DataRead_1.DataRead.forOverlay('log-overlay');
+                console.log("Subject: ".concat($('#ticket-subject').val()));
+                console.log("Description: ".concat($('#ticket-description').val()));
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
-                var logButton = indexHeader.querySelector('#log-a-ticket button');
+                var logAticket = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
+                var logButton = indexOverlay.querySelector('#log-ticket button');
+                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
+                var ticketDescription = indexOverlay.querySelector('#ticket-description');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var pendingDate = indexOverlay.querySelector('#pending-date');
+                pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
+                function checkState(button) {
+                    var subjectJQ = "".concat($('#ticket-subject').val());
+                    var descriptionJQ = "".concat($('#ticket-description').val());
+                    switch (button) {
+                        case 'log-ticket':
+                            if (subjectJQ === '' || descriptionJQ === '') {
+                                logButton.className = 'disabled-button';
+                            }
+                            else if (subjectJQ !== '' && descriptionJQ === '') {
+                                logButton.className = 'disabled-button';
+                            }
+                            else if (subjectJQ === '' && descriptionJQ !== '') {
+                                logButton.className = 'disabled-button';
+                            }
+                            else {
+                                logButton.className = '';
+                            }
+                            break;
+                    }
+                }
                 function closeContainer(block) {
                     var container = document.querySelector("#".concat(block));
                     document.querySelector("#".concat(block)).innerHTML = '';
@@ -23,12 +49,16 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/UseDatefy"], fu
                     document.querySelector("#".concat(block)).className = "default-".concat(block.split('-')[1]);
                     container.style.display = 'none';
                 }
-                $(closeOverlay).on('click', function () {
-                    logButton.className = '';
-                    indexMain.style.display = 'grid';
-                    closeContainer('index-overlay');
+                $(ticketSubject).on('keyup', function () {
+                    checkState('log-ticket');
                 });
-                console.log(UseDatefy_1.UseDatefy.forToday('00 Weekday, Month YYYY'));
+                $(ticketDescription).on('keyup', function () {
+                    checkState('log-ticket');
+                });
+                $(closeOverlay).on('click', function () {
+                    closeContainer('index-overlay');
+                    indexMain.style.display = 'grid';
+                });
                 console.log('--LogOverlay.js Loaded');
             }
             return initiateEvents;

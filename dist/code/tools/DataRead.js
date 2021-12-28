@@ -333,8 +333,9 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
                 switch (page) {
-                    case 'log-overlay':
-                        console.log('Read Ticket data');
+                    case 'logged-pending':
+                        break;
+                    case 'manage-pending':
                         break;
                 }
             }

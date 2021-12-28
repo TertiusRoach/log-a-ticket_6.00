@@ -195,6 +195,10 @@
 #index-overlay section footer section [id*=deleted] {
   color: #f95555;
 }
+#index-overlay section footer section .disabled-text {
+  color: #646e7e;
+  opacity: 0.5;
+}
 #index-overlay section footer button {
   grid-column: 2/3;
   display: flex;
