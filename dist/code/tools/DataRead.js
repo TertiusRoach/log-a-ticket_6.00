@@ -335,7 +335,6 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 switch (page) {
                     case 'log-overlay':
                         console.log(UseDatefy_1.UseDatefy.forToday('00 Weekday, Month YYYY'));
-                        console.log('Read Ticket data');
                         break;
                 }
             }
