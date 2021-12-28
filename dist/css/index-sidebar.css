@@ -315,7 +315,7 @@
 }
 .coworkers-sidebar #view-coworkers footer span {
   display: flex;
-  margin: 8px 0;
+  margin: 8px 1rem;
   color: white;
 }
 .coworkers-sidebar #view-coworkers footer span .notification {
@@ -417,8 +417,8 @@
 }
 .employees-sidebar #view-employees footer span {
   display: flex;
-  justify-content: flex-end;
-  margin: 8px 0;
+  justify-content: flex-start;
+  margin: 8px 1rem;
   color: white;
 }
 .employees-sidebar #view-employees footer span .notification {

@@ -360,7 +360,7 @@
       span {
         display: flex;
 
-        margin: 8px 0;
+        margin: 8px 1rem;
         color: white;
         .notification {
           cursor: default;
@@ -477,9 +477,9 @@
       background: $primary-dark;
       span {
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
 
-        margin: 8px 0;
+        margin: 8px 1rem;
         color: white;
         .notification {
           cursor: default;

@@ -8,10 +8,16 @@
   <header id="ticket-top">
     <input id="ticket-subject" value="${subjectText}" type="text" readonly />
 
-    <button class="claim-ticket">
-      <i class="fad fa-plus fa-4x"></i>
-      <div>Claim Ticket</div>
-    </button>
+    <button class="claim-ticket"></button>
+    <!--▼ Button Sample ▼-->
+    <div id="log-ticket">
+      <!--► class="disabled-button" ◄-->
+      <button class="disabled-button">
+        <i class="fad fa-plus fa-4x"></i>
+        <h1>Claim Ticket</h1>
+      </button>
+    </div>
+    <!--▲ Button Sample ▲-->
   </header>
   <footer id="ticket-bot">
     <textarea id="ticket-description" readonly>${descriptionText}</textarea>

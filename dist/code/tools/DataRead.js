@@ -324,6 +324,23 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
             return forSidebar;
         }());
         DataRead.forSidebar = forSidebar;
+        var forOverlay = (function () {
+            function forOverlay(page) {
+                var indexBody = document.querySelector('#index-body');
+                var indexHeader = document.querySelector('#index-header');
+                var indexMain = document.querySelector('#index-main');
+                var indexSidebar = document.querySelector('#index-sidebar');
+                var indexOverlay = document.querySelector('#index-overlay');
+                var indexData = document.querySelector('#index-data');
+                switch (page) {
+                    case 'log-overlay':
+                        console.log('Read Ticket data');
+                        break;
+                }
+            }
+            return forOverlay;
+        }());
+        DataRead.forOverlay = forOverlay;
         function findDepartment(userName) {
             var employeesData = document.querySelector('#employees-data');
             var employeesCollection = employeesData.getElementsByTagName('article');
