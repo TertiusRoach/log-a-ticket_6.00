@@ -19,6 +19,7 @@ export namespace LogOverlay {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('log-overlay');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -27,6 +28,7 @@ export namespace LogOverlay {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
+      indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -43,14 +45,17 @@ export namespace LogOverlay {
         document.querySelector(`#${block}`).className = `default-${block.split('-')[1]}`;
         container.style.display = 'none';
       }
+      /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(closeOverlay).on('click', () => {
         logButton.className = '';
+        indexMain.style.display = 'grid';
         closeContainer('index-overlay');
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      console.log(UseDatefy.forToday('00 Weekday, Month YYYY'));
       console.log('--LogOverlay.js Loaded');
     }
   }

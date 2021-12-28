@@ -527,6 +527,30 @@ export namespace DataRead {
       }
     }
   }
+  export class forOverlay {
+    constructor(page: 'log-overlay') {
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      const indexData: HTMLElement = document.querySelector('#index-data');
+
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+
+      /* Events ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      switch (page) {
+        case 'log-overlay':
+          console.log('Read Ticket data');
+          break;
+      }
+    }
+  }
 
   function findDepartment(userName: String) {
     const employeesData: HTMLDivElement = document.querySelector('#employees-data');

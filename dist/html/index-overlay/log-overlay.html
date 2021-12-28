@@ -8,10 +8,15 @@
   <header id="ticket-top">
     <input id="ticket-subject" placeholder="Subject" type="text" />
 
-    <button class="log-ticket">
-      <i class="fad fa-ticket-alt fa-4x"></i>
-      <div>Log a Ticket</div>
-    </button>
+    <!--▼ Button Sample ▼-->
+    <div id="log-ticket">
+      <!--► class="disabled-button" ◄-->
+      <button class="disabled-button">
+        <i class="fad fa-ticket-alt fa-4x"></i>
+        <h1>Log a Ticket</h1>
+      </button>
+    </div>
+    <!--▲ Button Sample ▲-->
   </header>
   <footer id="ticket-bot">
     <textarea id="ticket-description" placeholder="Description"></textarea>
@@ -19,7 +24,7 @@
     <section>
       <form id="department-form">
         <select>
-          <option value="department-select" selected>Select Department</option>
+          <option value="department-select" disabled selected>Select Department</option>
 
           <option value="technical">Technical</option>
           <option value="admin">Admin</option>
