@@ -28,7 +28,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var pendingDate = indexOverlay.querySelector('#pending-date');
                 var assignDate = indexOverlay.querySelector('#assigned-date');
                 pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
-                assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
                 function checkState(button) {
                     var subjectJQ = "".concat($('#ticket-subject').val());
@@ -65,6 +64,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                                 pendingDate.className = '';
                                 assignDate.className = 'disabled-text';
                             }
+                            else if (colleagueSelect.value !== 'select-colleague') {
+                                assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                            }
                             else {
                                 logButton.className = '';
                                 assignButton.className = '';
@@ -92,8 +94,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 }
                 $(departmentSelect)
                     .on('change', function () {
-                    checkState('log-ticket');
-                    toggleButton(colleagueSelect.value);
+                    assignDate.innerText = undefined;
+                    assignDate.style.display = 'none';
                 })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
@@ -107,8 +109,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 });
                 $(colleagueSelect)
                     .on('change', function () {
+                    assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                     assignDate.style.display = 'grid';
                     assignDate.className = '';
+                    assignButton.className = '';
                 })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
@@ -125,12 +129,60 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     toggleButton(colleagueSelect.value);
                 });
                 $(ticketSubject).on('keyup', function () {
-                    checkState('log-ticket');
-                    toggleButton(colleagueSelect.value);
+                    var subjectJQ = "".concat($('#ticket-subject').val());
+                    var descriptionJQ = "".concat($('#ticket-description').val());
+                    if (subjectJQ !== '' || descriptionJQ !== '') {
+                        if (colleagueSelect.value === 'select-colleague') {
+                            logButton.className = '';
+                            pendingDate.className = '';
+                        }
+                        else {
+                            logButton.className = '';
+                            pendingDate.className = '';
+                            assignButton.className = '';
+                            assignDate.className = '';
+                        }
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
+                    else if (colleagueSelect.length === 1) {
+                        logButton.className = 'disabled-button';
+                        assignButton.className = 'disabled-button';
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
+                    else {
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
                 });
                 $(ticketDescription).on('keyup', function () {
-                    checkState('log-ticket');
-                    toggleButton(colleagueSelect.value);
+                    var subjectJQ = "".concat($('#ticket-subject').val());
+                    var descriptionJQ = "".concat($('#ticket-description').val());
+                    if (subjectJQ !== '' || descriptionJQ !== '') {
+                        if (colleagueSelect.value === 'select-colleague') {
+                            logButton.className = '';
+                            pendingDate.className = '';
+                        }
+                        else {
+                            logButton.className = '';
+                            pendingDate.className = '';
+                            assignButton.className = '';
+                            assignDate.className = '';
+                        }
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
+                    else if (colleagueSelect.length === 1) {
+                        logButton.className = 'disabled-button';
+                        assignButton.className = 'disabled-button';
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
+                    else {
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
                 });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
