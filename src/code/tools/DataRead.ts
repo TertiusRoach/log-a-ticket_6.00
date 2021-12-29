@@ -545,6 +545,8 @@ export namespace DataRead {
       let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
+      let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
+      let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -631,11 +633,33 @@ export namespace DataRead {
             buildColleagues(departmentSelect.selectedOptions[0].value);
           };
 
-          $(departmentSelect).on('change', () => {
-            logButton.parentElement.style.display = 'grid';
-            assignButton.parentElement.style.display = 'none';
-            buildColleagues(departmentSelect.selectedOptions[0].value);
-          });
+          $(departmentSelect)
+            .on('click', () => {
+              if (colleagueSelect.length === 1) {
+                logButton.className = 'disabled-button';
+                assignButton.className = 'disabled-button';
+              } else {
+                logButton.className = '';
+                assignButton.className = '';
+              }
+            })
+            .on('change', () => {
+              logButton.parentElement.style.display = 'grid';
+              assignButton.parentElement.style.display = 'none';
+
+              pendingMark.style.background = `${GetColor.primaryDark()}`;
+              assignedMark.style.background = `${GetColor.primaryMedium()}`;
+
+              if (colleagueSelect.length === 1) {
+                logButton.className = 'disabled-button';
+                assignButton.className = 'disabled-button';
+              } else {
+                logButton.className = '';
+                assignButton.className = '';
+              }
+
+              buildColleagues(departmentSelect.selectedOptions[0].value);
+            });
 
           buildDepartments(findDepartment(findUser()));
           break;

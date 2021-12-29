@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, GetEvent_1, GetPath_1, UseCapify_1, UseValufy_1) {
+define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, GetColor_1, GetEvent_1, GetPath_1, UseCapify_1, UseValufy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataRead = void 0;
@@ -335,6 +335,8 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
+                var pendingMark = indexOverlay.querySelector('.pending-mark');
+                var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var indexData = document.querySelector('#index-data');
                 var departmentsData;
                 var employeesData;
@@ -391,9 +393,30 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                             }
                             buildColleagues_1(departmentSelect.selectedOptions[0].value);
                         };
-                        $(departmentSelect).on('change', function () {
+                        $(departmentSelect)
+                            .on('click', function () {
+                            if (colleagueSelect.length === 1) {
+                                logButton.className = 'disabled-button';
+                                assignButton.className = 'disabled-button';
+                            }
+                            else {
+                                logButton.className = '';
+                                assignButton.className = '';
+                            }
+                        })
+                            .on('change', function () {
                             logButton.parentElement.style.display = 'grid';
                             assignButton.parentElement.style.display = 'none';
+                            pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                            assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                            if (colleagueSelect.length === 1) {
+                                logButton.className = 'disabled-button';
+                                assignButton.className = 'disabled-button';
+                            }
+                            else {
+                                logButton.className = '';
+                                assignButton.className = '';
+                            }
                             buildColleagues_1(departmentSelect.selectedOptions[0].value);
                         });
                         buildDepartments(findDepartment(findUser()));

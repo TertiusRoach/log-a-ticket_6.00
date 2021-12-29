@@ -41,6 +41,8 @@ export namespace LogOverlay {
       let departmentForm: HTMLFormElement = indexOverlay.querySelector('#department-form');
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
+      let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
+      let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
 
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
@@ -59,7 +61,10 @@ export namespace LogOverlay {
 
         switch (button) {
           case 'log-ticket':
-            if (subjectJQ === '' || descriptionJQ === '') {
+            if (colleagueSelect.length === 1) {
+              logButton.className = 'disabled-button';
+              assignButton.className = 'disabled-button';
+            } else if (subjectJQ === '' || descriptionJQ === '') {
               logButton.className = 'disabled-button';
               assignButton.className = 'disabled-button';
             } else if (subjectJQ !== '' && descriptionJQ === '') {
@@ -87,16 +92,45 @@ export namespace LogOverlay {
         if (colleague !== 'select-colleague') {
           logButton.parentElement.style.display = 'none';
           assignButton.parentElement.style.display = 'grid';
+
+          pendingMark.style.background = `${GetColor.primaryMedium()}`;
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
         }
       }
 
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(colleagueSelect).on('change', () => {
-        checkState('log-ticket');
-        toggleButton(colleagueSelect.value);
-      });
+      $(departmentSelect)
+        .on('click', () => {
+          if (colleagueSelect.length === 1) {
+            logButton.className = 'disabled-button';
+            assignButton.className = 'disabled-button';
+          } else {
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          }
+        })
+        .on('change', () => {
+          checkState('log-ticket');
+          toggleButton(colleagueSelect.value);
+        });
+
+      $(colleagueSelect)
+        .on('click', () => {
+          if (colleagueSelect.length === 1) {
+            logButton.className = 'disabled-button';
+            assignButton.className = 'disabled-button';
+          } else {
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          }
+        })
+        .on('change', () => {
+          checkState('log-ticket');
+          toggleButton(colleagueSelect.value);
+        });
+
       $(ticketSubject).on('keyup', () => {
         checkState('log-ticket');
         toggleButton(colleagueSelect.value);
@@ -105,7 +139,6 @@ export namespace LogOverlay {
         checkState('log-ticket');
         toggleButton(colleagueSelect.value);
       });
-
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
         indexMain.style.display = 'grid';
