@@ -15,11 +15,11 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
+                var mainButton = '[id*="-ticket"] button';
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
                 var ticketSubject = indexOverlay.querySelector('#ticket-subject');
                 var ticketDescription = indexOverlay.querySelector('#ticket-description');
-                var departmentForm = indexOverlay.querySelector('#department-form');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
@@ -92,6 +92,16 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                     }
                 }
+                $(mainButton).on('click', function () {
+                    if (logButton.className !== 'disabled-button') {
+                        if (assignButton.className !== 'disabled-button') {
+                            console.log('Log as Assigned');
+                        }
+                        else {
+                            console.log('Log as Pending');
+                        }
+                    }
+                });
                 $(departmentSelect)
                     .on('change', function () {
                     assignDate.innerText = undefined;
@@ -128,7 +138,22 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     checkState('log-ticket');
                     toggleButton(colleagueSelect.value);
                 });
-                $(ticketSubject).on('keyup', function () {
+                $(ticketSubject)
+                    .on('keydown', function () {
+                    var subjectJQ = "".concat($('#ticket-subject').val());
+                    var descriptionJQ = "".concat($('#ticket-description').val());
+                    if (subjectJQ === '' || descriptionJQ === '') {
+                        logButton.className = 'disabled-button';
+                        assignButton.className = 'disabled-button';
+                        pendingDate.className = 'disabled-text';
+                        assignDate.className = 'disabled-text';
+                    }
+                    else {
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
+                })
+                    .on('keyup', function () {
                     var subjectJQ = "".concat($('#ticket-subject').val());
                     var descriptionJQ = "".concat($('#ticket-description').val());
                     if (subjectJQ !== '' || descriptionJQ !== '') {
@@ -156,7 +181,22 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         toggleButton(colleagueSelect.value);
                     }
                 });
-                $(ticketDescription).on('keyup', function () {
+                $(ticketDescription)
+                    .on('keydown', function () {
+                    var subjectJQ = "".concat($('#ticket-subject').val());
+                    var descriptionJQ = "".concat($('#ticket-description').val());
+                    if (subjectJQ === '' || descriptionJQ === '') {
+                        logButton.className = 'disabled-button';
+                        assignButton.className = 'disabled-button';
+                        pendingDate.className = 'disabled-text';
+                        assignDate.className = 'disabled-text';
+                    }
+                    else {
+                        checkState('log-ticket');
+                        toggleButton(colleagueSelect.value);
+                    }
+                })
+                    .on('keyup', function () {
                     var subjectJQ = "".concat($('#ticket-subject').val());
                     var descriptionJQ = "".concat($('#ticket-description').val());
                     if (subjectJQ !== '' || descriptionJQ !== '') {
