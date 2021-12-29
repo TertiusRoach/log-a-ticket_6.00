@@ -55,10 +55,8 @@ export namespace DataRead {
       switch (page) {
         case 'colleague-main':
           let selectedColleague: String = indexSidebar.querySelector('.active-colleague .text').textContent;
-          colleagueHeader.textContent = `${selectedColleague}`;
-
           let activeColleague: String = indexMain.querySelector('#colleague-name').textContent;
-
+          colleagueHeader.textContent = `${selectedColleague}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -720,6 +718,27 @@ export namespace DataRead {
         return occupation;
       case 'role':
         return role;
+    }
+  }
+  function userDepartment() {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+    let userSelect: HTMLSelectElement = document.querySelector('#user-form select');
+    let userName: String = userSelect.selectedOptions[0].textContent;
+
+    for (let i = 0; i < employeesTotal; i++) {
+      let firstName: String = employeesCollection[i].children[0].textContent;
+      let middleName: String = employeesCollection[i].children[1].textContent;
+      let lastName: String = employeesCollection[i].children[2].textContent;
+      let department: String = employeesCollection[i].children[3].textContent;
+      let occupation: String = employeesCollection[i].children[4].textContent;
+      let role: String = employeesCollection[i].children[5].textContent;
+
+      let employeeName: String = `${firstName} ${lastName}`;
+      if (employeeName === userName) {
+        return department;
+      }
     }
   }
 }

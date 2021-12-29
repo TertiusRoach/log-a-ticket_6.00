@@ -20,7 +20,7 @@ export namespace DefaultOverlay {
     constructor() {
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
       let preloader: HTMLDivElement = indexBody.querySelector('#preloader');
-      let userForm: HTMLElement = document.querySelector('#user-form select');
+      let userForm: HTMLElement = indexBody.querySelector('#user-form select');
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 

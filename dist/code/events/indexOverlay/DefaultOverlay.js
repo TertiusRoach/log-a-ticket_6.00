@@ -8,7 +8,7 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/GetEvent", "cod
             function initiateEvents() {
                 var indexBody = document.querySelector('#index-body');
                 var preloader = indexBody.querySelector('#preloader');
-                var userForm = document.querySelector('#user-form select');
+                var userForm = indexBody.querySelector('#user-form select');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');

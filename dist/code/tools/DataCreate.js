@@ -100,13 +100,6 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
             return forBlock;
         }());
         DataCreate.forBlock = forBlock;
-        function findUser() {
-            var indexBody = document.querySelector('#index-body');
-            var userSelect = indexBody.querySelector('#user-form select');
-            var userIndex = userSelect.selectedIndex;
-            var userName = userSelect.children[userIndex].textContent;
-            return "".concat(userName);
-        }
         function findDepartment(userName) {
             var employeesData = document.querySelector('#employees-data');
             var employeesCollection = employeesData.getElementsByTagName('article');
@@ -123,6 +116,13 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
                     return department;
                 }
             }
+        }
+        function findUser() {
+            var indexBody = document.querySelector('#index-body');
+            var userSelect = indexBody.querySelector('#user-form select');
+            var userIndex = userSelect.selectedIndex;
+            var userName = userSelect.children[userIndex].textContent;
+            return "".concat(userName);
         }
         function userDepartment() {
             var employeesData = document.querySelector('#employees-data');
@@ -143,7 +143,6 @@ define(["require", "exports", "code/tools/GetArray", "code/tools/UseValufy"], fu
                 }
             }
         }
-        DataCreate.userDepartment = userDepartment;
     })(DataCreate = exports.DataCreate || (exports.DataCreate = {}));
 });
 
