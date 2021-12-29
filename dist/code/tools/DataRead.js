@@ -331,8 +331,73 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
+                var logButton = indexOverlay.querySelector('#log-ticket button');
+                var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var departmentSelect = indexOverlay.querySelector('#department-form select');
+                var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var indexData = document.querySelector('#index-data');
+                var departmentsData;
+                var employeesData;
+                var ticketsData;
+                var userDepartment;
+                var userName;
                 switch (page) {
+                    case 'log-overlay':
+                        departmentsData = indexData.querySelector('#departments-data');
+                        employeesData = indexData.querySelector('#employees-data');
+                        ticketsData = indexData.querySelector('#tickets-data');
+                        userDepartment = findDepartment(findUser());
+                        var buildColleagues_1 = function (selectedDepartment) {
+                            colleagueSelect.innerHTML = '';
+                            $(colleagueSelect).append("<option value=\"select-colleague\" disabled selected>Select Colleague</option>");
+                            var employeesTotal = employeesData.children.length;
+                            for (var i = 0; i < employeesTotal; i++) {
+                                var firstName = get(i, 'first-name');
+                                var middleName = get(i, 'middle-name');
+                                var lastName = get(i, 'last-name');
+                                var department = get(i, 'department');
+                                var occupation = get(i, 'occupation');
+                                var role = get(i, 'role');
+                                if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                                    var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                                    var mainHeader = indexMain.getElementsByTagName('header');
+                                    var activeName;
+                                    if (typeof mainHeader[0] !== "".concat(undefined)) {
+                                        activeName = mainHeader[0].lastChild.textContent;
+                                    }
+                                    var indexName = "".concat(firstName, " ").concat(lastName);
+                                    var userName = findUser();
+                                    if (userName !== indexName) {
+                                        $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                                    }
+                                }
+                            }
+                        };
+                        var buildDepartments = function (userDepartment) {
+                            departmentSelect.innerHTML = '';
+                            var departmentsTotal = departmentsData.children.length;
+                            for (var i = 0; i < departmentsTotal; i++) {
+                                var department = "".concat(departmentsData.children[i].id);
+                                var option = document.createElement('option');
+                                option.value = UseValufy_1.UseValufy.forString(department);
+                                option.textContent = UseCapify_1.UseCapify.forString(' ', department);
+                                if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
+                                    option.selected = true;
+                                }
+                                else {
+                                    option.selected = false;
+                                }
+                                departmentSelect.append(option);
+                            }
+                            buildColleagues_1(departmentSelect.selectedOptions[0].value);
+                        };
+                        $(departmentSelect).on('change', function () {
+                            logButton.parentElement.style.display = 'grid';
+                            assignButton.parentElement.style.display = 'none';
+                            buildColleagues_1(departmentSelect.selectedOptions[0].value);
+                        });
+                        buildDepartments(findDepartment(findUser()));
+                        break;
                     case 'logged-pending':
                         break;
                     case 'manage-pending':
