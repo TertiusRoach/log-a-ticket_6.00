@@ -26,7 +26,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
-                var assignDate = indexOverlay.querySelector('#pending-date');
+                var assignDate = indexOverlay.querySelector('#assigned-date');
                 pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
@@ -38,22 +38,38 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                             if (colleagueSelect.length === 1) {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
+                                pendingDate.className = 'disabled-text';
+                                assignDate.className = 'disabled-text';
                             }
                             else if (subjectJQ === '' || descriptionJQ === '') {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
+                                pendingDate.className = 'disabled-text';
+                                assignDate.className = 'disabled-text';
                             }
                             else if (subjectJQ !== '' && descriptionJQ === '') {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
+                                pendingDate.className = 'disabled-text';
+                                assignDate.className = 'disabled-text';
                             }
                             else if (subjectJQ === '' && descriptionJQ !== '') {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
+                                pendingDate.className = 'disabled-text';
+                                assignDate.className = 'disabled-text';
+                            }
+                            else if (colleagueSelect.value === 'select-colleague') {
+                                logButton.className = '';
+                                assignButton.className = 'disabled-button';
+                                pendingDate.className = '';
+                                assignDate.className = 'disabled-text';
                             }
                             else {
                                 logButton.className = '';
                                 assignButton.className = '';
+                                pendingDate.className = '';
+                                assignDate.className = '';
                             }
                             break;
                     }
@@ -62,9 +78,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     var container = document.querySelector("#".concat(block));
                     var page = block.split('-')[1];
                     document.querySelector("#".concat(block)).innerHTML = '';
+                    document.querySelector("#".concat(block)).className = "default-".concat(page);
                     container.style.display = 'none';
                     activeButton.className = '';
-                    document.querySelector("#".concat(block)).className = "default-".concat(page);
                 }
                 function toggleButton(colleague) {
                     if (colleague !== 'select-colleague') {
@@ -75,6 +91,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     }
                 }
                 $(departmentSelect)
+                    .on('change', function () {
+                    checkState('log-ticket');
+                    toggleButton(colleagueSelect.value);
+                })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
                         logButton.className = 'disabled-button';
@@ -84,12 +104,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
                     }
-                })
-                    .on('change', function () {
-                    checkState('log-ticket');
-                    toggleButton(colleagueSelect.value);
                 });
                 $(colleagueSelect)
+                    .on('change', function () {
+                    assignDate.style.display = 'grid';
+                    assignDate.className = '';
+                })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
                         logButton.className = 'disabled-button';
@@ -116,6 +136,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     closeContainer('index-overlay');
                     indexMain.style.display = 'grid';
                 });
+                checkState('log-ticket');
                 console.log('--LogOverlay.js Loaded');
             }
             return initiateEvents;
