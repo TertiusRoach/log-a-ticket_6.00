@@ -34,11 +34,11 @@ export namespace LogOverlay {
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let mainButton: String = '[id*="-ticket"] button';
       let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
       let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
       let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
       let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
-      let departmentForm: HTMLFormElement = indexOverlay.querySelector('#department-form');
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
@@ -115,6 +115,16 @@ export namespace LogOverlay {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(mainButton).on('click', () => {
+        if (logButton.className !== 'disabled-button') {
+          if (assignButton.className !== 'disabled-button') {
+            console.log('Log as Assigned');
+          } else {
+            console.log('Log as Pending');
+          }
+        }
+      });
+
       $(departmentSelect)
         .on('change', () => {
           assignDate.innerText = undefined;
@@ -151,56 +161,84 @@ export namespace LogOverlay {
           toggleButton(colleagueSelect.value);
         });
 
-      $(ticketSubject).on('keyup', () => {
-        var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
-        var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
-        if (subjectJQ !== '' || descriptionJQ !== '') {
-          if (colleagueSelect.value === 'select-colleague') {
-            logButton.className = '';
-            pendingDate.className = '';
+      $(ticketSubject)
+        .on('keydown', () => {
+          var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
+          var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
+          if (subjectJQ === '' || descriptionJQ === '') {
+            logButton.className = 'disabled-button';
+            assignButton.className = 'disabled-button';
+            pendingDate.className = 'disabled-text';
+            assignDate.className = 'disabled-text';
           } else {
-            logButton.className = '';
-            pendingDate.className = '';
-            assignButton.className = '';
-            assignDate.className = '';
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
           }
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
-        } else if (colleagueSelect.length === 1) {
-          logButton.className = 'disabled-button';
-          assignButton.className = 'disabled-button';
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
-        } else {
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
-        }
-      });
-      $(ticketDescription).on('keyup', () => {
-        var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
-        var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
-        if (subjectJQ !== '' || descriptionJQ !== '') {
-          if (colleagueSelect.value === 'select-colleague') {
-            logButton.className = '';
-            pendingDate.className = '';
+        })
+        .on('keyup', () => {
+          var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
+          var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
+          if (subjectJQ !== '' || descriptionJQ !== '') {
+            if (colleagueSelect.value === 'select-colleague') {
+              logButton.className = '';
+              pendingDate.className = '';
+            } else {
+              logButton.className = '';
+              pendingDate.className = '';
+              assignButton.className = '';
+              assignDate.className = '';
+            }
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          } else if (colleagueSelect.length === 1) {
+            logButton.className = 'disabled-button';
+            assignButton.className = 'disabled-button';
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
           } else {
-            logButton.className = '';
-            pendingDate.className = '';
-            assignButton.className = '';
-            assignDate.className = '';
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
           }
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
-        } else if (colleagueSelect.length === 1) {
-          logButton.className = 'disabled-button';
-          assignButton.className = 'disabled-button';
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
-        } else {
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
-        }
-      });
+        });
+      $(ticketDescription)
+        .on('keydown', () => {
+          var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
+          var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
+          if (subjectJQ === '' || descriptionJQ === '') {
+            logButton.className = 'disabled-button';
+            assignButton.className = 'disabled-button';
+            pendingDate.className = 'disabled-text';
+            assignDate.className = 'disabled-text';
+          } else {
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          }
+        })
+        .on('keyup', () => {
+          var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
+          var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
+          if (subjectJQ !== '' || descriptionJQ !== '') {
+            if (colleagueSelect.value === 'select-colleague') {
+              logButton.className = '';
+              pendingDate.className = '';
+            } else {
+              logButton.className = '';
+              pendingDate.className = '';
+              assignButton.className = '';
+              assignDate.className = '';
+            }
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          } else if (colleagueSelect.length === 1) {
+            logButton.className = 'disabled-button';
+            assignButton.className = 'disabled-button';
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          } else {
+            checkState('log-ticket');
+            toggleButton(colleagueSelect.value);
+          }
+        });
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
         indexMain.style.display = 'grid';
