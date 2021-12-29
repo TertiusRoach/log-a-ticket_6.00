@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor", "code/tools/UseDatefy"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LogOverlay = void 0;
@@ -15,7 +15,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
-                var mainButton = '[id*="-ticket"] button';
+                var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
                 var ticketSubject = indexOverlay.querySelector('#ticket-subject');
@@ -24,9 +24,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
-                var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
                 var assignDate = indexOverlay.querySelector('#assigned-date');
+                var mainButton = '[id*="-ticket"] button';
                 pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
                 function checkState(button) {
@@ -94,11 +94,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 }
                 $(mainButton).on('click', function () {
                     if (logButton.className !== 'disabled-button') {
-                        if (assignButton.className !== 'disabled-button') {
-                            console.log('Log as Assigned');
-                        }
-                        else {
-                            console.log('Log as Pending');
+                        switch (assignButton.className) {
+                            case 'disabled-button':
+                                new DataUpdate_1.DataUpdate.forBlock('pending');
+                                break;
+                            default:
+                                new DataUpdate_1.DataUpdate.forBlock('assigned');
                         }
                     }
                 });

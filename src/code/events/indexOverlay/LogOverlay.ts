@@ -34,7 +34,8 @@ export namespace LogOverlay {
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
-      let mainButton: String = '[id*="-ticket"] button';
+
+      let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
       let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
       let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
@@ -43,10 +44,9 @@ export namespace LogOverlay {
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
       let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
-
-      let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
       let assignDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
+      let mainButton: String = '[id*="-ticket"] button';
       pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
@@ -117,10 +117,12 @@ export namespace LogOverlay {
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(mainButton).on('click', () => {
         if (logButton.className !== 'disabled-button') {
-          if (assignButton.className !== 'disabled-button') {
-            console.log('Log as Assigned');
-          } else {
-            console.log('Log as Pending');
+          switch (assignButton.className) {
+            case 'disabled-button':
+              new DataUpdate.forBlock('pending');
+              break;
+            default:
+              new DataUpdate.forBlock('assigned');
           }
         }
       });
@@ -243,14 +245,6 @@ export namespace LogOverlay {
         closeContainer('index-overlay');
         indexMain.style.display = 'grid';
       });
-
-      /*
-      $(departmentSelect).on('change', () => {
-        checkState('log-ticket');
-        toggleButton(colleagueSelect.value);
-      });
-      */
-
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       checkState('log-ticket');
       console.log('--LogOverlay.js Loaded');

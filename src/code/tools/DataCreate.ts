@@ -162,13 +162,6 @@ export namespace DataCreate {
       }
     }
   }
-  function findUser() {
-    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
-    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
-    let userIndex: number = userSelect.selectedIndex;
-    let userName: String = userSelect.children[userIndex].textContent;
-    return `${userName}`;
-  }
   function findDepartment(userName: String) {
     const employeesData: HTMLDivElement = document.querySelector('#employees-data');
     let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
@@ -187,8 +180,14 @@ export namespace DataCreate {
       }
     }
   }
-
-  export function userDepartment() {
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
+  }
+  function userDepartment() {
     const employeesData: HTMLDivElement = document.querySelector('#employees-data');
     let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
     let employeesTotal: Number = employeesData.getElementsByTagName('article').length;

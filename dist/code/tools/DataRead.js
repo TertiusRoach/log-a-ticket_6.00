@@ -36,8 +36,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 switch (page) {
                     case 'colleague-main':
                         var selectedColleague = indexSidebar.querySelector('.active-colleague .text').textContent;
-                        colleagueHeader.textContent = "".concat(selectedColleague);
                         var activeColleague = indexMain.querySelector('#colleague-name').textContent;
+                        colleagueHeader.textContent = "".concat(selectedColleague);
                         for (var i = 0; i < ticketsTotal; i++) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
@@ -477,6 +477,25 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     return occupation;
                 case 'role':
                     return role;
+            }
+        }
+        function userDepartment() {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            var userSelect = document.querySelector('#user-form select');
+            var userName = userSelect.selectedOptions[0].textContent;
+            for (var i = 0; i < employeesTotal; i++) {
+                var firstName = employeesCollection[i].children[0].textContent;
+                var middleName = employeesCollection[i].children[1].textContent;
+                var lastName = employeesCollection[i].children[2].textContent;
+                var department = employeesCollection[i].children[3].textContent;
+                var occupation = employeesCollection[i].children[4].textContent;
+                var role = employeesCollection[i].children[5].textContent;
+                var employeeName = "".concat(firstName, " ").concat(lastName);
+                if (employeeName === userName) {
+                    return department;
+                }
             }
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
