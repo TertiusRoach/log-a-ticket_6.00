@@ -528,7 +528,7 @@ export namespace DataRead {
     }
   }
   export class forOverlay {
-    constructor(page: 'logged-pending' | 'manage-pending') {
+    constructor(page: 'log-overlay' | 'logged-pending' | 'manage-pending') {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -541,8 +541,20 @@ export namespace DataRead {
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
+      let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
+      let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
+      let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
+      let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
+      let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
+
+      let departmentsData: HTMLDivElement;
+      let employeesData: HTMLDivElement;
+      let ticketsData: HTMLDivElement;
+      let userDepartment: String;
+      let userName: String;
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
@@ -550,6 +562,107 @@ export namespace DataRead {
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
+        case 'log-overlay':
+          departmentsData = indexData.querySelector('#departments-data');
+          employeesData = indexData.querySelector('#employees-data');
+          ticketsData = indexData.querySelector('#tickets-data');
+          userDepartment = findDepartment(findUser());
+
+          let buildColleagues = (selectedDepartment: String) => {
+            colleagueSelect.innerHTML = '';
+            $(colleagueSelect).append(`<option value="select-colleague" disabled selected>Select Colleague</option>`);
+            let employeesTotal = employeesData.children.length;
+            for (let i = 0; i < employeesTotal; i++) {
+              let firstName: String = get(i, 'first-name');
+              let middleName: String = get(i, 'middle-name');
+              let lastName: String = get(i, 'last-name');
+              let department: String = get(i, 'department');
+              let occupation: String = get(i, 'occupation');
+              let role: String = get(i, 'role');
+
+              if (UseValufy.forString(department) === `${selectedDepartment}`) {
+                var classValue: String = `${firstName.toLowerCase()}-${lastName.toLowerCase()}`;
+                var mainHeader: HTMLCollection = indexMain.getElementsByTagName('header');
+                var activeName: String;
+                if (typeof mainHeader[0] !== `${undefined}`) {
+                  activeName = mainHeader[0].lastChild.textContent;
+                }
+                var indexName: String = `${firstName} ${lastName}`;
+                var userName: String = findUser();
+
+                if (userName !== indexName) {
+                  $(colleagueSelect).append(`<option value="${UseValufy.forString(indexName)}">${firstName} ${lastName}</option>`);
+                }
+
+                /*
+                // This blocks a loop, still trying to comprehend its schematics
+                switch (recall) {
+                  case true:
+                    if (activeName !== indexName) {
+                      appendColleague(colleagueSelect, indexName);
+                    }
+                    break;
+                  case false:
+                    if (userName !== indexName) {
+                      appendColleague(colleagueSelect, indexName);
+                    }
+                    break;
+                }
+                */
+              }
+            }
+          };
+
+          let buildDepartments = (userDepartment: String) => {
+            departmentSelect.innerHTML = '';
+
+            let departmentsTotal = departmentsData.children.length;
+            for (let i = 0; i < departmentsTotal; i++) {
+              let department: String = `${departmentsData.children[i].id}`;
+              let option = document.createElement('option');
+              option.value = UseValufy.forString(department);
+              option.textContent = UseCapify.forString(' ', department);
+
+              if (userDepartment === UseCapify.forString(' ', department)) {
+                option.selected = true;
+              } else {
+                option.selected = false;
+              }
+              departmentSelect.append(option);
+            }
+            buildColleagues(departmentSelect.selectedOptions[0].value);
+          };
+
+          $(departmentSelect)
+            .on('click', () => {
+              if (colleagueSelect.length === 1) {
+                logButton.className = 'disabled-button';
+                assignButton.className = 'disabled-button';
+              } else {
+                logButton.className = '';
+                assignButton.className = '';
+              }
+            })
+            .on('change', () => {
+              logButton.parentElement.style.display = 'grid';
+              assignButton.parentElement.style.display = 'none';
+
+              pendingMark.style.background = `${GetColor.primaryDark()}`;
+              assignedMark.style.background = `${GetColor.primaryMedium()}`;
+
+              if (colleagueSelect.length === 1) {
+                logButton.className = 'disabled-button';
+                assignButton.className = 'disabled-button';
+              } else {
+                logButton.className = '';
+                assignButton.className = '';
+              }
+
+              buildColleagues(departmentSelect.selectedOptions[0].value);
+            });
+
+          buildDepartments(findDepartment(findUser()));
+          break;
         case 'logged-pending':
           break;
         case 'manage-pending':
