@@ -46,11 +46,9 @@ export namespace LogOverlay {
 
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
+      let assignDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
       pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
-      /*
-      let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
-      assignedDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
-      */
+      assignDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -58,24 +56,38 @@ export namespace LogOverlay {
       function checkState(button: String | 'log-ticket') {
         var subjectJQ: String | JQuery<String> = `${$('#ticket-subject').val()}`;
         var descriptionJQ: String | JQuery<String> = `${$('#ticket-description').val()}`;
-
         switch (button) {
           case 'log-ticket':
             if (colleagueSelect.length === 1) {
               logButton.className = 'disabled-button';
               assignButton.className = 'disabled-button';
+              pendingDate.className = 'disabled-text';
+              assignDate.className = 'disabled-text';
             } else if (subjectJQ === '' || descriptionJQ === '') {
               logButton.className = 'disabled-button';
               assignButton.className = 'disabled-button';
+              pendingDate.className = 'disabled-text';
+              assignDate.className = 'disabled-text';
             } else if (subjectJQ !== '' && descriptionJQ === '') {
               logButton.className = 'disabled-button';
               assignButton.className = 'disabled-button';
+              pendingDate.className = 'disabled-text';
+              assignDate.className = 'disabled-text';
             } else if (subjectJQ === '' && descriptionJQ !== '') {
               logButton.className = 'disabled-button';
               assignButton.className = 'disabled-button';
+              pendingDate.className = 'disabled-text';
+              assignDate.className = 'disabled-text';
+            } else if (colleagueSelect.value === 'select-colleague') {
+              logButton.className = '';
+              assignButton.className = 'disabled-button';
+              pendingDate.className = '';
+              assignDate.className = 'disabled-text';
             } else {
               logButton.className = '';
               assignButton.className = '';
+              pendingDate.className = '';
+              assignDate.className = '';
             }
             break;
         }
@@ -84,9 +96,9 @@ export namespace LogOverlay {
         let container: HTMLElement = document.querySelector(`#${block}`);
         let page: String = block.split('-')[1];
         document.querySelector(`#${block}`).innerHTML = '';
+        document.querySelector(`#${block}`).className = `default-${page}`;
         container.style.display = 'none';
         activeButton.className = '';
-        document.querySelector(`#${block}`).className = `default-${page}`;
       }
       function toggleButton(colleague: String | 'select-colleague') {
         if (colleague !== 'select-colleague') {
@@ -102,6 +114,10 @@ export namespace LogOverlay {
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(departmentSelect)
+        .on('change', () => {
+          checkState('log-ticket');
+          toggleButton(colleagueSelect.value);
+        })
         .on('click', () => {
           if (colleagueSelect.length === 1) {
             logButton.className = 'disabled-button';
@@ -110,13 +126,13 @@ export namespace LogOverlay {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);
           }
-        })
-        .on('change', () => {
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
         });
 
       $(colleagueSelect)
+        .on('change', () => {
+          assignDate.style.display = 'grid';
+          assignDate.className = '';
+        })
         .on('click', () => {
           if (colleagueSelect.length === 1) {
             logButton.className = 'disabled-button';
@@ -152,6 +168,7 @@ export namespace LogOverlay {
       */
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      checkState('log-ticket');
       console.log('--LogOverlay.js Loaded');
     }
   }
