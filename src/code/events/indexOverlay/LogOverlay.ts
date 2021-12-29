@@ -46,11 +46,9 @@ export namespace LogOverlay {
 
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
+      let assignDate: HTMLElement = indexOverlay.querySelector('#pending-date');
       pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
-      /*
-      let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
-      assignedDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
-      */
+      assignDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 

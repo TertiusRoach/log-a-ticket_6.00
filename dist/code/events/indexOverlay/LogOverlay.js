@@ -26,7 +26,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
+                var assignDate = indexOverlay.querySelector('#pending-date');
                 pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
                 function checkState(button) {
                     var subjectJQ = "".concat($('#ticket-subject').val());
