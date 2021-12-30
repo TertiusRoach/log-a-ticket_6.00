@@ -129,6 +129,9 @@
 #index-overlay section footer section [id*=name] {
   color: white;
 }
+#index-overlay section footer section [id*=date] {
+  filter: drop-shadow(0.5rem 0.5rem 1rem black);
+}
 #index-overlay section footer section [id*=pending] {
   color: #f8af58;
 }
@@ -434,12 +437,52 @@
 .logged-pending #ticket-container {
   grid-column: 2/9;
   grid-row: 5/20;
+  /*
+  #ticket-top {
+    .delete-ticket {
+      color: $deleted-default;
+    }
+    .assign-ticket {
+      color: $assigned-default;
+    }
+  }
+  */
 }
-.logged-pending #ticket-container #ticket-top .delete-ticket {
-  color: #f95555;
+.logged-pending #ticket-container #ticket-top #delete-ticket {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
-.logged-pending #ticket-container #ticket-top .assign-ticket {
-  color: #4c72a4;
+.logged-pending #ticket-container #ticket-top #delete-ticket button {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  overflow: visible;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: none;
+}
+.logged-pending #ticket-container #ticket-top #delete-ticket button h1 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.logged-pending #ticket-container #ticket-top #delete-ticket button:hover {
+  color: #f58a07;
+}
+.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button,
+.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover {
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.5;
+}
+.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button svg,
+.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover svg {
+  cursor: default;
 }
 .logged-pending #overlay-canvas {
   grid-column: 2/9;
