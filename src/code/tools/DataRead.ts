@@ -52,11 +52,14 @@ export namespace DataRead {
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       clearTickets(ticketsMain, status);
+
       switch (page) {
         case 'colleague-main':
-          let selectedColleague: String = indexSidebar.querySelector('.active-colleague .text').textContent;
-          let activeColleague: String = indexMain.querySelector('#colleague-name').textContent;
+          /* Leave it in this order ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+          var selectedColleague: String = indexSidebar.querySelector('.active-colleague .text').textContent;
           colleagueHeader.textContent = `${selectedColleague}`;
+          var activeColleague: String = indexMain.querySelector('#colleague-name').textContent;
+
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo: HTMLCollection | any = ticketsCollection[i].children[1];
             let ticketStatus: String = ticketInfo.children[0].textContent.toLowerCase();
@@ -74,6 +77,7 @@ export namespace DataRead {
             let noteResolved: String = ticketInfo.children[12].textContent;
             let dateDeleted: String = ticketInfo.children[13].textContent;
             let noteDeleted: String = ticketInfo.children[14].textContent;
+
             if (receiverName === activeColleague) {
               //--▼ Colleague Main ▼--//
               $(ticketsMain).append(

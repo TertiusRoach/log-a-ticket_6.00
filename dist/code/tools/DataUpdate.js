@@ -1,14 +1,18 @@
-define(["require", "exports", "code/tools/UseCapify", "code/tools/UseDatefy"], function (require, exports, UseCapify_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseDatefy"], function (require, exports, GetEvent_1, GetPath_1, UseCapify_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataUpdate = void 0;
     var DataUpdate;
     (function (DataUpdate) {
-        var forBlock = (function () {
-            function forBlock(status) {
+        var forTicket = (function () {
+            function forTicket(status) {
                 var indexBody = document.querySelector('#index-body');
                 var userSelect = indexBody.querySelector('#user-form select');
                 var indexHeader = document.querySelector('#index-header');
+                var loggedTickets = indexHeader.querySelector('#logged-tickets button');
+                var logAticket = indexHeader.querySelector('#log-a-ticket button');
+                var manageTickets = indexHeader.querySelector('#manage-tickets button');
+                var activeButton = indexHeader.querySelector('.active-page');
                 var indexMain = document.querySelector('#index-main');
                 var ticketsMain = indexMain.querySelector('#tickets-container');
                 var indexSidebar = document.querySelector('#index-sidebar');
@@ -25,74 +29,90 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseDatefy"], f
                 var indexData = document.querySelector('#index-data');
                 var ticketsData = indexData.querySelector('#tickets-data');
                 var departmentsContainer = indexData.querySelector('#departments-data');
+                var employeesContainer = indexData.querySelector('#employees-data');
+                var employeesTotal = employeesContainer.children.length;
                 var ticketsContainer = indexData.querySelector('#tickets-data');
                 var ticketsCollection = ticketsData.getElementsByTagName('article');
                 var ticketsTotal = ticketsCollection.length;
+                function closeContainer(block) {
+                    var page = block.split('-')[1];
+                    indexOverlay.className = "default-".concat(page);
+                    indexOverlay.style.display = 'none';
+                    indexMain.style.display = 'grid';
+                    indexOverlay.innerHTML = '';
+                    logAticket.className = '';
+                }
+                function highlightButton(role) { }
+                function receiverDefault(receiverName, receiverDepartment) {
+                    switch (receiverName) {
+                        case "".concat(undefined):
+                            return receiverDepartment;
+                        default:
+                            return receiverName;
+                    }
+                }
+                function refreshPages() {
+                    new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
+                    new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    new GetEvent_1.GetEvent.forPage("".concat(indexMain.className), GetPath_1.GetPath.forHTML('main'));
+                }
                 switch (status) {
                     case 'pending':
-                        var logStatus = "".concat(returnTicket('status', "".concat(status)));
-                        var logRating = "".concat(returnTicket('rating', "".concat(status)));
-                        var logSubject = "".concat(returnTicket('subject', "".concat(status)));
-                        var logDescription = "".concat(returnTicket('description', "".concat(status)));
-                        var logSenderName = "".concat(returnTicket('sender', "".concat(status)));
-                        var logSenderDepartment = "".concat(returnTicket('sender-department', "".concat(status)));
-                        var logReceiverName = "".concat(returnTicket('receiver', "".concat(status)));
-                        var logReceiverDepartment = "".concat(returnTicket('receiver-department', "".concat(status)));
-                        var logDateShort = "".concat(returnTicket('date-short', "".concat(status)));
-                        var logDatePending = "".concat(returnTicket('date-pending', "".concat(status)));
-                        var logDateAssigned = "".concat(returnTicket('date-assigned', "".concat(status)));
-                        var logDateResolved = "".concat(returnTicket('date-resolved', "".concat(status)));
-                        var logNoteResolved = "".concat(returnTicket('resolved-note', "".concat(status)));
-                        var logDateDeleted = "".concat(returnTicket('date-deleted', "".concat(status)));
-                        var logNoteDeleted = "".concat(returnTicket('deleted-note', "".concat(status)));
-                        for (var i = 0; i < ticketsTotal; i++) { }
-                        console.log("Ticket: ".concat(UseCapify_1.UseCapify.forString(' ', status)));
+                        var logStatus = "".concat(findTicket('status', "".concat(status)));
+                        var logRating = "".concat(findTicket('rating', "".concat(status)));
+                        var logSubject = "".concat(findTicket('subject', "".concat(status)));
+                        var logDescription = "".concat(findTicket('description', "".concat(status)));
+                        var logSenderName = "".concat(findTicket('sender', "".concat(status)));
+                        var logSenderDepartment = "".concat(findTicket('sender-department', "".concat(status)));
+                        var logReceiverName = "".concat(findTicket('receiver', "".concat(status)));
+                        var logReceiverDepartment = "".concat(findTicket('receiver-department', "".concat(status)));
+                        var logDateShort = "".concat(findTicket('date-short', "".concat(status)));
+                        var logDatePending = "".concat(findTicket('date-pending', "".concat(status)));
+                        var logDateAssigned = "".concat(findTicket('date-assigned', "".concat(status)));
+                        var logDateResolved = "".concat(findTicket('date-resolved', "".concat(status)));
+                        var logNoteResolved = "".concat(findTicket('resolved-note', "".concat(status)));
+                        var logDateDeleted = "".concat(findTicket('date-deleted', "".concat(status)));
+                        var logNoteDeleted = "".concat(findTicket('deleted-note', "".concat(status)));
+                        $(ticketsData).append("<article class=\"ticket ".concat(logStatus.toLowerCase(), "\">\n              <header>\n                <p class=\"shortdate\">").concat(logDateShort, "</p>\n                <p class=\"subject\">").concat(logSubject, "</p>\n                <p class=\"receiver\">").concat(receiverDefault(logReceiverName, logReceiverDepartment), "</p>\n              </header>                  \n              <footer>\n                <p class=\"ticket-status\">").concat(logStatus, "</p>\n                <p class=\"ticket-rating\">").concat(logRating, "</p>\n                <p class=\"subject-text\">").concat(logSubject, "</p>\n                <p class=\"description-text\">").concat(logDescription, "</p>\n                <p class=\"sender-name\">").concat(logSenderName, "</p>\n                <p class=\"sender-department\">").concat(logSenderDepartment, "</p>\n                <p class=\"receiver-name\">").concat(logReceiverName, "</p>\n                <p class=\"receiver-department\">").concat(logReceiverDepartment, "</p>\n                <p class=\"date-short\">").concat(logDateShort, "</p>\n                <p class=\"date-pending\">").concat(logDatePending, "</p>\n                <p class=\"date-assigned\">").concat(logDateAssigned, "</p>\n                <p class=\"date-resolved\">").concat(logDateResolved, "</p>\n                <p class=\"note-resolved\">").concat(logNoteResolved, "</p>\n                <p class=\"date-deleted\">").concat(logDateDeleted, "</p>\n                <p class=\"note-deleted\">").concat(logNoteDeleted, "</p>\n              </footer>\n            </article>"));
+                        closeContainer('index-overlay');
+                        refreshPages();
                         break;
                     case 'assigned':
-                        var logStatus = "".concat(returnTicket('status', "".concat(status)));
-                        var logRating = "".concat(returnTicket('rating', "".concat(status)));
-                        var logSubject = "".concat(returnTicket('subject', "".concat(status)));
-                        var logDescription = "".concat(returnTicket('description', "".concat(status)));
-                        var logSenderName = "".concat(returnTicket('sender', "".concat(status)));
-                        var logSenderDepartment = "".concat(returnTicket('sender-department', "".concat(status)));
-                        var logReceiverName = "".concat(returnTicket('receiver', "".concat(status)));
-                        var logReceiverDepartment = "".concat(returnTicket('receiver-department', "".concat(status)));
-                        var logDateShort = "".concat(returnTicket('date-short', "".concat(status)));
-                        var logDatePending = "".concat(returnTicket('date-pending', "".concat(status)));
-                        var logDateAssigned = "".concat(returnTicket('date-assigned', "".concat(status)));
-                        var logDateResolved = "".concat(returnTicket('date-resolved', "".concat(status)));
-                        var logNoteResolved = "".concat(returnTicket('resolved-note', "".concat(status)));
-                        var logDateDeleted = "".concat(returnTicket('date-deleted', "".concat(status)));
-                        var logNoteDeleted = "".concat(returnTicket('deleted-note', "".concat(status)));
-                        console.log(logStatus);
-                        console.log(logRating);
-                        console.log(logSubject);
-                        console.log(logDescription);
-                        console.log(logSenderName);
-                        console.log(logSenderDepartment);
-                        console.log(logReceiverName);
-                        console.log(logReceiverDepartment);
-                        console.log(logDateShort);
-                        console.log(logDatePending);
-                        console.log(logDateAssigned);
-                        console.log(logDateResolved);
-                        console.log(logNoteResolved);
-                        console.log(logDateDeleted);
-                        console.log(logNoteDeleted);
-                        console.log("Ticket: ".concat(UseCapify_1.UseCapify.forString(' ', status)));
+                        var assignStatus = "".concat(findTicket('status', "".concat(status)));
+                        var assignRating = "".concat(findTicket('rating', "".concat(status)));
+                        var assignSubject = "".concat(findTicket('subject', "".concat(status)));
+                        var assignDescription = "".concat(findTicket('description', "".concat(status)));
+                        var assignSenderName = "".concat(findTicket('sender', "".concat(status)));
+                        var assignSenderDepartment = "".concat(findTicket('sender-department', "".concat(status)));
+                        var assignReceiverName = "".concat(findTicket('receiver', "".concat(status)));
+                        var assignReceiverDepartment = "".concat(findTicket('receiver-department', "".concat(status)));
+                        var assignDateShort = "".concat(findTicket('date-short', "".concat(status)));
+                        var assignDatePending = "".concat(findTicket('date-pending', "".concat(status)));
+                        var assignDateAssigned = "".concat(findTicket('date-assigned', "".concat(status)));
+                        var assignDateResolved = "".concat(findTicket('date-resolved', "".concat(status)));
+                        var assignNoteResolved = "".concat(findTicket('resolved-note', "".concat(status)));
+                        var assignDateDeleted = "".concat(findTicket('date-deleted', "".concat(status)));
+                        var assignNoteDeleted = "".concat(findTicket('deleted-note', "".concat(status)));
+                        $(ticketsData).append("<article class=\"ticket ".concat(assignStatus.toLowerCase(), "\">\n              <header>\n                <p class=\"shortdate\">").concat(assignDateShort, "</p>\n                <p class=\"subject\">").concat(assignSubject, "</p>\n                <p class=\"receiver\">").concat(assignReceiverName, "</p>\n              </header>                  \n              <footer>\n                <p class=\"ticket-status\">").concat(assignStatus, "</p>\n                <p class=\"ticket-rating\">").concat(assignRating, "</p>\n                <p class=\"subject-text\">").concat(assignSubject, "</p>\n                <p class=\"description-text\">").concat(assignDescription, "</p>\n                <p class=\"sender-name\">").concat(assignSenderName, "</p>\n                <p class=\"sender-department\">").concat(assignSenderDepartment, "</p>\n                <p class=\"receiver-name\">").concat(assignReceiverName, "</p>\n                <p class=\"receiver-department\">").concat(assignReceiverDepartment, "</p>\n                <p class=\"date-short\">").concat(assignDateShort, "</p>\n                <p class=\"date-pending\">").concat(assignDatePending, "</p>\n                <p class=\"date-assigned\">").concat(assignDateAssigned, "</p>\n                <p class=\"date-resolved\">").concat(assignDateResolved, "</p>\n                <p class=\"note-resolved\">").concat(assignNoteResolved, "</p>\n                <p class=\"date-deleted\">").concat(assignDateDeleted, "</p>\n                <p class=\"note-deleted\">").concat(assignNoteDeleted, "</p>\n              </footer>\n            </article>"));
+                        closeContainer('index-overlay');
+                        refreshPages();
                         break;
                     case 'resolved':
                         console.log("Ticket: ".concat(UseCapify_1.UseCapify.forString(' ', status)));
+                        closeContainer('index-overlay');
+                        refreshPages();
                         break;
                     case 'deleted':
                         console.log("Ticket: ".concat(UseCapify_1.UseCapify.forString(' ', status)));
+                        closeContainer('index-overlay');
+                        refreshPages();
                         break;
                 }
                 console.log('--DataUpdate.js Loaded');
             }
-            return forBlock;
+            return forTicket;
         }());
-        DataUpdate.forBlock = forBlock;
+        DataUpdate.forTicket = forTicket;
         function findDepartment(userName) {
             var employeesData = document.querySelector('#employees-data');
             var employeesCollection = employeesData.getElementsByTagName('article');
@@ -110,39 +130,7 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseDatefy"], f
                 }
             }
         }
-        function findUser() {
-            var indexBody = document.querySelector('#index-body');
-            var userSelect = indexBody.querySelector('#user-form select');
-            var userIndex = userSelect.selectedIndex;
-            var userName = userSelect.children[userIndex].textContent;
-            return "".concat(userName);
-        }
-        function get(index, data) {
-            var employeesData = document.querySelector('#employees-data');
-            var employeesCollection = employeesData.getElementsByTagName('article');
-            var employeesTotal = employeesData.getElementsByTagName('article').length;
-            var firstName = employeesCollection[index].children[0].textContent;
-            var middleName = employeesCollection[index].children[1].textContent;
-            var lastName = employeesCollection[index].children[2].textContent;
-            var department = employeesCollection[index].children[3].textContent;
-            var occupation = employeesCollection[index].children[4].textContent;
-            var role = employeesCollection[index].children[5].textContent;
-            switch (data) {
-                case 'first-name':
-                    return firstName;
-                case 'middle-name':
-                    return middleName;
-                case 'last-name':
-                    return lastName;
-                case 'department':
-                    return department;
-                case 'occupation':
-                    return occupation;
-                case 'role':
-                    return role;
-            }
-        }
-        function returnTicket(info, status) {
+        function findTicket(info, status) {
             var indexBody = document.querySelector('#index-body');
             var indexHeader = document.querySelector('#index-header');
             var indexMain = document.querySelector('#index-main');
@@ -205,8 +193,9 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseDatefy"], f
                             }
                             return;
                         case 'receiver-department':
-                            liveReceiverDepartment = undefined;
-                            return;
+                            var departmentSelect = document.querySelector('#index-overlay #department-form select');
+                            liveReceiverDepartment = UseCapify_1.UseCapify.forString('-', departmentSelect.value);
+                            return liveReceiverDepartment;
                         case 'date-short':
                             liveDateShort = UseDatefy_1.UseDatefy.forToday('2000-01-01');
                             return liveDateShort;
@@ -256,18 +245,18 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseDatefy"], f
                                 }
                             }
                         case 'receiver':
-                            var colleagueSelect = document.querySelector('#index-overlay #colleague-form select');
-                            liveReceiverName = UseCapify_1.UseCapify.forString('-', colleagueSelect.value);
+                            var colleagueSelect = document.querySelector('#index-overlay #ticket-container footer #colleague-form select');
+                            switch (colleagueSelect) {
+                                case null:
+                                    liveReceiverName = undefined;
+                                default:
+                                    liveReceiverName = UseCapify_1.UseCapify.forString('-', colleagueSelect.value);
+                            }
                             return liveReceiverName;
                         case 'receiver-department':
-                            var colleagueSelect = document.querySelector('#index-overlay #colleague-form select');
-                            liveReceiverName = UseCapify_1.UseCapify.forString('-', colleagueSelect.value);
-                            for (var i = 0; i < employeesTotal; i++) {
-                                if ("".concat(get(i, 'first-name'), " ").concat(get(i, 'last-name')) === liveReceiverName) {
-                                    liveReceiverDepartment = get(i, 'department');
-                                    return liveReceiverDepartment;
-                                }
-                            }
+                            var departmentSelect = document.querySelector('#index-overlay #department-form select');
+                            liveReceiverDepartment = UseCapify_1.UseCapify.forString('-', departmentSelect.value);
+                            return liveReceiverDepartment;
                         case 'date-short':
                             liveDateShort = UseDatefy_1.UseDatefy.forToday('2000-01-01');
                             return liveDateShort;
@@ -292,11 +281,42 @@ define(["require", "exports", "code/tools/UseCapify", "code/tools/UseDatefy"], f
                             liveNoteDeleted = undefined;
                             return liveNoteDeleted;
                     }
-                    break;
                 case 'resolved':
                     break;
                 case 'deleted':
                     break;
+            }
+        }
+        function findUser() {
+            var indexBody = document.querySelector('#index-body');
+            var userSelect = indexBody.querySelector('#user-form select');
+            var userIndex = userSelect.selectedIndex;
+            var userName = userSelect.children[userIndex].textContent;
+            return "".concat(userName);
+        }
+        function get(index, data) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            var firstName = employeesCollection[index].children[0].textContent;
+            var middleName = employeesCollection[index].children[1].textContent;
+            var lastName = employeesCollection[index].children[2].textContent;
+            var department = employeesCollection[index].children[3].textContent;
+            var occupation = employeesCollection[index].children[4].textContent;
+            var role = employeesCollection[index].children[5].textContent;
+            switch (data) {
+                case 'first-name':
+                    return firstName;
+                case 'middle-name':
+                    return middleName;
+                case 'last-name':
+                    return lastName;
+                case 'department':
+                    return department;
+                case 'occupation':
+                    return occupation;
+                case 'role':
+                    return role;
             }
         }
         function userDepartment() {

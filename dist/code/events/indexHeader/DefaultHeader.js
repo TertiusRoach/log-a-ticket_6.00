@@ -12,6 +12,16 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
+                switch (indexMain.className) {
+                    case 'logged-main':
+                        manageButton.className = '';
+                        loggedButton.className = 'active-page';
+                        break;
+                    case 'manage-main':
+                        loggedButton.className = '';
+                        manageButton.className = 'active-page';
+                        break;
+                }
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');

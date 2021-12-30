@@ -18,6 +18,9 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace DefaultHeader {
   export class initiateEvents {
     constructor() {
+      /* First ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
@@ -26,6 +29,16 @@ export namespace DefaultHeader {
       let manageButton: HTMLElement = indexHeader.querySelector('#manage-tickets button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
+      switch (indexMain.className) {
+        case 'logged-main':
+          manageButton.className = '';
+          loggedButton.className = 'active-page';
+          break;
+        case 'manage-main':
+          loggedButton.className = '';
+          manageButton.className = 'active-page';
+          break;
+      }
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -33,6 +46,11 @@ export namespace DefaultHeader {
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(loggedButton).on('click', () => {
         manageButton.className = '';
         loggedButton.className = 'active-page';
@@ -50,6 +68,9 @@ export namespace DefaultHeader {
         new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
         new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
       });
+
+      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
       /*--► console.log('--DefaultHeader.js Loaded'); ◄--*/
     }
   }

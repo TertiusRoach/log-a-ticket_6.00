@@ -1,3 +1,13 @@
+//--|▼| Tools (Import) |▼|--//
+import { DataCreate } from 'code/tools/DataCreate';
+import { DataErase } from 'code/tools/DataErase';
+import { DataRead } from 'code/tools/DataRead';
+import { DataUpdate } from 'code/tools/DataUpdate';
+
+import { UseCapify } from 'code/tools/UseCapify';
+import { UseDatefy } from 'code/tools/UseDatefy';
+import { UseValufy } from 'code/tools/UseValufy';
+
 //--|▼| Events (Import) |▼|--//
 import { DefaultBody } from 'code/events/indexBody/defaultBody';
 
@@ -252,6 +262,33 @@ export namespace GetEvent {
             GetEvent.loadData(pageName);
           });
       }
+    }
+  }
+
+  function get(index: number, data: String | 'first-name' | 'middle-name' | 'last-name' | 'department' | 'occupation' | 'role') {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+
+    let firstName: String = employeesCollection[index].children[0].textContent;
+    let middleName: String = employeesCollection[index].children[1].textContent;
+    let lastName: String = employeesCollection[index].children[2].textContent;
+    let department: String = employeesCollection[index].children[3].textContent;
+    let occupation: String = employeesCollection[index].children[4].textContent;
+    let role: String = employeesCollection[index].children[5].textContent;
+    switch (data) {
+      case 'first-name':
+        return firstName;
+      case 'middle-name':
+        return middleName;
+      case 'last-name':
+        return lastName;
+      case 'department':
+        return department;
+      case 'occupation':
+        return occupation;
+      case 'role':
+        return role;
     }
   }
 }
