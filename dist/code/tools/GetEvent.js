@@ -188,6 +188,31 @@ define(["require", "exports", "code/events/indexBody/defaultBody", "code/events/
             return forPage;
         }());
         GetEvent.forPage = forPage;
+        function get(index, data) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            var firstName = employeesCollection[index].children[0].textContent;
+            var middleName = employeesCollection[index].children[1].textContent;
+            var lastName = employeesCollection[index].children[2].textContent;
+            var department = employeesCollection[index].children[3].textContent;
+            var occupation = employeesCollection[index].children[4].textContent;
+            var role = employeesCollection[index].children[5].textContent;
+            switch (data) {
+                case 'first-name':
+                    return firstName;
+                case 'middle-name':
+                    return middleName;
+                case 'last-name':
+                    return lastName;
+                case 'department':
+                    return department;
+                case 'occupation':
+                    return occupation;
+                case 'role':
+                    return role;
+            }
+        }
     })(GetEvent = exports.GetEvent || (exports.GetEvent = {}));
 });
 

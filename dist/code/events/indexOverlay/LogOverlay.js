@@ -79,10 +79,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 function closeContainer(block) {
                     var container = document.querySelector("#".concat(block));
                     var page = block.split('-')[1];
-                    document.querySelector("#".concat(block)).innerHTML = '';
-                    document.querySelector("#".concat(block)).className = "default-".concat(page);
                     container.style.display = 'none';
-                    activeButton.className = '';
+                    logAticket.className = '';
+                    container.innerHTML = '';
+                    container.className = "default-".concat(page);
                 }
                 function toggleButton(colleague) {
                     if (colleague !== 'select-colleague') {
@@ -96,10 +96,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     if (logButton.className !== 'disabled-button') {
                         switch (assignButton.className) {
                             case 'disabled-button':
-                                new DataUpdate_1.DataUpdate.forBlock('pending');
+                                new DataUpdate_1.DataUpdate.forTicket('pending');
                                 break;
                             default:
-                                new DataUpdate_1.DataUpdate.forBlock('assigned');
+                                new DataUpdate_1.DataUpdate.forTicket('assigned');
                         }
                     }
                 });

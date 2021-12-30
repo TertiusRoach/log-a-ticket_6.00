@@ -97,10 +97,10 @@ export namespace LogOverlay {
       function closeContainer(block: String | 'index-body' | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
         let container: HTMLElement = document.querySelector(`#${block}`);
         let page: String = block.split('-')[1];
-        document.querySelector(`#${block}`).innerHTML = '';
-        document.querySelector(`#${block}`).className = `default-${page}`;
         container.style.display = 'none';
-        activeButton.className = '';
+        logAticket.className = '';
+        container.innerHTML = '';
+        container.className = `default-${page}`;
       }
       function toggleButton(colleague: String | 'select-colleague') {
         if (colleague !== 'select-colleague') {
@@ -119,10 +119,10 @@ export namespace LogOverlay {
         if (logButton.className !== 'disabled-button') {
           switch (assignButton.className) {
             case 'disabled-button':
-              new DataUpdate.forBlock('pending');
+              new DataUpdate.forTicket('pending');
               break;
             default:
-              new DataUpdate.forBlock('assigned');
+              new DataUpdate.forTicket('assigned');
           }
         }
       });

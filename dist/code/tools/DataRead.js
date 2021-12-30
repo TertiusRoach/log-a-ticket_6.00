@@ -36,8 +36,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 switch (page) {
                     case 'colleague-main':
                         var selectedColleague = indexSidebar.querySelector('.active-colleague .text').textContent;
-                        var activeColleague = indexMain.querySelector('#colleague-name').textContent;
                         colleagueHeader.textContent = "".concat(selectedColleague);
+                        var activeColleague = indexMain.querySelector('#colleague-name').textContent;
                         for (var i = 0; i < ticketsTotal; i++) {
                             var ticketInfo = ticketsCollection[i].children[1];
                             var ticketStatus = ticketInfo.children[0].textContent.toLowerCase();
