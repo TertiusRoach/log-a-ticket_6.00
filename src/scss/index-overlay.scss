@@ -133,6 +133,9 @@
         [id*='name'] {
           color: white;
         }
+        [id*='date'] {
+          filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        }
         [id*='pending'] {
           color: $pending-default;
         }
@@ -485,6 +488,46 @@
     grid-column: 2/9;
     grid-row: 5/20;
 
+    #ticket-top #delete-ticket {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      button {
+        grid-column: 2/3;
+        grid-row: 2/3;
+
+        display: flex;
+        overflow: visible;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        h1 {
+          white-space: nowrap;
+
+          line-height: 1rem;
+          padding-left: 1rem;
+        }
+        border: none;
+        color: white;
+        background: none;
+      }
+      button:hover {
+        color: $secondary-dark;
+      }
+      .disabled-button,
+      .disabled-button:hover {
+        cursor: default;
+        color: $disabled-default;
+        opacity: 0.5;
+        svg {
+          cursor: default;
+        }
+      }
+    }
+
+    /*
     #ticket-top {
       .delete-ticket {
         color: $deleted-default;
@@ -493,6 +536,7 @@
         color: $assigned-default;
       }
     }
+    */
   }
   #overlay-canvas {
     grid-column: 2/9;
