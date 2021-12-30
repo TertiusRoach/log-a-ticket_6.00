@@ -8,11 +8,31 @@
   <header id="ticket-top">
     <input id="ticket-subject" placeholder="Subject" value="${subjectText}" type="text" />
 
-    <div id="delete-ticket">
+    <div id="assign-ticket" style="display: none">
       <!--► Default: class="disabled-button" ◄-->
+      <button class="disabled-button">
+        <i class="fad fa-user-plus fa-4x"></i>
+        <h1>Assign Ticket</h1>
+      </button>
+    </div>
+    <div id="delete-ticket">
       <button class="">
         <i class="fad fa-trash-alt fa-4x"></i>
         <h1>Delete Ticket</h1>
+      </button>
+    </div>
+    <div id="move-ticket" style="display: none">
+      <!--► Default: class="disabled-button" ◄-->
+      <button class="disabled-button">
+        <i class="fad fa-truck-moving fa-4x"></i>
+        <h1>Move Ticket</h1>
+      </button>
+    </div>
+    <div id="save-ticket" style="display: none">
+      <!--► Default: class="disabled-button" ◄-->
+      <button class="disabled-button">
+        <i class="fad fa-save fa-4x"></i>
+        <h1>Save Ticket</h1>
       </button>
     </div>
   </header>
@@ -28,15 +48,15 @@
 
       <form id="colleague-form">
         <select>
-          <option value="colleague-select" selected>Pick Colleague</option>
+          <option value="select-colleague" selected disabled>Select Colleague</option>
 
           <option value="name-surname">Name Surname</option>
         </select>
       </form>
 
       <h4 id="pending-date">${00 Weekday, Month YYYY}</h4>
-      <h4 id="assigned-date" class="disabled-text" style="display: none">${00 Weekday, Month YYYY}</h4>
-      <h4 id="deleted-date" class="disabled-text" style="display: none">${00 Weekday, Month YYYY}</h4>
+      <h4 id="assigned-date" class="disabled-text" style="display: none">undefined</h4>
+      <h4 id="deleted-date" class="disabled-text" style="display: none">undefined</h4>
     </section>
   </footer>
 </section>

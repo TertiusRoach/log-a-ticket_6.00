@@ -36,7 +36,25 @@ export namespace LoggedPending {
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let deleteButton: HTMLElement = indexOverlay.querySelector('#delete-ticket button');
+
+      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+
+      let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
+      let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
+
+      /*
+      
+      let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
+      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
+
+
+
+      let mainButton: String = '[id*="-ticket"] button';
+      pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
+      */
 
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
       let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
@@ -45,17 +63,6 @@ export namespace LoggedPending {
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
       let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
       let deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
-      /*
-      let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
-      let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
-      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
-      let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
-      let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
-
-
-      let mainButton: String = '[id*="-ticket"] button';
-      pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
-      */
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -71,9 +78,73 @@ export namespace LoggedPending {
         activeTicket.className = `${status}`;
         indexMain.style.display = 'grid';
       }
+      function resetDefault() {
+        let activeTicket = ticketsMain.querySelector('.active-ticket');
+        var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
+        var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
+        var subjectText: String = activeTicket.children[3].children[2].innerHTML;
+        var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
+        var senderName: String = activeTicket.children[3].children[4].innerHTML;
+        var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
+        var receiverName: String = activeTicket.children[3].children[6].innerHTML;
+        var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
+        var dateShort: String = activeTicket.children[3].children[8].innerHTML;
+        var datePending: String = activeTicket.children[3].children[9].innerHTML;
+        var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
+        var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
+        var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
+        var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
+        var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
+
+        if (colleagueSelect.value === 'select-colleague') {
+          pendingMark.style.background = `${GetColor.primaryDark()}`;
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+          deletedMark.style.background = `${GetColor.primaryMedium()}`;
+
+          assignedDate.textContent = undefined;
+          // Default: Delete ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ //
+          assignButton.parentElement.style.display = 'none';
+          deleteButton.parentElement.style.display = 'flex';
+          moveButton.parentElement.style.display = 'none';
+          saveButton.parentElement.style.display = 'none';
+        } else if (colleagueSelect.value !== 'select-colleague') {
+          assignedDate.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          // Assign ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ //
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+          assignButton.parentElement.style.display = 'grid';
+          assignedDate.className = '';
+          assignButton.className = '';
+
+          deletedMark.style.background = `${GetColor.primaryMedium()}`;
+          pendingMark.style.background = `${GetColor.primaryMedium()}`;
+
+          deleteButton.parentElement.style.display = 'none';
+          moveButton.parentElement.style.display = 'none';
+          saveButton.parentElement.style.display = 'none';
+        }
+      }
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      $(departmentSelect).on('change', () => {
+        resetDefault();
+      });
+
+      $(colleagueSelect).on('click', () => {
+        resetDefault();
+      });
+
+      $(assignButton)
+        .on('mouseenter', () => {
+          assignButton.style.color = `${GetColor.primaryLight()}`;
+          assignedDate.style.display = 'grid';
+        })
+        .on('mouseleave', () => {
+          assignButton.style.color = '';
+          assignedDate.style.display = 'none';
+        });
+
       $(deleteButton)
         .on('mouseenter', () => {
           deletedMark.style.background = `${GetColor.primaryDark()}`;
@@ -81,16 +152,20 @@ export namespace LoggedPending {
           pendingMark.style.background = `${GetColor.primaryMedium()}`;
           assignedMark.style.background = `${GetColor.primaryMedium()}`;
 
+          deleteButton.style.color = `${GetColor.deletedDefault()}`;
+          deletedDate.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
           deletedDate.style.display = 'grid';
           deletedDate.className = '';
         })
         .on('mouseleave', () => {
           pendingMark.style.background = `${GetColor.primaryDark()}`;
-
-          deletedMark.style.background = `${GetColor.primaryMedium()}`;
           assignedMark.style.background = `${GetColor.primaryMedium()}`;
 
+          deletedMark.style.background = `${GetColor.primaryMedium()}`;
+
+          deleteButton.style.color = '';
           deletedDate.style.display = 'none';
+          deletedDate.textContent = 'undefined';
           deletedDate.className = 'disabled-text';
         });
       $(closeOverlay).on('click', () => {

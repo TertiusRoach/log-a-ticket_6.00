@@ -25,7 +25,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
-                var assignDate = indexOverlay.querySelector('#assigned-date');
+                var assignedDate = indexOverlay.querySelector('#assigned-date');
                 var mainButton = '[id*="-ticket"] button';
                 pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                 var indexData = document.querySelector('#index-data');
@@ -38,40 +38,40 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
                                 pendingDate.className = 'disabled-text';
-                                assignDate.className = 'disabled-text';
+                                assignedDate.className = 'disabled-text';
                             }
                             else if (subjectJQ === '' || descriptionJQ === '') {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
                                 pendingDate.className = 'disabled-text';
-                                assignDate.className = 'disabled-text';
+                                assignedDate.className = 'disabled-text';
                             }
                             else if (subjectJQ !== '' && descriptionJQ === '') {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
                                 pendingDate.className = 'disabled-text';
-                                assignDate.className = 'disabled-text';
+                                assignedDate.className = 'disabled-text';
                             }
                             else if (subjectJQ === '' && descriptionJQ !== '') {
                                 logButton.className = 'disabled-button';
                                 assignButton.className = 'disabled-button';
                                 pendingDate.className = 'disabled-text';
-                                assignDate.className = 'disabled-text';
+                                assignedDate.className = 'disabled-text';
                             }
                             else if (colleagueSelect.value === 'select-colleague') {
                                 logButton.className = '';
                                 assignButton.className = 'disabled-button';
                                 pendingDate.className = '';
-                                assignDate.className = 'disabled-text';
+                                assignedDate.className = 'disabled-text';
                             }
                             else if (colleagueSelect.value !== 'select-colleague') {
-                                assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                                assignedDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                             }
                             else {
                                 logButton.className = '';
                                 assignButton.className = '';
                                 pendingDate.className = '';
-                                assignDate.className = '';
+                                assignedDate.className = '';
                             }
                             break;
                     }
@@ -102,11 +102,35 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                                 new DataUpdate_1.DataUpdate.forTicket('assigned');
                         }
                     }
+                    if ($(ticketSubject).val() === '') {
+                        ticketSubject.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketSubject.style.border = '';
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketDescription.style.border = '';
+                    }
+                });
+                $(assignButton)
+                    .on('mouseenter', function () {
+                    if (assignButton.className !== 'disabled-button') {
+                        assignButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
+                    }
+                    else {
+                        assignButton.style.color = '';
+                    }
+                })
+                    .on('mouseleave', function () {
+                    assignButton.style.color = '';
                 });
                 $(departmentSelect)
                     .on('change', function () {
-                    assignDate.innerText = undefined;
-                    assignDate.style.display = 'none';
+                    assignedDate.innerText = undefined;
+                    assignedDate.style.display = 'none';
                 })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
@@ -120,10 +144,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 });
                 $(colleagueSelect)
                     .on('change', function () {
-                    assignDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
-                    assignDate.style.display = 'grid';
-                    assignDate.className = '';
+                    assignedDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                    assignedDate.style.display = 'grid';
+                    assignedDate.className = '';
                     assignButton.className = '';
+                    checkState('log-ticket');
+                    toggleButton(colleagueSelect.value);
                 })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
@@ -134,10 +160,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
                     }
-                })
-                    .on('change', function () {
-                    checkState('log-ticket');
-                    toggleButton(colleagueSelect.value);
                 });
                 $(ticketSubject)
                     .on('keydown', function () {
@@ -147,7 +169,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                         logButton.className = 'disabled-button';
                         assignButton.className = 'disabled-button';
                         pendingDate.className = 'disabled-text';
-                        assignDate.className = 'disabled-text';
+                        assignedDate.className = 'disabled-text';
                     }
                     else {
                         checkState('log-ticket');
@@ -166,7 +188,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                             logButton.className = '';
                             pendingDate.className = '';
                             assignButton.className = '';
-                            assignDate.className = '';
+                            assignedDate.className = '';
                         }
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
@@ -180,6 +202,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     else {
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
+                    }
+                    if ($(ticketSubject).val() === '') {
+                        ticketSubject.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketSubject.style.border = '';
                     }
                 });
                 $(ticketDescription)
@@ -190,11 +218,14 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                         logButton.className = 'disabled-button';
                         assignButton.className = 'disabled-button';
                         pendingDate.className = 'disabled-text';
-                        assignDate.className = 'disabled-text';
+                        assignedDate.className = 'disabled-text';
                     }
                     else {
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = '';
                     }
                 })
                     .on('keyup', function () {
@@ -209,7 +240,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                             logButton.className = '';
                             pendingDate.className = '';
                             assignButton.className = '';
-                            assignDate.className = '';
+                            assignedDate.className = '';
                         }
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
@@ -223,6 +254,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     else {
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketDescription.style.border = '';
                     }
                 });
                 $(closeOverlay).on('click', function () {
