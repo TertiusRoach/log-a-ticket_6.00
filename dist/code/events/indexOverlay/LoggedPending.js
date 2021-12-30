@@ -40,20 +40,60 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     activeTicket.className = "".concat(status);
                     indexMain.style.display = 'grid';
                 }
-                console.log(assignButton);
-                $(colleagueSelect).on('click', function () {
+                function resetDefault() {
+                    var activeTicket = ticketsMain.querySelector('.active-ticket');
+                    var ticketStatus = activeTicket.children[3].children[0].innerHTML;
+                    var ticketRating = activeTicket.children[3].children[1].innerHTML;
+                    var subjectText = activeTicket.children[3].children[2].innerHTML;
+                    var descriptionText = activeTicket.children[3].children[3].innerHTML;
+                    var senderName = activeTicket.children[3].children[4].innerHTML;
+                    var senderDepartment = activeTicket.children[3].children[5].innerHTML;
+                    var receiverName = activeTicket.children[3].children[6].innerHTML;
+                    var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
+                    var dateShort = activeTicket.children[3].children[8].innerHTML;
+                    var datePending = activeTicket.children[3].children[9].innerHTML;
+                    var dateAssigned = activeTicket.children[3].children[10].innerHTML;
+                    var dateResolved = activeTicket.children[3].children[11].innerHTML;
+                    var noteResolved = activeTicket.children[3].children[12].innerHTML;
+                    var dateDeleted = activeTicket.children[3].children[13].innerHTML;
+                    var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                     if (colleagueSelect.value === 'select-colleague') {
+                        pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                        assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        assignedDate.textContent = undefined;
                         assignButton.parentElement.style.display = 'none';
                         deleteButton.parentElement.style.display = 'flex';
                         moveButton.parentElement.style.display = 'none';
                         saveButton.parentElement.style.display = 'none';
                     }
-                    else {
-                        assignButton.parentElement.style.display = 'flex';
+                    else if (colleagueSelect.value !== 'select-colleague') {
+                        assignedDate.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                        assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                        assignButton.parentElement.style.display = 'grid';
+                        assignedDate.className = '';
+                        assignButton.className = '';
+                        deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
                         deleteButton.parentElement.style.display = 'none';
                         moveButton.parentElement.style.display = 'none';
                         saveButton.parentElement.style.display = 'none';
                     }
+                }
+                $(departmentSelect).on('change', function () {
+                    resetDefault();
+                });
+                $(colleagueSelect).on('click', function () {
+                    resetDefault();
+                });
+                $(assignButton)
+                    .on('mouseenter', function () {
+                    assignButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
+                    assignedDate.style.display = 'grid';
+                })
+                    .on('mouseleave', function () {
+                    assignButton.style.color = '';
+                    assignedDate.style.display = 'none';
                 });
                 $(deleteButton)
                     .on('mouseenter', function () {

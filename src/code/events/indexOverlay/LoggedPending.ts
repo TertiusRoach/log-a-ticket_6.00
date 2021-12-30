@@ -78,25 +78,72 @@ export namespace LoggedPending {
         activeTicket.className = `${status}`;
         indexMain.style.display = 'grid';
       }
-      /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      function resetDefault() {
+        let activeTicket = ticketsMain.querySelector('.active-ticket');
+        var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
+        var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
+        var subjectText: String = activeTicket.children[3].children[2].innerHTML;
+        var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
+        var senderName: String = activeTicket.children[3].children[4].innerHTML;
+        var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
+        var receiverName: String = activeTicket.children[3].children[6].innerHTML;
+        var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
+        var dateShort: String = activeTicket.children[3].children[8].innerHTML;
+        var datePending: String = activeTicket.children[3].children[9].innerHTML;
+        var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
+        var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
+        var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
+        var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
+        var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
 
-      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-
-      console.log(assignButton);
-
-      $(colleagueSelect).on('click', () => {
         if (colleagueSelect.value === 'select-colleague') {
+          pendingMark.style.background = `${GetColor.primaryDark()}`;
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+          deletedMark.style.background = `${GetColor.primaryMedium()}`;
+
+          assignedDate.textContent = undefined;
+          // Default: Delete ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ //
           assignButton.parentElement.style.display = 'none';
           deleteButton.parentElement.style.display = 'flex';
           moveButton.parentElement.style.display = 'none';
           saveButton.parentElement.style.display = 'none';
-        } else {
-          assignButton.parentElement.style.display = 'flex';
+        } else if (colleagueSelect.value !== 'select-colleague') {
+          assignedDate.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          // Assign ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ //
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+          assignButton.parentElement.style.display = 'grid';
+          assignedDate.className = '';
+          assignButton.className = '';
+
+          deletedMark.style.background = `${GetColor.primaryMedium()}`;
+          pendingMark.style.background = `${GetColor.primaryMedium()}`;
+
           deleteButton.parentElement.style.display = 'none';
           moveButton.parentElement.style.display = 'none';
           saveButton.parentElement.style.display = 'none';
         }
+      }
+      /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      $(departmentSelect).on('change', () => {
+        resetDefault();
       });
+
+      $(colleagueSelect).on('click', () => {
+        resetDefault();
+      });
+
+      $(assignButton)
+        .on('mouseenter', () => {
+          assignButton.style.color = `${GetColor.primaryLight()}`;
+          assignedDate.style.display = 'grid';
+        })
+        .on('mouseleave', () => {
+          assignButton.style.color = '';
+          assignedDate.style.display = 'none';
+        });
 
       $(deleteButton)
         .on('mouseenter', () => {
