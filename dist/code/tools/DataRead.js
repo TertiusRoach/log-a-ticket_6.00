@@ -221,12 +221,12 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             coworkerFooter_1.innerHTML = '';
                             var employeesTotal = employeesData.children.length;
                             for (var i = 0; i < employeesTotal; i++) {
-                                var firstName = get(i, 'first-name');
-                                var middleName = get(i, 'middle-name');
-                                var lastName = get(i, 'last-name');
-                                var department = get(i, 'department');
-                                var occupation = get(i, 'occupation');
-                                var role = get(i, 'role');
+                                var firstName = getData(i, 'first-name');
+                                var middleName = getData(i, 'middle-name');
+                                var lastName = getData(i, 'last-name');
+                                var department = getData(i, 'department');
+                                var occupation = getData(i, 'occupation');
+                                var role = getData(i, 'role');
                                 if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
                                     var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
                                     var mainHeader = indexMain.getElementsByTagName('header');
@@ -257,7 +257,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                 }
                             }
                         };
-                        var buildDropdown = function (userDepartment) {
+                        var buildDepartments_1 = function (userDepartment) {
                             departmentSelect_1.innerHTML = '';
                             var departmentsTotal = departmentsData.children.length;
                             for (var i = 0; i < departmentsTotal; i++) {
@@ -275,7 +275,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             }
                             buildCoworkers_1(departmentSelect_1.selectedOptions[0].value, false);
                         };
-                        buildDropdown(findDepartment(findUser()));
+                        buildDepartments_1(findDepartment(findUser()));
                         coworkerButtons = coworkerFooter_1.getElementsByTagName('span');
                         var recall_1 = function (coworkerButtons) {
                             $(coworkerButtons).on('click', function () {
@@ -302,12 +302,12 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             employeesData = indexData.querySelector('#employees-data');
                             var employeesTotal = employeesData.getElementsByTagName('article').length;
                             for (var i = 0; i < employeesTotal; i++) {
-                                var firstName = get(i, 'first-name');
-                                var middleName = get(i, 'middle-name');
-                                var lastName = get(i, 'last-name');
-                                var department = get(i, 'department');
-                                var occupation = get(i, 'occupation');
-                                var role = get(i, 'role');
+                                var firstName = getData(i, 'first-name');
+                                var middleName = getData(i, 'middle-name');
+                                var lastName = getData(i, 'last-name');
+                                var department = getData(i, 'department');
+                                var occupation = getData(i, 'occupation');
+                                var role = getData(i, 'role');
                                 var classValue = UseValufy_1.UseValufy.forString("".concat(firstName, " ").concat(lastName));
                                 if (userDepartment === department) {
                                     if ("".concat(firstName, " ").concat(lastName) !== "".concat(findUser())) {
@@ -329,16 +329,28 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
+                var activeTicket = ticketsMain.querySelector('.active-ticket');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var deleteButton = indexOverlay.querySelector('#delete-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
+                var resolvedMark = indexOverlay.querySelector('.resolved-mark');
+                var deletedMark = indexOverlay.querySelector('.deleted-mark');
+                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
+                var ticketDescription = indexOverlay.querySelector('#ticket-description');
+                var pendingDate = indexOverlay.querySelector('#pending-date');
+                var assignedDate = indexOverlay.querySelector('#assigned-date');
+                var resolvedDate = indexOverlay.querySelector('#resolved-date');
+                var deletedDate = indexOverlay.querySelector('#deleted-date');
                 var indexData = document.querySelector('#index-data');
                 var departmentsData;
+                var departmentsTotal;
                 var employeesData;
                 var ticketsData;
                 var userDepartment;
@@ -349,50 +361,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         employeesData = indexData.querySelector('#employees-data');
                         ticketsData = indexData.querySelector('#tickets-data');
                         userDepartment = findDepartment(findUser());
-                        var buildColleagues_1 = function (selectedDepartment) {
-                            colleagueSelect.innerHTML = '';
-                            $(colleagueSelect).append("<option value=\"select-colleague\" disabled selected>Select Colleague</option>");
-                            var employeesTotal = employeesData.children.length;
-                            for (var i = 0; i < employeesTotal; i++) {
-                                var firstName = get(i, 'first-name');
-                                var middleName = get(i, 'middle-name');
-                                var lastName = get(i, 'last-name');
-                                var department = get(i, 'department');
-                                var occupation = get(i, 'occupation');
-                                var role = get(i, 'role');
-                                if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
-                                    var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
-                                    var mainHeader = indexMain.getElementsByTagName('header');
-                                    var activeName;
-                                    if (typeof mainHeader[0] !== "".concat(undefined)) {
-                                        activeName = mainHeader[0].lastChild.textContent;
-                                    }
-                                    var indexName = "".concat(firstName, " ").concat(lastName);
-                                    var userName = findUser();
-                                    if (userName !== indexName) {
-                                        $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
-                                    }
-                                }
-                            }
-                        };
-                        var buildDepartments = function (userDepartment) {
-                            departmentSelect.innerHTML = '';
-                            var departmentsTotal = departmentsData.children.length;
-                            for (var i = 0; i < departmentsTotal; i++) {
-                                var department = "".concat(departmentsData.children[i].id);
-                                var option = document.createElement('option');
-                                option.value = UseValufy_1.UseValufy.forString(department);
-                                option.textContent = UseCapify_1.UseCapify.forString(' ', department);
-                                if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
-                                    option.selected = true;
-                                }
-                                else {
-                                    option.selected = false;
-                                }
-                                departmentSelect.append(option);
-                            }
-                            buildColleagues_1(departmentSelect.selectedOptions[0].value);
-                        };
                         $(departmentSelect)
                             .on('click', function () {
                             if (colleagueSelect.length === 1) {
@@ -417,11 +385,35 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                 logButton.className = '';
                                 assignButton.className = '';
                             }
-                            buildColleagues_1(departmentSelect.selectedOptions[0].value);
+                            buildColleagues(departmentSelect.selectedOptions[0].value);
                         });
                         buildDepartments(findDepartment(findUser()));
                         break;
                     case 'logged-pending':
+                        departmentsData = indexData.querySelector('#departments-data');
+                        departmentsTotal = departmentsData.children.length;
+                        var ticketStatus = activeTicket.children[3].children[0].innerHTML;
+                        var ticketRating = activeTicket.children[3].children[1].innerHTML;
+                        var subjectText = activeTicket.children[3].children[2].innerHTML;
+                        var descriptionText = activeTicket.children[3].children[3].innerHTML;
+                        var senderName = activeTicket.children[3].children[4].innerHTML;
+                        var senderDepartment = activeTicket.children[3].children[5].innerHTML;
+                        var receiverName = activeTicket.children[3].children[6].innerHTML;
+                        var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
+                        var dateShort = activeTicket.children[3].children[8].innerHTML;
+                        var datePending = activeTicket.children[3].children[9].innerHTML;
+                        var dateAssigned = activeTicket.children[3].children[10].innerHTML;
+                        var dateResolved = activeTicket.children[3].children[11].innerHTML;
+                        var noteResolved = activeTicket.children[3].children[12].innerHTML;
+                        var dateDeleted = activeTicket.children[3].children[13].innerHTML;
+                        var noteDeleted = activeTicket.children[3].children[14].innerHTML;
+                        ticketSubject.value = "".concat(subjectText);
+                        ticketDescription.innerHTML = "".concat(descriptionText);
+                        pendingDate.innerHTML = "".concat(datePending);
+                        $(departmentSelect).on('change', function () {
+                            buildColleagues(departmentSelect.value);
+                        });
+                        buildDepartments(receiverDepartment);
                         break;
                     case 'manage-pending':
                         break;
@@ -454,7 +446,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
             var userName = userSelect.children[userIndex].textContent;
             return "".concat(userName);
         }
-        function get(index, data) {
+        function getData(index, data) {
             var employeesData = document.querySelector('#employees-data');
             var employeesCollection = employeesData.getElementsByTagName('article');
             var employeesTotal = employeesData.getElementsByTagName('article').length;
@@ -497,6 +489,58 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     return department;
                 }
             }
+        }
+        function buildColleagues(selectedDepartment) {
+            var indexMain = document.querySelector('#index-main');
+            var indexOverlay = document.querySelector('#index-overlay');
+            var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
+            colleagueSelect.innerHTML = "<option value=\"select-colleague\" selected disabled>Select Colleague</option>";
+            var employeesData = document.querySelector('#employees-data');
+            var employeesTotal = employeesData.children.length;
+            for (var i = 0; i < employeesTotal; i++) {
+                var firstName = getData(i, 'first-name');
+                var middleName = getData(i, 'middle-name');
+                var lastName = getData(i, 'last-name');
+                var department = getData(i, 'department');
+                var occupation = getData(i, 'occupation');
+                var role = getData(i, 'role');
+                if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                    var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                    var mainHeader = indexMain.getElementsByTagName('header');
+                    var activeName;
+                    if (typeof mainHeader[0] !== "".concat(undefined)) {
+                        activeName = mainHeader[0].lastChild.textContent;
+                    }
+                    var indexName = "".concat(firstName, " ").concat(lastName);
+                    var userName = findUser();
+                    if (userName !== indexName) {
+                        $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                    }
+                }
+            }
+        }
+        function buildDepartments(userDepartment) {
+            var indexOverlay = document.querySelector('#index-overlay');
+            var departmentSelect = indexOverlay.querySelector('#department-form select');
+            var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
+            var indexData = document.querySelector('#index-data');
+            var departmentsData = indexData.querySelector('#departments-data');
+            departmentSelect.innerHTML = '';
+            var departmentsTotal = departmentsData.children.length;
+            for (var i = 0; i < departmentsTotal; i++) {
+                var department = "".concat(departmentsData.children[i].id);
+                var option = document.createElement('option');
+                option.value = UseValufy_1.UseValufy.forString(department);
+                option.textContent = UseCapify_1.UseCapify.forString(' ', department);
+                if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
+                    option.selected = true;
+                }
+                else {
+                    option.selected = false;
+                }
+                departmentSelect.append(option);
+            }
+            buildColleagues(departmentSelect.selectedOptions[0].value);
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
 });

@@ -309,47 +309,13 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
-.log-overlay #ticket-container #ticket-top #log-ticket {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-.log-overlay #ticket-container #ticket-top #log-ticket button {
-  grid-column: 2/3;
-  grid-row: 2/3;
-  display: flex;
-  overflow: visible;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border: none;
-  color: white;
-  background: none;
-}
-.log-overlay #ticket-container #ticket-top #log-ticket button h1 {
-  white-space: nowrap;
-  line-height: 1rem;
-  padding-left: 1rem;
-}
-.log-overlay #ticket-container #ticket-top #log-ticket button:hover {
-  color: #f58a07;
-}
-.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button,
-.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button:hover {
-  cursor: default;
-  color: #646e7e;
-  opacity: 0.5;
-}
-.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button svg,
-.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button:hover svg {
-  cursor: default;
-}
+.log-overlay #ticket-container #ticket-top #log-ticket,
 .log-overlay #ticket-container #ticket-top #assign-ticket {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
+.log-overlay #ticket-container #ticket-top #log-ticket button,
 .log-overlay #ticket-container #ticket-top #assign-ticket button {
   grid-column: 2/3;
   grid-row: 2/3;
@@ -363,20 +329,26 @@
   color: white;
   background: none;
 }
+.log-overlay #ticket-container #ticket-top #log-ticket button h1,
 .log-overlay #ticket-container #ticket-top #assign-ticket button h1 {
   white-space: nowrap;
   line-height: 1rem;
   padding-left: 1rem;
 }
+.log-overlay #ticket-container #ticket-top #log-ticket button:hover,
 .log-overlay #ticket-container #ticket-top #assign-ticket button:hover {
   color: #f58a07;
 }
+.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button,
+.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button:hover,
 .log-overlay #ticket-container #ticket-top #assign-ticket .disabled-button,
 .log-overlay #ticket-container #ticket-top #assign-ticket .disabled-button:hover {
   cursor: default;
   color: #646e7e;
   opacity: 0.5;
 }
+.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button svg,
+.log-overlay #ticket-container #ticket-top #log-ticket .disabled-button:hover svg,
 .log-overlay #ticket-container #ticket-top #assign-ticket .disabled-button svg,
 .log-overlay #ticket-container #ticket-top #assign-ticket .disabled-button:hover svg {
   cursor: default;
@@ -448,12 +420,14 @@
   }
   */
 }
-.logged-pending #ticket-container #ticket-top #delete-ticket {
+.logged-pending #ticket-container #ticket-top #delete-ticket,
+.logged-pending #ticket-container #ticket-top #assign-ticket {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
-.logged-pending #ticket-container #ticket-top #delete-ticket button {
+.logged-pending #ticket-container #ticket-top #delete-ticket button,
+.logged-pending #ticket-container #ticket-top #assign-ticket button {
   grid-column: 2/3;
   grid-row: 2/3;
   display: flex;
@@ -466,22 +440,28 @@
   color: white;
   background: none;
 }
-.logged-pending #ticket-container #ticket-top #delete-ticket button h1 {
+.logged-pending #ticket-container #ticket-top #delete-ticket button h1,
+.logged-pending #ticket-container #ticket-top #assign-ticket button h1 {
   white-space: nowrap;
   line-height: 1rem;
   padding-left: 1rem;
 }
-.logged-pending #ticket-container #ticket-top #delete-ticket button:hover {
+.logged-pending #ticket-container #ticket-top #delete-ticket button:hover,
+.logged-pending #ticket-container #ticket-top #assign-ticket button:hover {
   color: #f58a07;
 }
 .logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button,
-.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover {
+.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover,
+.logged-pending #ticket-container #ticket-top #assign-ticket .disabled-button,
+.logged-pending #ticket-container #ticket-top #assign-ticket .disabled-button:hover {
   cursor: default;
   color: #646e7e;
   opacity: 0.5;
 }
 .logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button svg,
-.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover svg {
+.logged-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover svg,
+.logged-pending #ticket-container #ticket-top #assign-ticket .disabled-button svg,
+.logged-pending #ticket-container #ticket-top #assign-ticket .disabled-button:hover svg {
   cursor: default;
 }
 .logged-pending #overlay-canvas {
