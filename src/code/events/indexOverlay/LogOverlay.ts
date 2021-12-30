@@ -124,6 +124,16 @@ export namespace LogOverlay {
               new DataUpdate.forTicket('assigned');
           }
         }
+        if ($(ticketSubject).val() === '') {
+          ticketSubject.style.border = `2px solid ${GetColor.secondaryDark()}`;
+        } else {
+          ticketSubject.style.border = '';
+        }
+        if ($(ticketDescription).val() === '') {
+          ticketDescription.style.border = `2px solid ${GetColor.secondaryDark()}`;
+        } else {
+          ticketDescription.style.border = '';
+        }
       });
 
       $(departmentSelect)
@@ -147,6 +157,9 @@ export namespace LogOverlay {
           assignDate.style.display = 'grid';
           assignDate.className = '';
           assignButton.className = '';
+
+          checkState('log-ticket');
+          toggleButton(colleagueSelect.value);
         })
         .on('click', () => {
           if (colleagueSelect.length === 1) {
@@ -156,10 +169,6 @@ export namespace LogOverlay {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);
           }
-        })
-        .on('change', () => {
-          checkState('log-ticket');
-          toggleButton(colleagueSelect.value);
         });
 
       $(ticketSubject)
@@ -200,6 +209,11 @@ export namespace LogOverlay {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);
           }
+          if ($(ticketSubject).val() === '') {
+            ticketSubject.style.border = `2px solid ${GetColor.secondaryDark()}`;
+          } else {
+            ticketSubject.style.border = '';
+          }
         });
       $(ticketDescription)
         .on('keydown', () => {
@@ -213,6 +227,9 @@ export namespace LogOverlay {
           } else {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);
+          }
+          if ($(ticketDescription).val() === '') {
+            ticketDescription.style.border = '';
           }
         })
         .on('keyup', () => {
@@ -238,6 +255,11 @@ export namespace LogOverlay {
           } else {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);
+          }
+          if ($(ticketDescription).val() === '') {
+            ticketDescription.style.border = `2px solid ${GetColor.secondaryDark()}`;
+          } else {
+            ticketDescription.style.border = '';
           }
         });
       $(closeOverlay).on('click', () => {

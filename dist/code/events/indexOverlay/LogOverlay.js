@@ -102,6 +102,18 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                                 new DataUpdate_1.DataUpdate.forTicket('assigned');
                         }
                     }
+                    if ($(ticketSubject).val() === '') {
+                        ticketSubject.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketSubject.style.border = '';
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketDescription.style.border = '';
+                    }
                 });
                 $(departmentSelect)
                     .on('change', function () {
@@ -124,6 +136,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     assignDate.style.display = 'grid';
                     assignDate.className = '';
                     assignButton.className = '';
+                    checkState('log-ticket');
+                    toggleButton(colleagueSelect.value);
                 })
                     .on('click', function () {
                     if (colleagueSelect.length === 1) {
@@ -134,10 +148,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
                     }
-                })
-                    .on('change', function () {
-                    checkState('log-ticket');
-                    toggleButton(colleagueSelect.value);
                 });
                 $(ticketSubject)
                     .on('keydown', function () {
@@ -181,6 +191,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
                     }
+                    if ($(ticketSubject).val() === '') {
+                        ticketSubject.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketSubject.style.border = '';
+                    }
                 });
                 $(ticketDescription)
                     .on('keydown', function () {
@@ -195,6 +211,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     else {
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = '';
                     }
                 })
                     .on('keyup', function () {
@@ -223,6 +242,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     else {
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketDescription.style.border = '';
                     }
                 });
                 $(closeOverlay).on('click', function () {
