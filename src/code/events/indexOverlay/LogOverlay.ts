@@ -34,7 +34,6 @@ export namespace LogOverlay {
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
-
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
       let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
