@@ -39,17 +39,7 @@ export namespace ManagePending {
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
-        let container: HTMLElement = document.querySelector(`#${block}`);
-        container.innerHTML = '';
-        container.className = '';
-        container.className = `default-${block.split('-')[1]}`;
-        container.style.display = 'none';
 
-        var status: String = activeTicket.classList[0];
-        activeTicket.className = `${status}`;
-        indexMain.style.display = 'grid';
-      }
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
@@ -60,5 +50,18 @@ export namespace ManagePending {
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       console.log('--ManagePending.js Loaded');
     }
+  }
+  function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
+    const indexMain: HTMLElement = document.querySelector('#index-main');
+    var ticketsMain: HTMLDivElement = indexMain.querySelector('#tickets-container');
+    var activeTicket: HTMLElement = ticketsMain.querySelector('.active-ticket');
+    var container: HTMLElement = document.querySelector(`#${block}`);
+    container.innerHTML = '';
+    container.className = '';
+    container.style.display = 'none';
+    container.className = `default-${block.split('-')[1]}`;
+    activeTicket.className = activeTicket.classList[0];
+
+    indexMain.style.display = 'grid';
   }
 }

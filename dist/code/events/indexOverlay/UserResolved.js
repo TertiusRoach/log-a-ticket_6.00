@@ -17,16 +17,6 @@ define(["require", "exports"], function (require, exports) {
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
                 var indexData = document.querySelector('#index-data');
-                function closeContainer(block) {
-                    var container = document.querySelector("#".concat(block));
-                    container.innerHTML = '';
-                    container.className = '';
-                    container.className = "default-".concat(block.split('-')[1]);
-                    container.style.display = 'none';
-                    var status = activeTicket.classList[0];
-                    activeTicket.className = "".concat(status);
-                    indexMain.style.display = 'grid';
-                }
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });
@@ -35,6 +25,18 @@ define(["require", "exports"], function (require, exports) {
             return initiateEvents;
         }());
         UserResolved.initiateEvents = initiateEvents;
+        function closeContainer(block) {
+            var indexMain = document.querySelector('#index-main');
+            var ticketsMain = indexMain.querySelector('#tickets-container');
+            var activeTicket = ticketsMain.querySelector('.active-ticket');
+            var container = document.querySelector("#".concat(block));
+            container.innerHTML = '';
+            container.className = '';
+            container.style.display = 'none';
+            container.className = "default-".concat(block.split('-')[1]);
+            activeTicket.className = activeTicket.classList[0];
+            indexMain.style.display = 'grid';
+        }
     })(UserResolved = exports.UserResolved || (exports.UserResolved = {}));
 });
 
