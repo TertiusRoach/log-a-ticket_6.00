@@ -45,7 +45,6 @@ export namespace LoggedDeleted {
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
 
-      console.log(liveSubject);
       liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
       liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
       liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;

@@ -28,6 +28,7 @@
   cursor: pointer;
 }
 #index-overlay section {
+  filter: drop-shadow(0 0 8px black);
   display: inherit;
   overflow: hidden;
   grid-template-columns: 1rem 1fr 1rem;
@@ -60,7 +61,6 @@
   border: 2px solid #fcd5aa;
 }
 #index-overlay section header input:read-only {
-  filter: drop-shadow(0.5rem 0.5rem 1rem black);
   cursor: default;
   border: none;
   color: white;
@@ -74,12 +74,6 @@
   grid-template-columns: 1fr 24rem;
   grid-template-rows: 1fr;
 }
-#index-overlay section footer [id*=note]:read-only {
-  filter: none;
-  height: 100%;
-  margin-left: 1rem;
-  color: white;
-}
 #index-overlay section footer textarea {
   resize: none;
   display: flex;
@@ -90,7 +84,7 @@
   line-height: 1rem;
   font-weight: 600;
   font-size: 1rem;
-  padding: 4px 8px 0 0;
+  padding: 8px 8px 0 8px;
   border: 2px solid #909cc2;
   color: #084887;
 }
@@ -98,7 +92,6 @@
   border: 2px solid #fcd5aa;
 }
 #index-overlay section footer textarea:read-only {
-  filter: drop-shadow(0.5rem 0.5rem 1rem black);
   cursor: default;
   resize: none;
   border: none;
@@ -114,13 +107,16 @@
   font-size: 1rem;
   color: white;
 }
+#index-overlay section footer [id*=note]:read-only {
+  height: 100%;
+  margin-left: 1rem;
+  color: white;
+}
 #index-overlay section footer #resolved-note {
-  filter: drop-shadow(0.5rem 0.5rem 1rem black);
-  color: #08870c;
+  color: #cce2cc;
 }
 #index-overlay section footer #deleted-note {
-  filter: drop-shadow(0.5rem 0.5rem 1rem black);
-  color: #f95555;
+  color: #e7c3c3;
 }
 #index-overlay section footer section {
   grid-column: 2/3;
@@ -149,27 +145,23 @@
   border: 2px solid #fcd5aa;
 }
 #index-overlay section footer section h4 {
-  filter: drop-shadow(0.5rem 0.5rem 1rem black);
   cursor: default;
   margin: 0 0 1rem 1rem;
 }
 #index-overlay section footer section [id*=name] {
   color: white;
 }
-#index-overlay section footer section [id*=date] {
-  filter: drop-shadow(0.5rem 0.5rem 1rem black);
-}
 #index-overlay section footer section [id*=pending] {
   color: #f8af58;
 }
 #index-overlay section footer section [id*=assigned] {
-  color: #4c72a4;
+  color: #94a9c5;
 }
 #index-overlay section footer section [id*=resolved] {
-  color: #08870c;
+  color: #cce2cc;
 }
 #index-overlay section footer section [id*=deleted] {
-  color: #f95555;
+  color: #e7c3c3;
 }
 #index-overlay section footer section .disabled-text {
   color: #646e7e;
@@ -224,8 +216,9 @@
   background-color: black;
 }
 #index-overlay #close-overlay div {
-  display: grid;
+  filter: drop-shadow(0 0 4px #084887);
   cursor: default;
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
 }
@@ -701,12 +694,65 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
-.manage-pending #ticket-container #ticket-top .delete-ticket {
-  color: #f95555;
+.manage-pending #ticket-container #ticket-top #claim-ticket,
+.manage-pending #ticket-container #ticket-top #delete-ticket,
+.manage-pending #ticket-container #ticket-top #move-ticket,
+.manage-pending #ticket-container #ticket-top #save-ticket {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
-.manage-pending #ticket-container #ticket-top .claim-ticket,
-.manage-pending #ticket-container #ticket-top .assign-ticket {
-  color: #4c72a4;
+.manage-pending #ticket-container #ticket-top #claim-ticket button,
+.manage-pending #ticket-container #ticket-top #delete-ticket button,
+.manage-pending #ticket-container #ticket-top #move-ticket button,
+.manage-pending #ticket-container #ticket-top #save-ticket button {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  overflow: visible;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: none;
+}
+.manage-pending #ticket-container #ticket-top #claim-ticket button h1,
+.manage-pending #ticket-container #ticket-top #delete-ticket button h1,
+.manage-pending #ticket-container #ticket-top #move-ticket button h1,
+.manage-pending #ticket-container #ticket-top #save-ticket button h1 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.manage-pending #ticket-container #ticket-top #claim-ticket button:hover,
+.manage-pending #ticket-container #ticket-top #delete-ticket button:hover,
+.manage-pending #ticket-container #ticket-top #move-ticket button:hover,
+.manage-pending #ticket-container #ticket-top #save-ticket button:hover {
+  color: #f58a07;
+}
+.manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button,
+.manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button:hover,
+.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button,
+.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover,
+.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button,
+.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button:hover,
+.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button,
+.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button:hover {
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.5;
+}
+.manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button svg,
+.manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button:hover svg,
+.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button svg,
+.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover svg,
+.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button svg,
+.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button:hover svg,
+.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button svg,
+.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button:hover svg {
+  cursor: default;
 }
 .manage-pending #overlay-canvas {
   grid-column: 2/9;
@@ -1100,12 +1146,6 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
-.coworker-resolved #ticket-container #ticket-bot #resolved-note:read-only {
-  margin-left: 1rem;
-  height: 100%;
-  border: 2px solid #08870c;
-  color: white;
-}
 .coworker-resolved #overlay-canvas {
   grid-column: 2/9;
   grid-row: 5/20;
@@ -1145,12 +1185,6 @@
 .coworker-deleted #ticket-container {
   grid-column: 2/9;
   grid-row: 5/20;
-}
-.coworker-deleted #ticket-container #ticket-bot #deleted-note:read-only {
-  margin-left: 1rem;
-  height: 100%;
-  border: 2px solid #f95555;
-  color: white;
 }
 .coworker-deleted #overlay-canvas {
   grid-column: 2/9;

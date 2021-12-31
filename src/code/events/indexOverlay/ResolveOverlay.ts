@@ -18,8 +18,76 @@ import { UseValufy } from 'code/tools/UseValufy';
 export namespace ResolveOverlay {
   export class initiateEvents {
     constructor() {
+      /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+
+      const indexHeader: HTMLElement = document.querySelector('#index-header');
+      let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
+
+      const indexMain: HTMLElement = document.querySelector('#index-main');
+      const ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      indexMain.style.display = 'none';
+
+      const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+
+      const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+      let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
+      let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
+      let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
+      let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
+      let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
+      let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
+      let liveResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
+      let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
+      let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
+      let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
+
+      /*
+      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
+      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
+      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
+      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
+      if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
+        liveColleague.style.display = 'none';
+        liveAssigned.style.display = 'none';
+      } else {
+        liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
+        liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
+      }
+      liveDeleted.textContent = `${getTicket('date-deleted', ticketsContainer)}`;
+      liveNoteDeleted.textContent = `${getTicket('note-deleted', ticketsContainer)}`;
+      */
+
+      const indexData: HTMLElement = document.querySelector('#index-data');
+
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
+      /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(closeOverlay).on('click', () => {
+        closeContainer('index-overlay');
+      });
+
+      /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       console.log('--ResolveOverlay.js Loaded');
     }
+  }
+  function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
+    const indexMain: HTMLElement = document.querySelector('#index-main');
+    var ticketsMain: HTMLDivElement = indexMain.querySelector('#tickets-container');
+    var activeTicket: HTMLElement = ticketsMain.querySelector('.active-ticket');
+    var container: HTMLElement = document.querySelector(`#${block}`);
+    container.innerHTML = '';
+    container.className = '';
+    container.style.display = 'none';
+    container.className = `default-${block.split('-')[1]}`;
+    activeTicket.className = activeTicket.classList[0];
+
+    indexMain.style.display = 'grid';
   }
   function getTicket(
     info:

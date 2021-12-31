@@ -20,12 +20,15 @@ export namespace GetColor {
 
   const resolvedDefaultHEX: String = '#08870c';
   const resolvedOpacityRGBA: String = 'rgba(8, 135, 12, 0.15)';
+  const resolvedNoteHEX: String = '#cce2cc';
 
   const deletedDefaultHEX: String = '#f95555';
   const deletedOpacityRGBA: String = 'rgba(249, 85, 85, 0.15)';
+  const deletedNoteHEX: String = '#e7c3c3';
 
   const ticketOddHEX: String = '#eef0f6';
   const ticketEvenHEX: String = '#cdd2e3';
+  const disabledDefaultHEX: String = '#646e7e';
 
   export function primaryDark() {
     return primaryDarkHEX;
@@ -72,17 +75,26 @@ export namespace GetColor {
   export function resolvedOpacity() {
     return resolvedOpacityRGBA;
   }
+  export function resolvedNote() {
+    return resolvedNoteHEX;
+  }
   export function deletedDefault() {
     return deletedDefaultHEX;
   }
   export function deletedOpacity() {
     return deletedOpacityRGBA;
   }
+  export function deletedNote() {
+    return deletedNoteHEX;
+  }
   export function ticketOdd() {
     return ticketOddHEX;
   }
   export function ticketEven() {
     return ticketEvenHEX;
+  }
+  export function disabledDefault() {
+    return disabledDefaultHEX;
   }
 
   // switch (name) {

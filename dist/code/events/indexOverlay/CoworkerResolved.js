@@ -10,12 +10,35 @@ define(["require", "exports"], function (require, exports) {
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsMain.querySelector('.active-ticket');
+                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var liveSubject = indexOverlay.querySelector('#ticket-subject');
+                var liveDescription = indexOverlay.querySelector('#ticket-description');
+                var liveDepartment = indexOverlay.querySelector('#department-name');
+                var liveColleague = indexOverlay.querySelector('#colleague-name');
+                var livePending = indexOverlay.querySelector('#pending-date');
+                var liveAssigned = indexOverlay.querySelector('#assigned-date');
+                var liveResolved = indexOverlay.querySelector('#resolved-date');
+                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
+                var liveDeleted = null;
+                var liveNoteDeleted = null;
+                liveSubject.value = "".concat(getTicket('subject-text', ticketsContainer));
+                liveDescription.textContent = "".concat(getTicket('description-text', ticketsContainer));
+                liveDepartment.textContent = "".concat(getTicket('receiver-department', ticketsContainer));
+                livePending.textContent = "".concat(getTicket('date-pending', ticketsContainer));
+                if (getTicket('receiver-name', ticketsContainer) === "".concat(undefined)) {
+                    liveColleague.style.display = 'none';
+                    liveAssigned.style.display = 'none';
+                }
+                else {
+                    liveColleague.textContent = "".concat(getTicket('receiver-name', ticketsContainer));
+                    liveAssigned.textContent = "".concat(getTicket('date-assigned', ticketsContainer));
+                }
+                liveResolved.textContent = "".concat(getTicket('date-resolved', ticketsContainer));
+                liveNoteResolved.textContent = "".concat(getTicket('note-resolved', ticketsContainer));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
