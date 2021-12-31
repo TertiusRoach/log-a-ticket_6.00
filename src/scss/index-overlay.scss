@@ -55,10 +55,13 @@
         border: 2px solid $secondary-light;
       }
       input:read-only {
+        filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        cursor: default;
         border: none;
         color: white;
-        cursor: default;
         background: none;
+
+        padding-left: 0;
       }
     }
     footer {
@@ -68,6 +71,14 @@
       display: inherit;
       grid-template-columns: 1fr 24rem;
       grid-template-rows: 1fr;
+
+      [id*='note']:read-only {
+        filter: none;
+        height: 100%;
+        margin-left: 1rem;
+
+        color: white;
+      }
 
       textarea {
         resize: none;
@@ -80,7 +91,7 @@
         line-height: 1rem;
         font-weight: 600;
         font-size: 1rem;
-        padding: 1rem;
+        padding: 4px 8px 0 0;
 
         border: 2px solid $primary-light;
         color: $primary-dark;
@@ -89,11 +100,32 @@
         border: 2px solid $secondary-light;
       }
       textarea:read-only {
-        border: none;
-        color: white;
+        filter: drop-shadow(0.5rem 0.5rem 1rem black);
         cursor: default;
+        resize: none;
+        border: none;
+        display: flex;
+        outline: none;
         background: none;
-        border: 2px solid $primary-light;
+        align-items: center;
+        justify-content: center;
+
+        padding: 4px 8px 0 0;
+        border-radius: 1rem;
+        line-height: 1rem;
+        font-weight: 600;
+        font-size: 1rem;
+
+        color: white;
+      }
+
+      #resolved-note {
+        filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        color: $resolved-default;
+      }
+      #deleted-note {
+        filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        color: $deleted-default;
       }
 
       section {
@@ -126,6 +158,7 @@
           }
         }
         h4 {
+          filter: drop-shadow(0.5rem 0.5rem 1rem black);
           cursor: default;
           margin: 0 0 1rem 1rem;
         }
@@ -667,6 +700,7 @@
         color: $assigned-default;
       }
     }
+    /*
     #ticket-bot {
       #deleted-note:read-only {
         margin-left: 1rem;
@@ -675,6 +709,7 @@
         color: white;
       }
     }
+    */
   }
   #overlay-canvas {
     grid-column: 2/9;

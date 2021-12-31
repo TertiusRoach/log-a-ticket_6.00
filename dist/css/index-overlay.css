@@ -60,10 +60,12 @@
   border: 2px solid #fcd5aa;
 }
 #index-overlay section header input:read-only {
+  filter: drop-shadow(0.5rem 0.5rem 1rem black);
+  cursor: default;
   border: none;
   color: white;
-  cursor: default;
   background: none;
+  padding-left: 0;
 }
 #index-overlay section footer {
   grid-column: 2/3;
@@ -71,6 +73,12 @@
   display: inherit;
   grid-template-columns: 1fr 24rem;
   grid-template-rows: 1fr;
+}
+#index-overlay section footer [id*=note]:read-only {
+  filter: none;
+  height: 100%;
+  margin-left: 1rem;
+  color: white;
 }
 #index-overlay section footer textarea {
   resize: none;
@@ -82,7 +90,7 @@
   line-height: 1rem;
   font-weight: 600;
   font-size: 1rem;
-  padding: 1rem;
+  padding: 4px 8px 0 0;
   border: 2px solid #909cc2;
   color: #084887;
 }
@@ -90,11 +98,29 @@
   border: 2px solid #fcd5aa;
 }
 #index-overlay section footer textarea:read-only {
-  border: none;
-  color: white;
+  filter: drop-shadow(0.5rem 0.5rem 1rem black);
   cursor: default;
+  resize: none;
+  border: none;
+  display: flex;
+  outline: none;
   background: none;
-  border: 2px solid #909cc2;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px 0 0;
+  border-radius: 1rem;
+  line-height: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+}
+#index-overlay section footer #resolved-note {
+  filter: drop-shadow(0.5rem 0.5rem 1rem black);
+  color: #08870c;
+}
+#index-overlay section footer #deleted-note {
+  filter: drop-shadow(0.5rem 0.5rem 1rem black);
+  color: #f95555;
 }
 #index-overlay section footer section {
   grid-column: 2/3;
@@ -123,6 +149,7 @@
   border: 2px solid #fcd5aa;
 }
 #index-overlay section footer section h4 {
+  filter: drop-shadow(0.5rem 0.5rem 1rem black);
   cursor: default;
   margin: 0 0 1rem 1rem;
 }
@@ -617,18 +644,22 @@
 .logged-deleted #ticket-container {
   grid-column: 2/9;
   grid-row: 5/20;
+  /*
+  #ticket-bot {
+    #deleted-note:read-only {
+      margin-left: 1rem;
+      height: 100%;
+      border: 2px solid $deleted-default;
+      color: white;
+    }
+  }
+  */
 }
 .logged-deleted #ticket-container #ticket-top .delete-ticket {
   color: #f95555;
 }
 .logged-deleted #ticket-container #ticket-top .assign-ticket {
   color: #4c72a4;
-}
-.logged-deleted #ticket-container #ticket-bot #deleted-note:read-only {
-  margin-left: 1rem;
-  height: 100%;
-  border: 2px solid #f95555;
-  color: white;
 }
 .logged-deleted #overlay-canvas {
   grid-column: 2/9;
