@@ -10,12 +10,36 @@ define(["require", "exports"], function (require, exports) {
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsMain.querySelector('.active-ticket');
+                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var liveSubject = indexOverlay.querySelector('#ticket-subject');
+                var liveDescription = indexOverlay.querySelector('#ticket-description');
+                var liveDepartment = indexOverlay.querySelector('#department-name');
+                var liveColleague = indexOverlay.querySelector('#colleague-name');
+                var livePending = indexOverlay.querySelector('#pending-date');
+                var liveAssigned = indexOverlay.querySelector('#assigned-date');
+                var liveResolved = indexOverlay.querySelector('#resolved-date');
+                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
+                var liveDeleted = indexOverlay.querySelector('#deleted-date');
+                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
+                console.log(liveSubject);
+                liveSubject.value = "".concat(getTicket('subject-text', ticketsContainer));
+                liveDescription.textContent = "".concat(getTicket('description-text', ticketsContainer));
+                liveDepartment.textContent = "".concat(getTicket('receiver-department', ticketsContainer));
+                livePending.textContent = "".concat(getTicket('date-pending', ticketsContainer));
+                if (getTicket('receiver-name', ticketsContainer) === "".concat(undefined)) {
+                    liveColleague.style.display = 'none';
+                    liveAssigned.style.display = 'none';
+                }
+                else {
+                    liveColleague.textContent = "".concat(getTicket('receiver-name', ticketsContainer));
+                    liveAssigned.textContent = "".concat(getTicket('date-assigned', ticketsContainer));
+                }
+                liveDeleted.textContent = "".concat(getTicket('date-deleted', ticketsContainer));
+                liveNoteDeleted.textContent = "".concat(getTicket('note-deleted', ticketsContainer));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
@@ -36,6 +60,56 @@ define(["require", "exports"], function (require, exports) {
             container.className = "default-".concat(block.split('-')[1]);
             activeTicket.className = activeTicket.classList[0];
             indexMain.style.display = 'grid';
+        }
+        function getTicket(info, container) {
+            var activeTicket = container.querySelector('.active-ticket');
+            switch (info) {
+                case 'ticket-status':
+                    var ticketStatus = activeTicket.children[3].children[0].innerHTML;
+                    return ticketStatus;
+                case 'ticket-rating':
+                    var ticketRating = activeTicket.children[3].children[1].innerHTML;
+                    return ticketRating;
+                case 'subject-text':
+                    var subjectText = activeTicket.children[3].children[2].innerHTML;
+                    return subjectText;
+                case 'description-text':
+                    var descriptionText = activeTicket.children[3].children[3].innerHTML;
+                    return descriptionText;
+                case 'sender-name':
+                    var senderName = activeTicket.children[3].children[4].innerHTML;
+                    return senderName;
+                case 'sender-department':
+                    var senderDepartment = activeTicket.children[3].children[5].innerHTML;
+                    return senderDepartment;
+                case 'receiver-name':
+                    var receiverName = activeTicket.children[3].children[6].innerHTML;
+                    return receiverName;
+                case 'receiver-department':
+                    var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
+                    return receiverDepartment;
+                case 'date-short':
+                    var dateShort = activeTicket.children[3].children[8].innerHTML;
+                    return dateShort;
+                case 'date-pending':
+                    var datePending = activeTicket.children[3].children[9].innerHTML;
+                    return datePending;
+                case 'date-assigned':
+                    var dateAssigned = activeTicket.children[3].children[10].innerHTML;
+                    return dateAssigned;
+                case 'date-resolved':
+                    var dateResolved = activeTicket.children[3].children[11].innerHTML;
+                    return dateResolved;
+                case 'note-resolved':
+                    var noteResolved = activeTicket.children[3].children[12].innerHTML;
+                    return noteResolved;
+                case 'date-deleted':
+                    var dateDeleted = activeTicket.children[3].children[13].innerHTML;
+                    return dateDeleted;
+                case 'note-deleted':
+                    var noteDeleted = activeTicket.children[3].children[14].innerHTML;
+                    return noteDeleted;
+            }
         }
     })(LoggedDeleted = exports.LoggedDeleted || (exports.LoggedDeleted = {}));
 });
