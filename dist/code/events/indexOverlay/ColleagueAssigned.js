@@ -10,12 +10,21 @@ define(["require", "exports"], function (require, exports) {
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsMain.querySelector('.active-ticket');
+                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var liveSubject = indexOverlay.querySelector('#ticket-subject');
+                var liveDescription = indexOverlay.querySelector('#ticket-description');
+                var liveDepartment = indexOverlay.querySelector('#department-name');
+                var liveColleague = indexOverlay.querySelector('#colleague-name');
+                var livePending = indexOverlay.querySelector('#pending-date');
+                var liveAssigned = indexOverlay.querySelector('#assigned-date');
+                var liveResolved = indexOverlay.querySelector('#resolved-date');
+                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
+                var liveDeleted = indexOverlay.querySelector('#deleted-date');
+                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');

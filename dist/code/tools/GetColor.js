@@ -19,10 +19,13 @@ define(["require", "exports"], function (require, exports) {
         var assignedOpacityRGBA = 'rgba(144, 156, 194, 0.75)';
         var resolvedDefaultHEX = '#08870c';
         var resolvedOpacityRGBA = 'rgba(8, 135, 12, 0.15)';
+        var resolvedNoteHEX = '#cce2cc';
         var deletedDefaultHEX = '#f95555';
         var deletedOpacityRGBA = 'rgba(249, 85, 85, 0.15)';
+        var deletedNoteHEX = '#e7c3c3';
         var ticketOddHEX = '#eef0f6';
         var ticketEvenHEX = '#cdd2e3';
+        var disabledDefaultHEX = '#646e7e';
         function primaryDark() {
             return primaryDarkHEX;
         }
@@ -83,6 +86,10 @@ define(["require", "exports"], function (require, exports) {
             return resolvedOpacityRGBA;
         }
         GetColor.resolvedOpacity = resolvedOpacity;
+        function resolvedNote() {
+            return resolvedNoteHEX;
+        }
+        GetColor.resolvedNote = resolvedNote;
         function deletedDefault() {
             return deletedDefaultHEX;
         }
@@ -91,6 +98,10 @@ define(["require", "exports"], function (require, exports) {
             return deletedOpacityRGBA;
         }
         GetColor.deletedOpacity = deletedOpacity;
+        function deletedNote() {
+            return deletedNoteHEX;
+        }
+        GetColor.deletedNote = deletedNote;
         function ticketOdd() {
             return ticketOddHEX;
         }
@@ -99,6 +110,10 @@ define(["require", "exports"], function (require, exports) {
             return ticketEvenHEX;
         }
         GetColor.ticketEven = ticketEven;
+        function disabledDefault() {
+            return disabledDefaultHEX;
+        }
+        GetColor.disabledDefault = disabledDefault;
     })(GetColor = exports.GetColor || (exports.GetColor = {}));
 });
 

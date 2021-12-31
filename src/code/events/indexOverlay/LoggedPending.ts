@@ -45,16 +45,6 @@ export namespace LoggedPending {
       let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
       let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
 
-      /*
-      
-
-
-
-
-      let mainButton: String = '[id*="-ticket"] button';
-      pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
-      */
-
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
       let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
       let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');

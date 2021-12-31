@@ -20,6 +20,7 @@
     }
   }
   section {
+    filter: drop-shadow(0 0 8px black);
     display: inherit;
     overflow: hidden;
     grid-template-columns: 1rem 1fr 1rem;
@@ -55,7 +56,7 @@
         border: 2px solid $secondary-light;
       }
       input:read-only {
-        filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        // filter: drop-shadow(0.5rem 0.5rem 1rem black);
         cursor: default;
         border: none;
         color: white;
@@ -72,14 +73,6 @@
       grid-template-columns: 1fr 24rem;
       grid-template-rows: 1fr;
 
-      [id*='note']:read-only {
-        filter: none;
-        height: 100%;
-        margin-left: 1rem;
-
-        color: white;
-      }
-
       textarea {
         resize: none;
         display: flex;
@@ -91,7 +84,7 @@
         line-height: 1rem;
         font-weight: 600;
         font-size: 1rem;
-        padding: 4px 8px 0 0;
+        padding: 8px 8px 0 8px;
 
         border: 2px solid $primary-light;
         color: $primary-dark;
@@ -100,7 +93,7 @@
         border: 2px solid $secondary-light;
       }
       textarea:read-only {
-        filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        // filter: drop-shadow(0.5rem 0.5rem 1rem black);
         cursor: default;
         resize: none;
         border: none;
@@ -118,14 +111,20 @@
 
         color: white;
       }
+      [id*='note']:read-only {
+        // filter: none;
+        height: 100%;
+        margin-left: 1rem;
 
+        color: white;
+      }
       #resolved-note {
-        filter: drop-shadow(0.5rem 0.5rem 1rem black);
-        color: $resolved-default;
+        // filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        color: $resolved-note;
       }
       #deleted-note {
-        filter: drop-shadow(0.5rem 0.5rem 1rem black);
-        color: $deleted-default;
+        // filter: drop-shadow(0.5rem 0.5rem 1rem black);
+        color: $deleted-note;
       }
 
       section {
@@ -158,7 +157,7 @@
           }
         }
         h4 {
-          filter: drop-shadow(0.5rem 0.5rem 1rem black);
+          // filter: drop-shadow(0.5rem 0.5rem 1rem black);
           cursor: default;
           margin: 0 0 1rem 1rem;
         }
@@ -166,20 +165,17 @@
         [id*='name'] {
           color: white;
         }
-        [id*='date'] {
-          filter: drop-shadow(0.5rem 0.5rem 1rem black);
-        }
         [id*='pending'] {
           color: $pending-default;
         }
         [id*='assigned'] {
-          color: $assigned-default;
+          color: $assigned-note;
         }
         [id*='resolved'] {
-          color: $resolved-default;
+          color: $resolved-note;
         }
         [id*='deleted'] {
-          color: $deleted-default;
+          color: $deleted-note;
         }
 
         .disabled-text {
@@ -250,8 +246,9 @@
 
   #close-overlay {
     div {
-      display: grid;
+      filter: drop-shadow(0 0 4px $primary-dark);
       cursor: default;
+      display: grid;
 
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: 1fr;
@@ -755,13 +752,45 @@
     grid-column: 2/9;
     grid-row: 5/20;
 
-    #ticket-top {
-      .delete-ticket {
-        color: $deleted-default;
+    #ticket-top #claim-ticket,
+    #ticket-top #delete-ticket,
+    #ticket-top #move-ticket,
+    #ticket-top #save-ticket {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      button {
+        grid-column: 2/3;
+        grid-row: 2/3;
+
+        display: flex;
+        overflow: visible;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        h1 {
+          white-space: nowrap;
+
+          line-height: 1rem;
+          padding-left: 1rem;
+        }
+        border: none;
+        color: white;
+        background: none;
       }
-      .claim-ticket,
-      .assign-ticket {
-        color: $assigned-default;
+      button:hover {
+        color: $secondary-dark;
+      }
+      .disabled-button,
+      .disabled-button:hover {
+        cursor: default;
+        color: $disabled-default;
+        opacity: 0.5;
+        svg {
+          cursor: default;
+        }
       }
     }
   }
@@ -1217,15 +1246,6 @@
   #ticket-container {
     grid-column: 2/9;
     grid-row: 5/20;
-
-    #ticket-bot {
-      #resolved-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $resolved-default;
-        color: white;
-      }
-    }
   }
   #overlay-canvas {
     grid-column: 2/9;
@@ -1269,15 +1289,6 @@
   #ticket-container {
     grid-column: 2/9;
     grid-row: 5/20;
-
-    #ticket-bot {
-      #deleted-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $deleted-default;
-        color: white;
-      }
-    }
   }
   #overlay-canvas {
     grid-column: 2/9;

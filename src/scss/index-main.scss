@@ -257,9 +257,10 @@
   }
   [id*='tab'] {
     h1 {
+      filter: drop-shadow(0 0 4px $primary-dark);
+      cursor: pointer;
       grid-column: 2/3;
       grid-row: 1/2;
-      cursor: pointer;
     }
     h1:hover {
       color: $secondary-dark;

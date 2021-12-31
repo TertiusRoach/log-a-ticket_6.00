@@ -25,7 +25,6 @@ define(["require", "exports"], function (require, exports) {
                 var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
                 var liveDeleted = indexOverlay.querySelector('#deleted-date');
                 var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
-                console.log(liveSubject);
                 liveSubject.value = "".concat(getTicket('subject-text', ticketsContainer));
                 liveDescription.textContent = "".concat(getTicket('description-text', ticketsContainer));
                 liveDepartment.textContent = "".concat(getTicket('receiver-department', ticketsContainer));
