@@ -329,8 +329,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsMain.querySelector('.active-ticket');
+                var ticketsContainer = indexMain.querySelector('#tickets-container');
+                var activeTicket = ticketsContainer.querySelector('.active-ticket');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var logButton = indexOverlay.querySelector('#log-ticket button');

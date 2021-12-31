@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseCapify", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, UseCapify_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LoggedPending = void 0;
@@ -11,8 +11,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var indexHeader = document.querySelector('#index-header');
                 var logAticket = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsMain.querySelector('.active-ticket');
+                var ticketsContainer = indexMain.querySelector('#tickets-container');
+                var activeTicket = ticketsContainer.querySelector('.active-ticket');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
@@ -23,6 +23,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var saveButton = indexOverlay.querySelector('#save-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
+                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
+                var ticketDescription = indexOverlay.querySelector('#ticket-description');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var deletedMark = indexOverlay.querySelector('.deleted-mark');
@@ -40,8 +42,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     activeTicket.className = "".concat(status);
                     indexMain.style.display = 'grid';
                 }
-                function resetDefault() {
-                    var activeTicket = ticketsMain.querySelector('.active-ticket');
+                function toggleButton() {
+                    var activeTicket = ticketsContainer.querySelector('.active-ticket');
                     var ticketStatus = activeTicket.children[3].children[0].innerHTML;
                     var ticketRating = activeTicket.children[3].children[1].innerHTML;
                     var subjectText = activeTicket.children[3].children[2].innerHTML;
@@ -57,34 +59,83 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     var noteResolved = activeTicket.children[3].children[12].innerHTML;
                     var dateDeleted = activeTicket.children[3].children[13].innerHTML;
                     var noteDeleted = activeTicket.children[3].children[14].innerHTML;
-                    if (colleagueSelect.value === 'select-colleague') {
+                    var liveReceiverDepartment = "".concat(UseCapify_1.UseCapify.forString('-', "".concat($(departmentSelect).val())));
+                    if (colleagueSelect.value !== 'select-colleague') {
+                        assignedDate.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                        assignButton.parentElement.style.display = 'grid';
+                        deleteButton.parentElement.style.display = 'none';
+                        moveButton.parentElement.style.display = 'none';
+                        saveButton.parentElement.style.display = 'none';
+                        assignButton.className = '';
+                        deleteButton.className = 'disabled-button';
+                        moveButton.className = 'disabled-button';
+                        saveButton.className = 'disabled-button';
+                        pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                        assignedDate.className = '';
+                    }
+                    else if (liveReceiverDepartment !== receiverDepartment) {
+                        assignButton.parentElement.style.display = 'none';
+                        deleteButton.parentElement.style.display = 'none';
+                        moveButton.parentElement.style.display = 'grid';
+                        saveButton.parentElement.style.display = 'none';
+                        assignButton.className = 'disabled-button';
+                        deleteButton.className = 'disabled-button';
+                        moveButton.className = '';
+                        saveButton.className = 'disabled-button';
+                        if (colleagueSelect.value === 'select-colleague') {
+                            pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                            assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                            deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        }
+                        else {
+                            pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                            assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                            deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                        }
+                    }
+                    else if (subjectText !== "".concat($(ticketSubject).val()) || descriptionText !== "".concat($(ticketDescription).val())) {
+                        assignButton.parentElement.style.display = 'none';
+                        deleteButton.parentElement.style.display = 'none';
+                        moveButton.parentElement.style.display = 'none';
+                        saveButton.parentElement.style.display = 'grid';
+                        assignButton.className = 'disabled-button';
+                        deleteButton.className = 'disabled-button';
+                        moveButton.className = 'disabled-button';
+                        saveButton.className = '';
+                        saveButton.className = '';
+                    }
+                    else if (colleagueSelect.value === 'select-colleague') {
                         pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                         assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
                         deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
                         assignedDate.textContent = undefined;
                         assignButton.parentElement.style.display = 'none';
-                        deleteButton.parentElement.style.display = 'flex';
+                        deleteButton.parentElement.style.display = 'grid';
                         moveButton.parentElement.style.display = 'none';
                         saveButton.parentElement.style.display = 'none';
-                    }
-                    else if (colleagueSelect.value !== 'select-colleague') {
-                        assignedDate.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
-                        assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
-                        assignButton.parentElement.style.display = 'grid';
-                        assignedDate.className = '';
-                        assignButton.className = '';
-                        deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
-                        pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
-                        deleteButton.parentElement.style.display = 'none';
-                        moveButton.parentElement.style.display = 'none';
-                        saveButton.parentElement.style.display = 'none';
+                        assignButton.className = 'disabled-button';
+                        deleteButton.className = '';
+                        moveButton.className = 'disabled-button';
+                        saveButton.className = 'disabled-button';
                     }
                 }
+                $(ticketSubject)
+                    .on('keydown', function () { })
+                    .on('keyup', function () {
+                    toggleButton();
+                });
+                $(ticketDescription)
+                    .on('keydown', function () { })
+                    .on('keyup', function () {
+                    toggleButton();
+                });
                 $(departmentSelect).on('change', function () {
-                    resetDefault();
+                    toggleButton();
                 });
                 $(colleagueSelect).on('click', function () {
-                    resetDefault();
+                    toggleButton();
                 });
                 $(assignButton)
                     .on('mouseenter', function () {
