@@ -539,8 +539,8 @@ export namespace DataRead {
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      let ticketsMain: HTMLDivElement = indexMain.querySelector('#tickets-container');
-      let activeTicket = ticketsMain.querySelector('.active-ticket');
+      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      let activeTicket = ticketsContainer.querySelector('.active-ticket');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
