@@ -152,7 +152,8 @@ export namespace LogOverlay {
         .on('change', () => {
           assignedDate.innerText = undefined;
           assignedDate.style.display = 'none';
-
+        })
+        .on('click', () => {
           if (colleagueSelect.length === 1) {
             logButton.className = 'disabled-button';
             assignButton.className = 'disabled-button';
@@ -161,8 +162,7 @@ export namespace LogOverlay {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);
           }
-        })
-        .on('click', () => {});
+        });
 
       $(colleagueSelect)
         .on('change', () => {
