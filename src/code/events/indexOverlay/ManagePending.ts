@@ -100,7 +100,30 @@ export namespace ManagePending {
           dateDeleted.style.display = 'flex';
         }
       }
-      function toggleButton() {}
+      function toggleButton() {
+        if (colleagueSelect.value === UseValufy.forString(findUser())) {
+          assignButton.parentElement.style.display = 'none';
+          assignButton.className = 'disabled-button';
+          claimButton.parentElement.style.display = 'grid';
+          claimButton.className = '';
+          moveButton.parentElement.style.display = 'none';
+          moveButton.className = 'disabled-button';
+        } else if (colleagueSelect.value === 'select-colleague') {
+          assignButton.parentElement.style.display = 'none';
+          assignButton.className = 'disabled-button';
+          claimButton.parentElement.style.display = 'none';
+          claimButton.className = 'disabled-button';
+          moveButton.parentElement.style.display = 'grid';
+          moveButton.className = '';
+        } else if (colleagueSelect.value !== 'select-colleague') {
+          assignButton.parentElement.style.display = 'grid';
+          assignButton.className = '';
+          claimButton.parentElement.style.display = 'grid';
+          claimButton.className = 'disabled-button';
+          moveButton.parentElement.style.display = 'none';
+          moveButton.className = 'disabled-button';
+        }
+      }
 
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
@@ -129,51 +152,79 @@ export namespace ManagePending {
         });
       $(deleteButton)
         .on('mouseenter', () => {
-          dateAssigned.style.display = 'none';
-          dateAssigned.textContent = 'undefined';
-          dateAssigned.className = 'disabled-text';
-
-          dateDeleted.style.display = 'flex';
-          dateDeleted.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
-          dateDeleted.className = '';
-
-          deleteButton.parentElement.style.background = `${GetColor.primaryDark()}`;
-          pendingMark.style.background = '';
-          assignedMark.style.background = '';
-        })
-        .on('mouseleave', () => {
-          if (colleagueSelect.value !== 'select-colleague') {
-            dateAssigned.style.display = 'flex';
-            dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
-            dateAssigned.className = '';
-
-            dateDeleted.style.display = 'none';
-            dateDeleted.textContent = 'undefined';
-            dateDeleted.className = 'disabled-text';
-
-            pendingMark.style.background = '';
-            assignedMark.style.background = `${GetColor.primaryDark()}`;
-          } else {
+          if (deleteButton.className !== 'disabled-button') {
             dateAssigned.style.display = 'none';
             dateAssigned.textContent = 'undefined';
             dateAssigned.className = 'disabled-text';
 
-            dateDeleted.style.display = 'none';
-            dateDeleted.textContent = 'undefined';
-            dateDeleted.className = 'disabled-text';
+            dateDeleted.style.display = 'flex';
+            dateDeleted.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+            dateDeleted.className = '';
 
-            pendingMark.style.background = `${GetColor.primaryDark()}`;
+            deleteButton.parentElement.style.background = `${GetColor.primaryDark()}`;
+            pendingMark.style.background = '';
             assignedMark.style.background = '';
           }
-          deleteButton.parentElement.style.background = '';
+        })
+        .on('mouseleave', () => {
+          if (deleteButton.className !== 'disabled-button') {
+            if (colleagueSelect.value !== 'select-colleague') {
+              dateAssigned.style.display = 'flex';
+              dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+              dateAssigned.className = '';
+
+              dateDeleted.style.display = 'none';
+              dateDeleted.textContent = 'undefined';
+              dateDeleted.className = 'disabled-text';
+
+              pendingMark.style.background = '';
+              assignedMark.style.background = `${GetColor.primaryDark()}`;
+            } else {
+              dateAssigned.style.display = 'none';
+              dateAssigned.textContent = 'undefined';
+              dateAssigned.className = 'disabled-text';
+
+              dateDeleted.style.display = 'none';
+              dateDeleted.textContent = 'undefined';
+              dateDeleted.className = 'disabled-text';
+
+              pendingMark.style.background = `${GetColor.primaryDark()}`;
+              assignedMark.style.background = '';
+            }
+            deleteButton.parentElement.style.background = '';
+          }
         });
 
-      $(departmentSelect).on('click', () => {
-        toggleDates();
-      });
-      $(colleagueSelect).on('click', () => {
-        toggleDates();
-      });
+      $(departmentSelect)
+        .on('click', () => {
+          if (colleagueSelect.value !== UseValufy.forString(findUser())) {
+            deleteButton.className = 'disabled-button';
+            deleteButton.parentElement.style.background = `${GetColor.primaryMedium()}`;
+          } else {
+            deleteButton.className = '';
+            deleteButton.parentElement.style.background = '';
+          }
+          toggleDates();
+        })
+        .on('change', () => {
+          toggleButton();
+        });
+      $(colleagueSelect)
+        .on('click', () => {
+          if (colleagueSelect.value === 'select-colleague') {
+            claimButton.className = 'disabled-button';
+          } else if (colleagueSelect.value !== UseValufy.forString(findUser())) {
+            deleteButton.className = 'disabled-button';
+            deleteButton.parentElement.style.background = `${GetColor.primaryMedium()}`;
+          } else {
+            deleteButton.className = '';
+            deleteButton.parentElement.style.background = '';
+          }
+          toggleDates();
+        })
+        .on('change', () => {
+          toggleButton();
+        });
 
       $(dateAssigned).on('change', () => {
         toggleDates();
@@ -204,6 +255,13 @@ export namespace ManagePending {
     activeTicket.className = activeTicket.classList[0];
 
     indexMain.style.display = 'grid';
+  }
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
   }
   function getTicket(
     info:

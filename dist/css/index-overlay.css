@@ -791,9 +791,10 @@
 }
 .manage-pending #delete-ticket .disabled-button,
 .manage-pending #delete-ticket .disabled-button:hover {
+  filter: drop-shadow(0 0 8px black);
   cursor: default;
   color: #646e7e;
-  opacity: 0.5;
+  opacity: 0.75;
 }
 .manage-pending #delete-ticket .disabled-button svg,
 .manage-pending #delete-ticket .disabled-button:hover svg {
