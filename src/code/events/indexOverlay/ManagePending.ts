@@ -35,6 +35,21 @@ export namespace ManagePending {
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
+      let claimButton: HTMLButtonElement = indexOverlay.querySelector('#claim-ticket button');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+      let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
+      let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
+      let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
+      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
+      let datePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
+      let dateAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
+      let dateDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
+      let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
+      let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
+
       let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
       let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
       let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
@@ -45,7 +60,6 @@ export namespace ManagePending {
       let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
-
       liveSubject.value = `${getTicket('subject-text')}`;
       liveDescription.textContent = `${getTicket('description-text')}`;
       livePending.textContent = `${getTicket('date-pending')}`;
@@ -53,15 +67,179 @@ export namespace ManagePending {
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      function toggleDates() {
+        var selectedIndex = colleagueSelect.selectedOptions[0].value;
+        if (selectedIndex === 'select-colleague') {
+          dateAssigned.textContent = 'undefined';
+          dateAssigned.className = 'disabled-text';
+
+          pendingMark.style.background = `${GetColor.primaryDark()}`;
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+
+          dateDeleted.textContent = 'undefined';
+          dateDeleted.className = 'disabled-text';
+        } else {
+          dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          dateAssigned.className = '';
+
+          pendingMark.style.background = `${GetColor.primaryMedium()}`;
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+
+          dateDeleted.textContent = 'undefined';
+          dateDeleted.className = 'disabled-text';
+        }
+
+        if (dateAssigned.textContent === 'undefined' || dateAssigned.textContent === 'undefined') {
+          dateAssigned.style.display = 'none';
+          dateDeleted.style.display = 'none';
+        } else if (dateAssigned.textContent !== 'undefined') {
+          dateAssigned.style.display = 'flex';
+          dateDeleted.style.display = 'none';
+        } else if (dateDeleted.textContent !== 'undefined') {
+          dateAssigned.style.display = 'none';
+          dateDeleted.style.display = 'flex';
+        }
+      }
+      function toggleButton() {
+        if (colleagueSelect.value === UseValufy.forString(findUser())) {
+          assignButton.parentElement.style.display = 'none';
+          assignButton.className = 'disabled-button';
+          claimButton.parentElement.style.display = 'grid';
+          claimButton.className = '';
+          moveButton.parentElement.style.display = 'none';
+          moveButton.className = 'disabled-button';
+        } else if (colleagueSelect.value === 'select-colleague') {
+          assignButton.parentElement.style.display = 'none';
+          assignButton.className = 'disabled-button';
+          claimButton.parentElement.style.display = 'none';
+          claimButton.className = 'disabled-button';
+          moveButton.parentElement.style.display = 'grid';
+          moveButton.className = '';
+        } else if (colleagueSelect.value !== 'select-colleague') {
+          assignButton.parentElement.style.display = 'grid';
+          assignButton.className = '';
+          claimButton.parentElement.style.display = 'grid';
+          claimButton.className = 'disabled-button';
+          moveButton.parentElement.style.display = 'none';
+          moveButton.className = 'disabled-button';
+        }
+      }
 
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(claimButton)
+        .on('mouseenter', () => {
+          if (claimButton.className !== 'disabled-button') {
+            claimButton.style.color = `${GetColor.primaryLight()}`;
+          } else {
+            claimButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          claimButton.style.color = '';
+        });
+      $(assignButton)
+        .on('mouseenter', () => {
+          if (assignButton.className !== 'disabled-button') {
+            assignButton.style.color = `${GetColor.primaryLight()}`;
+          } else {
+            assignButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          assignButton.style.color = '';
+        });
+      $(deleteButton)
+        .on('mouseenter', () => {
+          if (deleteButton.className !== 'disabled-button') {
+            dateAssigned.style.display = 'none';
+            dateAssigned.textContent = 'undefined';
+            dateAssigned.className = 'disabled-text';
+
+            dateDeleted.style.display = 'flex';
+            dateDeleted.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+            dateDeleted.className = '';
+
+            deleteButton.parentElement.style.background = `${GetColor.primaryDark()}`;
+            pendingMark.style.background = '';
+            assignedMark.style.background = '';
+          }
+        })
+        .on('mouseleave', () => {
+          if (deleteButton.className !== 'disabled-button') {
+            if (colleagueSelect.value !== 'select-colleague') {
+              dateAssigned.style.display = 'flex';
+              dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+              dateAssigned.className = '';
+
+              dateDeleted.style.display = 'none';
+              dateDeleted.textContent = 'undefined';
+              dateDeleted.className = 'disabled-text';
+
+              pendingMark.style.background = '';
+              assignedMark.style.background = `${GetColor.primaryDark()}`;
+            } else {
+              dateAssigned.style.display = 'none';
+              dateAssigned.textContent = 'undefined';
+              dateAssigned.className = 'disabled-text';
+
+              dateDeleted.style.display = 'none';
+              dateDeleted.textContent = 'undefined';
+              dateDeleted.className = 'disabled-text';
+
+              pendingMark.style.background = `${GetColor.primaryDark()}`;
+              assignedMark.style.background = '';
+            }
+            deleteButton.parentElement.style.background = '';
+          }
+        });
+
+      $(departmentSelect)
+        .on('click', () => {
+          if (colleagueSelect.value !== UseValufy.forString(findUser())) {
+            deleteButton.className = 'disabled-button';
+            deleteButton.parentElement.style.background = `${GetColor.primaryMedium()}`;
+          } else {
+            deleteButton.className = '';
+            deleteButton.parentElement.style.background = '';
+          }
+          toggleDates();
+        })
+        .on('change', () => {
+          toggleButton();
+        });
+      $(colleagueSelect)
+        .on('click', () => {
+          if (colleagueSelect.value === 'select-colleague') {
+            claimButton.className = 'disabled-button';
+          } else if (colleagueSelect.value !== UseValufy.forString(findUser())) {
+            deleteButton.className = 'disabled-button';
+            deleteButton.parentElement.style.background = `${GetColor.primaryMedium()}`;
+          } else {
+            deleteButton.className = '';
+            deleteButton.parentElement.style.background = '';
+          }
+          toggleDates();
+        })
+        .on('change', () => {
+          toggleButton();
+        });
+
+      $(dateAssigned).on('change', () => {
+        toggleDates();
+      });
+
+      $(dateDeleted).on('change', () => {
+        toggleDates();
+      });
+
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      toggleDates();
       console.log('--ManagePending.js Loaded');
     }
   }
@@ -77,6 +255,13 @@ export namespace ManagePending {
     activeTicket.className = activeTicket.classList[0];
 
     indexMain.style.display = 'grid';
+  }
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
   }
   function getTicket(
     info:

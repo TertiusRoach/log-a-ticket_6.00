@@ -598,7 +598,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             }
                             var indexName = "".concat(firstName, " ").concat(lastName);
                             var userName = findUser();
-                            console.log(indexMain.className);
                             if (userName !== indexName) {
                                 $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
                             }

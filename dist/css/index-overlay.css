@@ -28,13 +28,13 @@
   cursor: pointer;
 }
 #index-overlay section {
-  filter: drop-shadow(0 0 8px black);
   display: inherit;
   overflow: hidden;
   grid-template-columns: 1rem 1fr 1rem;
   grid-template-rows: 1rem 5rem 1fr 1rem;
 }
 #index-overlay section header {
+  filter: drop-shadow(0 0 8px black);
   grid-column: 2/3;
   grid-row: 2/3;
   display: inherit;
@@ -58,6 +58,7 @@
   color: #084887;
 }
 #index-overlay section header input:hover {
+  filter: drop-shadow(0 0 8px black);
   border: 2px solid #fcd5aa;
 }
 #index-overlay section header input:read-only {
@@ -68,6 +69,7 @@
   padding-left: 0;
 }
 #index-overlay section footer {
+  filter: drop-shadow(0 0 8px black);
   grid-column: 2/3;
   grid-row: 3/4;
   display: inherit;
@@ -89,6 +91,7 @@
   color: #084887;
 }
 #index-overlay section footer textarea:hover {
+  filter: drop-shadow(0 0 8px black);
   border: 2px solid #fcd5aa;
 }
 #index-overlay section footer textarea:read-only {
@@ -147,6 +150,9 @@
 #index-overlay section footer section h4 {
   cursor: default;
   margin: 0 0 1rem 1rem;
+}
+#index-overlay section footer section h4:hover {
+  filter: drop-shadow(0 0 8px black);
 }
 #index-overlay section footer section [id*=name] {
   color: white;
@@ -694,18 +700,16 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
+.manage-pending #ticket-container #ticket-top #assign-ticket,
 .manage-pending #ticket-container #ticket-top #claim-ticket,
-.manage-pending #ticket-container #ticket-top #delete-ticket,
-.manage-pending #ticket-container #ticket-top #move-ticket,
-.manage-pending #ticket-container #ticket-top #save-ticket {
+.manage-pending #ticket-container #ticket-top #move-ticket {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
+.manage-pending #ticket-container #ticket-top #assign-ticket button,
 .manage-pending #ticket-container #ticket-top #claim-ticket button,
-.manage-pending #ticket-container #ticket-top #delete-ticket button,
-.manage-pending #ticket-container #ticket-top #move-ticket button,
-.manage-pending #ticket-container #ticket-top #save-ticket button {
+.manage-pending #ticket-container #ticket-top #move-ticket button {
   grid-column: 2/3;
   grid-row: 2/3;
   display: flex;
@@ -718,40 +722,34 @@
   color: white;
   background: none;
 }
+.manage-pending #ticket-container #ticket-top #assign-ticket button h1,
 .manage-pending #ticket-container #ticket-top #claim-ticket button h1,
-.manage-pending #ticket-container #ticket-top #delete-ticket button h1,
-.manage-pending #ticket-container #ticket-top #move-ticket button h1,
-.manage-pending #ticket-container #ticket-top #save-ticket button h1 {
+.manage-pending #ticket-container #ticket-top #move-ticket button h1 {
   white-space: nowrap;
   line-height: 1rem;
   padding-left: 1rem;
 }
+.manage-pending #ticket-container #ticket-top #assign-ticket button:hover,
 .manage-pending #ticket-container #ticket-top #claim-ticket button:hover,
-.manage-pending #ticket-container #ticket-top #delete-ticket button:hover,
-.manage-pending #ticket-container #ticket-top #move-ticket button:hover,
-.manage-pending #ticket-container #ticket-top #save-ticket button:hover {
+.manage-pending #ticket-container #ticket-top #move-ticket button:hover {
   color: #f58a07;
 }
+.manage-pending #ticket-container #ticket-top #assign-ticket .disabled-button,
+.manage-pending #ticket-container #ticket-top #assign-ticket .disabled-button:hover,
 .manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button,
 .manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button:hover,
-.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button,
-.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover,
 .manage-pending #ticket-container #ticket-top #move-ticket .disabled-button,
-.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button:hover,
-.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button,
-.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button:hover {
+.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button:hover {
   cursor: default;
   color: #646e7e;
   opacity: 0.5;
 }
+.manage-pending #ticket-container #ticket-top #assign-ticket .disabled-button svg,
+.manage-pending #ticket-container #ticket-top #assign-ticket .disabled-button:hover svg,
 .manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button svg,
 .manage-pending #ticket-container #ticket-top #claim-ticket .disabled-button:hover svg,
-.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button svg,
-.manage-pending #ticket-container #ticket-top #delete-ticket .disabled-button:hover svg,
 .manage-pending #ticket-container #ticket-top #move-ticket .disabled-button svg,
-.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button:hover svg,
-.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button svg,
-.manage-pending #ticket-container #ticket-top #save-ticket .disabled-button:hover svg {
+.manage-pending #ticket-container #ticket-top #move-ticket .disabled-button:hover svg {
   cursor: default;
 }
 .manage-pending #overlay-canvas {
@@ -760,6 +758,50 @@
   z-index: -1;
   border-radius: 0 1rem 0 1rem;
   background-color: #084887;
+}
+.manage-pending #delete-ticket {
+  grid-column: 8/9;
+  grid-row: 20/22;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  border-radius: 0 0 1rem 1rem;
+  background: #909cc2;
+}
+.manage-pending #delete-ticket button {
+  cursor: pointer;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  width: 100%;
+  display: flex;
+  overflow: visible;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  background: none;
+}
+.manage-pending #delete-ticket button h2 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.manage-pending #delete-ticket button:hover {
+  color: #f95555;
+}
+.manage-pending #delete-ticket .disabled-button,
+.manage-pending #delete-ticket .disabled-button:hover {
+  filter: drop-shadow(0 0 8px black);
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.75;
+}
+.manage-pending #delete-ticket .disabled-button svg,
+.manage-pending #delete-ticket .disabled-button:hover svg {
+  cursor: default;
+}
+.manage-pending #delete-ticket:hover {
+  background: #4c72a4;
 }
 
 /*--▼ .manage-deleted ▼--*/

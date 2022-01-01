@@ -852,9 +852,6 @@ export namespace DataRead {
             }
             var indexName: String = `${firstName} ${lastName}`;
             var userName: String = findUser();
-
-            console.log(indexMain.className);
-
             if (userName !== indexName) {
               $(colleagueSelect).append(`<option value="${UseValufy.forString(indexName)}">${firstName} ${lastName}</option>`);
             }
