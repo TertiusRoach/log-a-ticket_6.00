@@ -157,6 +157,7 @@ export namespace LogOverlay {
           if (colleagueSelect.length === 1) {
             logButton.className = 'disabled-button';
             assignButton.className = 'disabled-button';
+            toggleButton(colleagueSelect.value);
           } else {
             checkState('log-ticket');
             toggleButton(colleagueSelect.value);

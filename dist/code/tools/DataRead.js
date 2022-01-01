@@ -336,6 +336,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
                 var deleteButton = indexOverlay.querySelector('#delete-ticket button');
+                var moveButton = indexOverlay.querySelector('#move-ticket button');
+                var saveButton = indexOverlay.querySelector('#save-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
@@ -385,7 +387,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                 logButton.className = '';
                                 assignButton.className = '';
                             }
-                            buildColleagues(departmentSelect.selectedOptions[0].value);
+                            buildColleagues(departmentSelect.selectedOptions[0].value, 'user');
                         });
                         buildDepartments(findDepartment(findUser()));
                         break;
@@ -411,11 +413,35 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         ticketDescription.innerHTML = "".concat(descriptionText);
                         pendingDate.innerHTML = "".concat(datePending);
                         $(departmentSelect).on('change', function () {
-                            buildColleagues(departmentSelect.value);
+                            buildColleagues(departmentSelect.value, 'user');
                         });
                         buildDepartments(receiverDepartment);
                         break;
                     case 'manage-pending':
+                        departmentsData = indexData.querySelector('#departments-data');
+                        departmentsTotal = departmentsData.children.length;
+                        var ticketStatus = activeTicket.children[3].children[0].innerHTML;
+                        var ticketRating = activeTicket.children[3].children[1].innerHTML;
+                        var subjectText = activeTicket.children[3].children[2].innerHTML;
+                        var descriptionText = activeTicket.children[3].children[3].innerHTML;
+                        var senderName = activeTicket.children[3].children[4].innerHTML;
+                        var senderDepartment = activeTicket.children[3].children[5].innerHTML;
+                        var receiverName = activeTicket.children[3].children[6].innerHTML;
+                        var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
+                        var dateShort = activeTicket.children[3].children[8].innerHTML;
+                        var datePending = activeTicket.children[3].children[9].innerHTML;
+                        var dateAssigned = activeTicket.children[3].children[10].innerHTML;
+                        var dateResolved = activeTicket.children[3].children[11].innerHTML;
+                        var noteResolved = activeTicket.children[3].children[12].innerHTML;
+                        var dateDeleted = activeTicket.children[3].children[13].innerHTML;
+                        var noteDeleted = activeTicket.children[3].children[14].innerHTML;
+                        ticketSubject.value = "".concat(subjectText);
+                        ticketDescription.innerHTML = "".concat(descriptionText);
+                        pendingDate.innerHTML = "".concat(datePending);
+                        $(departmentSelect).on('change', function () {
+                            buildColleagues(departmentSelect.value, 'none');
+                        });
+                        buildDepartments(findDepartment(findUser()));
                         break;
                 }
             }
@@ -471,55 +497,118 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     return role;
             }
         }
-        function userDepartment() {
-            var employeesData = document.querySelector('#employees-data');
-            var employeesCollection = employeesData.getElementsByTagName('article');
-            var employeesTotal = employeesData.getElementsByTagName('article').length;
-            var userSelect = document.querySelector('#user-form select');
-            var userName = userSelect.selectedOptions[0].textContent;
-            for (var i = 0; i < employeesTotal; i++) {
-                var firstName = employeesCollection[i].children[0].textContent;
-                var middleName = employeesCollection[i].children[1].textContent;
-                var lastName = employeesCollection[i].children[2].textContent;
-                var department = employeesCollection[i].children[3].textContent;
-                var occupation = employeesCollection[i].children[4].textContent;
-                var role = employeesCollection[i].children[5].textContent;
-                var employeeName = "".concat(firstName, " ").concat(lastName);
-                if (employeeName === userName) {
-                    return department;
-                }
+        function getTicket(info) {
+            var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
+            switch (info) {
+                case 'ticket-status':
+                    var ticketStatus = activeTicket.children[3].children[0].innerHTML;
+                    return ticketStatus;
+                case 'ticket-rating':
+                    var ticketRating = activeTicket.children[3].children[1].innerHTML;
+                    return ticketRating;
+                case 'subject-text':
+                    var subjectText = activeTicket.children[3].children[2].innerHTML;
+                    return subjectText;
+                case 'description-text':
+                    var descriptionText = activeTicket.children[3].children[3].innerHTML;
+                    return descriptionText;
+                case 'sender-name':
+                    var senderName = activeTicket.children[3].children[4].innerHTML;
+                    return senderName;
+                case 'sender-department':
+                    var senderDepartment = activeTicket.children[3].children[5].innerHTML;
+                    return senderDepartment;
+                case 'receiver-name':
+                    var receiverName = activeTicket.children[3].children[6].innerHTML;
+                    return receiverName;
+                case 'receiver-department':
+                    var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
+                    return receiverDepartment;
+                case 'date-short':
+                    var dateShort = activeTicket.children[3].children[8].innerHTML;
+                    return dateShort;
+                case 'date-pending':
+                    var datePending = activeTicket.children[3].children[9].innerHTML;
+                    return datePending;
+                case 'date-assigned':
+                    var dateAssigned = activeTicket.children[3].children[10].innerHTML;
+                    return dateAssigned;
+                case 'date-resolved':
+                    var dateResolved = activeTicket.children[3].children[11].innerHTML;
+                    return dateResolved;
+                case 'note-resolved':
+                    var noteResolved = activeTicket.children[3].children[12].innerHTML;
+                    return noteResolved;
+                case 'date-deleted':
+                    var dateDeleted = activeTicket.children[3].children[13].innerHTML;
+                    return dateDeleted;
+                case 'note-deleted':
+                    var noteDeleted = activeTicket.children[3].children[14].innerHTML;
+                    return noteDeleted;
             }
         }
-        function buildColleagues(selectedDepartment) {
+        function buildColleagues(selectedDepartment, filter) {
             var indexMain = document.querySelector('#index-main');
             var indexOverlay = document.querySelector('#index-overlay');
             var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
             colleagueSelect.innerHTML = "<option value=\"select-colleague\" selected disabled>Select Colleague</option>";
             var employeesData = document.querySelector('#employees-data');
             var employeesTotal = employeesData.children.length;
-            for (var i = 0; i < employeesTotal; i++) {
-                var firstName = getData(i, 'first-name');
-                var middleName = getData(i, 'middle-name');
-                var lastName = getData(i, 'last-name');
-                var department = getData(i, 'department');
-                var occupation = getData(i, 'occupation');
-                var role = getData(i, 'role');
-                if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
-                    var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
-                    var mainHeader = indexMain.getElementsByTagName('header');
-                    var activeName;
-                    if (typeof mainHeader[0] !== "".concat(undefined)) {
-                        activeName = mainHeader[0].lastChild.textContent;
+            switch (filter) {
+                case 'none':
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var firstName = getData(i, 'first-name');
+                        var middleName = getData(i, 'middle-name');
+                        var lastName = getData(i, 'last-name');
+                        var department = getData(i, 'department');
+                        var occupation = getData(i, 'occupation');
+                        var role = getData(i, 'role');
+                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                            var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                            var mainHeader = indexMain.getElementsByTagName('header');
+                            var activeName;
+                            if (typeof mainHeader[0] !== "".concat(undefined)) {
+                                activeName = mainHeader[0].lastChild.textContent;
+                            }
+                            var indexName = "".concat(firstName, " ").concat(lastName);
+                            var userName = findUser();
+                            if (userName === indexName) {
+                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\" selected>").concat(firstName, " ").concat(lastName, "</option>"));
+                            }
+                            else {
+                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                            }
+                        }
                     }
-                    var indexName = "".concat(firstName, " ").concat(lastName);
-                    var userName = findUser();
-                    if (userName !== indexName) {
-                        $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                    break;
+                case 'user':
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var firstName = getData(i, 'first-name');
+                        var middleName = getData(i, 'middle-name');
+                        var lastName = getData(i, 'last-name');
+                        var department = getData(i, 'department');
+                        var occupation = getData(i, 'occupation');
+                        var role = getData(i, 'role');
+                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                            var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                            var mainHeader = indexMain.getElementsByTagName('header');
+                            var activeName;
+                            if (typeof mainHeader[0] !== "".concat(undefined)) {
+                                activeName = mainHeader[0].lastChild.textContent;
+                            }
+                            var indexName = "".concat(firstName, " ").concat(lastName);
+                            var userName = findUser();
+                            console.log(indexMain.className);
+                            if (userName !== indexName) {
+                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                            }
+                        }
                     }
-                }
+                    break;
             }
         }
         function buildDepartments(userDepartment) {
+            var indexMain = document.querySelector('#index-main');
             var indexOverlay = document.querySelector('#index-overlay');
             var departmentSelect = indexOverlay.querySelector('#department-form select');
             var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
@@ -540,7 +629,15 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 }
                 departmentSelect.append(option);
             }
-            buildColleagues(departmentSelect.selectedOptions[0].value);
+            if (indexOverlay.className === 'log-overlay' || indexOverlay.className === 'logged-pending') {
+                buildColleagues(departmentSelect.selectedOptions[0].value, 'user');
+            }
+            else {
+                buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
+            }
+        }
+        function userDepartment() {
+            return "".concat(findDepartment(findUser()));
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
 });

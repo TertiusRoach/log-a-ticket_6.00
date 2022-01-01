@@ -136,6 +136,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     if (colleagueSelect.length === 1) {
                         logButton.className = 'disabled-button';
                         assignButton.className = 'disabled-button';
+                        toggleButton(colleagueSelect.value);
                     }
                     else {
                         checkState('log-ticket');
