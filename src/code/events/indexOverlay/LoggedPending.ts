@@ -49,9 +49,9 @@ export namespace LoggedPending {
       let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
       let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');
 
-      let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
-      let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
-      let deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
+      let pendingDate: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
+      let assignedDate: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
+      let deletedDate: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -222,7 +222,6 @@ export namespace LoggedPending {
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });
-
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       console.log('--LoggedPending.js Loaded');
     }

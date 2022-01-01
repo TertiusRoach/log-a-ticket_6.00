@@ -35,6 +35,21 @@ export namespace ManagePending {
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
+      let claimButton: HTMLButtonElement = indexOverlay.querySelector('#claim-ticket button');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+      let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
+      let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
+      let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
+      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
+      let datePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
+      let dateAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
+      let dateDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
+      let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
+      let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
+
       let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
       let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
       let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
@@ -45,7 +60,6 @@ export namespace ManagePending {
       let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
-
       liveSubject.value = `${getTicket('subject-text')}`;
       liveDescription.textContent = `${getTicket('description-text')}`;
       livePending.textContent = `${getTicket('date-pending')}`;
@@ -53,15 +67,128 @@ export namespace ManagePending {
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      function toggleDates() {
+        var selectedIndex = colleagueSelect.selectedOptions[0].value;
+        if (selectedIndex === 'select-colleague') {
+          dateAssigned.textContent = 'undefined';
+          dateAssigned.className = 'disabled-text';
+
+          pendingMark.style.background = `${GetColor.primaryDark()}`;
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+
+          dateDeleted.textContent = 'undefined';
+          dateDeleted.className = 'disabled-text';
+        } else {
+          dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          dateAssigned.className = '';
+
+          pendingMark.style.background = `${GetColor.primaryMedium()}`;
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+
+          dateDeleted.textContent = 'undefined';
+          dateDeleted.className = 'disabled-text';
+        }
+
+        if (dateAssigned.textContent === 'undefined' || dateAssigned.textContent === 'undefined') {
+          dateAssigned.style.display = 'none';
+          dateDeleted.style.display = 'none';
+        } else if (dateAssigned.textContent !== 'undefined') {
+          dateAssigned.style.display = 'flex';
+          dateDeleted.style.display = 'none';
+        } else if (dateDeleted.textContent !== 'undefined') {
+          dateAssigned.style.display = 'none';
+          dateDeleted.style.display = 'flex';
+        }
+      }
+      function toggleButton() {}
 
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(claimButton)
+        .on('mouseenter', () => {
+          if (claimButton.className !== 'disabled-button') {
+            claimButton.style.color = `${GetColor.primaryLight()}`;
+          } else {
+            claimButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          claimButton.style.color = '';
+        });
+      $(assignButton)
+        .on('mouseenter', () => {
+          if (assignButton.className !== 'disabled-button') {
+            assignButton.style.color = `${GetColor.primaryLight()}`;
+          } else {
+            assignButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          assignButton.style.color = '';
+        });
+      $(deleteButton)
+        .on('mouseenter', () => {
+          dateAssigned.style.display = 'none';
+          dateAssigned.textContent = 'undefined';
+          dateAssigned.className = 'disabled-text';
+
+          dateDeleted.style.display = 'flex';
+          dateDeleted.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          dateDeleted.className = '';
+
+          deleteButton.parentElement.style.background = `${GetColor.primaryDark()}`;
+          pendingMark.style.background = '';
+          assignedMark.style.background = '';
+        })
+        .on('mouseleave', () => {
+          if (colleagueSelect.value !== 'select-colleague') {
+            dateAssigned.style.display = 'flex';
+            dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+            dateAssigned.className = '';
+
+            dateDeleted.style.display = 'none';
+            dateDeleted.textContent = 'undefined';
+            dateDeleted.className = 'disabled-text';
+
+            pendingMark.style.background = '';
+            assignedMark.style.background = `${GetColor.primaryDark()}`;
+          } else {
+            dateAssigned.style.display = 'none';
+            dateAssigned.textContent = 'undefined';
+            dateAssigned.className = 'disabled-text';
+
+            dateDeleted.style.display = 'none';
+            dateDeleted.textContent = 'undefined';
+            dateDeleted.className = 'disabled-text';
+
+            pendingMark.style.background = `${GetColor.primaryDark()}`;
+            assignedMark.style.background = '';
+          }
+          deleteButton.parentElement.style.background = '';
+        });
+
+      $(departmentSelect).on('click', () => {
+        toggleDates();
+      });
+      $(colleagueSelect).on('click', () => {
+        toggleDates();
+      });
+
+      $(dateAssigned).on('change', () => {
+        toggleDates();
+      });
+
+      $(dateDeleted).on('change', () => {
+        toggleDates();
+      });
+
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      toggleDates();
       console.log('--ManagePending.js Loaded');
     }
   }
