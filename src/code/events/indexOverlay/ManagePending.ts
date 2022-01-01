@@ -19,6 +19,7 @@ export namespace ManagePending {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('manage-pending');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -27,7 +28,7 @@ export namespace ManagePending {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      const ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
+
       indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
@@ -45,11 +46,17 @@ export namespace ManagePending {
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
 
+      liveSubject.value = `${getTicket('subject-text')}`;
+      liveDescription.textContent = `${getTicket('description-text')}`;
+      livePending.textContent = `${getTicket('date-pending')}`;
+
+      console.log(getTicket('date-assigned'));
+
       /*
       liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
       liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
       liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
+     
       if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
         liveColleague.style.display = 'none';
         liveAssigned.style.display = 'none';
@@ -106,10 +113,9 @@ export namespace ManagePending {
       | 'date-resolved'
       | 'note-resolved'
       | 'date-deleted'
-      | 'note-deleted',
-    container: HTMLDivElement
+      | 'note-deleted'
   ) {
-    var activeTicket = container.querySelector('.active-ticket');
+    var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
 
     switch (info) {
       case 'ticket-status':

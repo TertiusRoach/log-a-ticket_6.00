@@ -21,12 +21,12 @@ define(["require", "exports"], function (require, exports) {
                 var liveColleague = indexOverlay.querySelector('#colleague-name');
                 var livePending = indexOverlay.querySelector('#pending-date');
                 var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                liveSubject.value = "".concat(getTicket('subject-text', ticketsContainer));
-                liveDescription.textContent = "".concat(getTicket('description-text', ticketsContainer));
-                liveDepartment.textContent = "".concat(getTicket('receiver-department', ticketsContainer));
-                liveColleague.textContent = "".concat(getTicket('receiver-name', ticketsContainer));
-                livePending.textContent = "".concat(getTicket('date-pending', ticketsContainer));
-                liveAssigned.textContent = "".concat(getTicket('date-assigned', ticketsContainer));
+                liveSubject.value = "".concat(getTicket('subject-text'));
+                liveDescription.textContent = "".concat(getTicket('description-text'));
+                liveDepartment.textContent = "".concat(getTicket('receiver-department'));
+                liveColleague.textContent = "".concat(getTicket('receiver-name'));
+                livePending.textContent = "".concat(getTicket('date-pending'));
+                liveAssigned.textContent = "".concat(getTicket('date-assigned'));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
@@ -48,8 +48,8 @@ define(["require", "exports"], function (require, exports) {
             activeTicket.className = activeTicket.classList[0];
             indexMain.style.display = 'grid';
         }
-        function getTicket(info, container) {
-            var activeTicket = container.querySelector('.active-ticket');
+        function getTicket(info) {
+            var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
             switch (info) {
                 case 'ticket-status':
                     var ticketStatus = activeTicket.children[3].children[0].innerHTML;

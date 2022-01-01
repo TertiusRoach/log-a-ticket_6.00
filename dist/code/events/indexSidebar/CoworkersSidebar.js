@@ -18,7 +18,6 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
                 $(closeCoworkers).on('click', function () {
                     indexSidebar.style.display = 'none';
                 });
-                console.log('--CoworkersSidebar.js Loaded');
             }
             return initiateEvents;
         }());

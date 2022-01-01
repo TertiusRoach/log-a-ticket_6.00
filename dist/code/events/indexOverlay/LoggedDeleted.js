@@ -25,20 +25,20 @@ define(["require", "exports"], function (require, exports) {
                 var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
                 var liveDeleted = indexOverlay.querySelector('#deleted-date');
                 var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
-                liveSubject.value = "".concat(getTicket('subject-text', ticketsContainer));
-                liveDescription.textContent = "".concat(getTicket('description-text', ticketsContainer));
-                liveDepartment.textContent = "".concat(getTicket('receiver-department', ticketsContainer));
-                livePending.textContent = "".concat(getTicket('date-pending', ticketsContainer));
-                if (getTicket('receiver-name', ticketsContainer) === "".concat(undefined)) {
+                liveSubject.value = "".concat(getTicket('subject-text'));
+                liveDescription.textContent = "".concat(getTicket('description-text'));
+                liveDepartment.textContent = "".concat(getTicket('receiver-department'));
+                livePending.textContent = "".concat(getTicket('date-pending'));
+                if (getTicket('receiver-name') === "".concat(undefined)) {
                     liveColleague.style.display = 'none';
                     liveAssigned.style.display = 'none';
                 }
                 else {
-                    liveColleague.textContent = "".concat(getTicket('receiver-name', ticketsContainer));
-                    liveAssigned.textContent = "".concat(getTicket('date-assigned', ticketsContainer));
+                    liveColleague.textContent = "".concat(getTicket('receiver-name'));
+                    liveAssigned.textContent = "".concat(getTicket('date-assigned'));
                 }
-                liveDeleted.textContent = "".concat(getTicket('date-deleted', ticketsContainer));
-                liveNoteDeleted.textContent = "".concat(getTicket('note-deleted', ticketsContainer));
+                liveDeleted.textContent = "".concat(getTicket('date-deleted'));
+                liveNoteDeleted.textContent = "".concat(getTicket('note-deleted'));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
@@ -60,8 +60,8 @@ define(["require", "exports"], function (require, exports) {
             activeTicket.className = activeTicket.classList[0];
             indexMain.style.display = 'grid';
         }
-        function getTicket(info, container) {
-            var activeTicket = container.querySelector('.active-ticket');
+        function getTicket(info) {
+            var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
             switch (info) {
                 case 'ticket-status':
                     var ticketStatus = activeTicket.children[3].children[0].innerHTML;

@@ -45,19 +45,19 @@ export namespace LoggedDeleted {
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
 
-      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
-      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
-      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
-      if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
+      liveSubject.value = `${getTicket('subject-text')}`;
+      liveDescription.textContent = `${getTicket('description-text')}`;
+      liveDepartment.textContent = `${getTicket('receiver-department')}`;
+      livePending.textContent = `${getTicket('date-pending')}`;
+      if (getTicket('receiver-name') === `${undefined}`) {
         liveColleague.style.display = 'none';
         liveAssigned.style.display = 'none';
       } else {
-        liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
-        liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
+        liveColleague.textContent = `${getTicket('receiver-name')}`;
+        liveAssigned.textContent = `${getTicket('date-assigned')}`;
       }
-      liveDeleted.textContent = `${getTicket('date-deleted', ticketsContainer)}`;
-      liveNoteDeleted.textContent = `${getTicket('note-deleted', ticketsContainer)}`;
+      liveDeleted.textContent = `${getTicket('date-deleted')}`;
+      liveNoteDeleted.textContent = `${getTicket('note-deleted')}`;
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -104,10 +104,9 @@ export namespace LoggedDeleted {
       | 'date-resolved'
       | 'note-resolved'
       | 'date-deleted'
-      | 'note-deleted',
-    container: HTMLDivElement
+      | 'note-deleted'
   ) {
-    var activeTicket = container.querySelector('.active-ticket');
+    var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
 
     switch (info) {
       case 'ticket-status':

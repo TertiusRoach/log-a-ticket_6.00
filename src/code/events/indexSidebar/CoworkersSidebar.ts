@@ -46,7 +46,6 @@ export namespace CoworkersSidebar {
       });
       // Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ //
       /*--► console.log('--CoworkersSidebar.js Loaded'); ◄--*/
-      console.log('--CoworkersSidebar.js Loaded');
     }
   }
 }
