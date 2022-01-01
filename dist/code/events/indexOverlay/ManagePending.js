@@ -28,7 +28,6 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
                 liveSubject.value = "".concat(getTicket('subject-text'));
                 liveDescription.textContent = "".concat(getTicket('description-text'));
                 livePending.textContent = "".concat(getTicket('date-pending'));
-                console.log(getTicket('date-assigned'));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');

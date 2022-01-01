@@ -60,7 +60,17 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     var dateDeleted = activeTicket.children[3].children[13].innerHTML;
                     var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                     var liveReceiverDepartment = "".concat(UseCapify_1.UseCapify.forString('-', "".concat($(departmentSelect).val())));
-                    if (colleagueSelect.value !== 'select-colleague') {
+                    if (colleagueSelect.getElementsByTagName('option').length === 1) {
+                        assignButton.parentElement.style.display = 'none';
+                        deleteButton.parentElement.style.display = 'grid';
+                        moveButton.parentElement.style.display = 'none';
+                        saveButton.parentElement.style.display = 'none';
+                        assignButton.className = 'disabled-button';
+                        deleteButton.className = '';
+                        moveButton.className = 'disabled-button';
+                        saveButton.className = 'disabled-button';
+                    }
+                    else if (colleagueSelect.value !== 'select-colleague') {
                         assignedDate.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
                         assignButton.parentElement.style.display = 'grid';
                         deleteButton.parentElement.style.display = 'none';
@@ -131,7 +141,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     .on('keyup', function () {
                     toggleButton();
                 });
-                $(departmentSelect).on('change', function () {
+                $(departmentSelect).on('click', function () {
                     toggleButton();
                 });
                 $(colleagueSelect).on('click', function () {

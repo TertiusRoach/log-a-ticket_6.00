@@ -131,17 +131,17 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                     .on('change', function () {
                     assignedDate.innerText = undefined;
                     assignedDate.style.display = 'none';
-                })
-                    .on('click', function () {
                     if (colleagueSelect.length === 1) {
                         logButton.className = 'disabled-button';
                         assignButton.className = 'disabled-button';
+                        toggleButton(colleagueSelect.value);
                     }
                     else {
                         checkState('log-ticket');
                         toggleButton(colleagueSelect.value);
                     }
-                });
+                })
+                    .on('click', function () { });
                 $(colleagueSelect)
                     .on('change', function () {
                     assignedDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');

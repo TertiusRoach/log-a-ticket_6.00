@@ -86,7 +86,17 @@ export namespace LoggedPending {
         var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
 
         let liveReceiverDepartment = `${UseCapify.forString('-', `${$(departmentSelect).val()}`)}`;
-        if (colleagueSelect.value !== 'select-colleague') {
+        if (colleagueSelect.getElementsByTagName('option').length === 1) {
+          assignButton.parentElement.style.display = 'none';
+          deleteButton.parentElement.style.display = 'grid';
+          moveButton.parentElement.style.display = 'none';
+          saveButton.parentElement.style.display = 'none';
+
+          assignButton.className = 'disabled-button';
+          deleteButton.className = '';
+          moveButton.className = 'disabled-button';
+          saveButton.className = 'disabled-button';
+        } else if (colleagueSelect.value !== 'select-colleague') {
           assignedDate.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
           // Assign ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ //
           assignButton.parentElement.style.display = 'grid';
@@ -168,7 +178,7 @@ export namespace LoggedPending {
           toggleButton();
         });
 
-      $(departmentSelect).on('change', () => {
+      $(departmentSelect).on('click', () => {
         toggleButton();
       });
 
