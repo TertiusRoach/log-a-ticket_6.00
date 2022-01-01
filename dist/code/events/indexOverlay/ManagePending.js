@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ManagePending = void 0;
@@ -6,11 +6,11 @@ define(["require", "exports"], function (require, exports) {
     (function (ManagePending) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('manage-pending');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
@@ -25,6 +25,10 @@ define(["require", "exports"], function (require, exports) {
                 var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
                 var liveDeleted = indexOverlay.querySelector('#deleted-date');
                 var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
+                liveSubject.value = "".concat(getTicket('subject-text'));
+                liveDescription.textContent = "".concat(getTicket('description-text'));
+                livePending.textContent = "".concat(getTicket('date-pending'));
+                console.log(getTicket('date-assigned'));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
@@ -46,8 +50,8 @@ define(["require", "exports"], function (require, exports) {
             activeTicket.className = activeTicket.classList[0];
             indexMain.style.display = 'grid';
         }
-        function getTicket(info, container) {
-            var activeTicket = container.querySelector('.active-ticket');
+        function getTicket(info) {
+            var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
             switch (info) {
                 case 'ticket-status':
                     var ticketStatus = activeTicket.children[3].children[0].innerHTML;

@@ -173,8 +173,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
             return initiateEvents;
         }());
         LoggedPending.initiateEvents = initiateEvents;
-        function getTicket(info, container) {
-            var activeTicket = container.querySelector('.active-ticket');
+        function getTicket(info) {
+            var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
             switch (info) {
                 case 'ticket-status':
                     var ticketStatus = activeTicket.children[3].children[0].innerHTML;

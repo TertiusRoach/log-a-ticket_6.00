@@ -106,10 +106,9 @@ export namespace ManageAssigned {
       | 'date-resolved'
       | 'note-resolved'
       | 'date-deleted'
-      | 'note-deleted',
-    container: HTMLDivElement
+      | 'note-deleted'
   ) {
-    var activeTicket = container.querySelector('.active-ticket');
+    var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
 
     switch (info) {
       case 'ticket-status':

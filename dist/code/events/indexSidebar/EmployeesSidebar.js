@@ -30,7 +30,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 $(closeEmployees).on('click', function () {
                     indexSidebar.style.display = 'none';
                 });
-                console.log('--EmployeesSidebar.js Loaded');
             }
             return initiateEvents;
         }());

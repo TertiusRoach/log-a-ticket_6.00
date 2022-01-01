@@ -41,12 +41,12 @@ export namespace LoggedAssigned {
       let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
       let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
       let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
-      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
-      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
-      liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
+      liveSubject.value = `${getTicket('subject-text')}`;
+      liveDescription.textContent = `${getTicket('description-text')}`;
+      liveDepartment.textContent = `${getTicket('receiver-department')}`;
+      liveColleague.textContent = `${getTicket('receiver-name')}`;
+      livePending.textContent = `${getTicket('date-pending')}`;
+      liveAssigned.textContent = `${getTicket('date-assigned')}`;
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -93,10 +93,9 @@ export namespace LoggedAssigned {
       | 'date-resolved'
       | 'note-resolved'
       | 'date-deleted'
-      | 'note-deleted',
-    container: HTMLDivElement
+      | 'note-deleted'
   ) {
-    var activeTicket = container.querySelector('.active-ticket');
+    var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
 
     switch (info) {
       case 'ticket-status':
