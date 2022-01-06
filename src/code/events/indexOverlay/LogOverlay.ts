@@ -26,7 +26,6 @@ export namespace LogOverlay {
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
       let activeButton: HTMLButtonElement = indexHeader.querySelector('.active-page');
-      let logAticket: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
       indexMain.style.display = 'none';
@@ -93,14 +92,7 @@ export namespace LogOverlay {
             break;
         }
       }
-      function closeContainer(block: String | 'index-body' | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
-        let container: HTMLElement = document.querySelector(`#${block}`);
-        let page: String = block.split('-')[1];
-        container.style.display = 'none';
-        logAticket.className = '';
-        container.innerHTML = '';
-        container.className = `default-${page}`;
-      }
+
       function toggleButton(colleague: String | 'select-colleague') {
         if (colleague !== 'select-colleague') {
           logButton.parentElement.style.display = 'none';
@@ -283,5 +275,16 @@ export namespace LogOverlay {
       checkState('log-ticket');
       console.log('--LogOverlay.js Loaded');
     }
+  }
+  function closeContainer(block: String | 'index-body' | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
+    const indexHeader: HTMLElement = document.querySelector('#index-header');
+    var logAticket: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
+    var container: HTMLElement = document.querySelector(`#${block}`);
+    var page: String = block.split('-')[1];
+
+    logAticket.className = '';
+    container.style.display = 'none';
+    container.innerHTML = '';
+    container.className = `default-${page}`;
   }
 }

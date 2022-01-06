@@ -539,8 +539,6 @@ export namespace DataRead {
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
-      let activeTicket = ticketsContainer.querySelector('.active-ticket');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -579,6 +577,11 @@ export namespace DataRead {
       let userDepartment: String;
       let userName: String;
 
+      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+      /*
+      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      let activeTicket = ticketsContainer.querySelector('.active-ticket');
+
       var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
       var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
       var subjectText: String = activeTicket.children[3].children[2].innerHTML;
@@ -594,8 +597,7 @@ export namespace DataRead {
       var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
       var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
       var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
-
-      /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
+      */
 
       /* Events ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
@@ -641,28 +643,30 @@ export namespace DataRead {
           departmentsData = indexData.querySelector('#departments-data');
           departmentsTotal = departmentsData.children.length;
 
-          ticketSubject.value = `${subjectText}`;
-          ticketDescription.innerHTML = `${descriptionText}`;
-          pendingDate.textContent = `${datePending}`;
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.innerHTML = `${getTicket('description-text')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
           $(departmentSelect).on('change', () => {
             buildColleagues(departmentSelect.value, 'user');
           });
-          buildDepartments(receiverDepartment);
+          buildDepartments(getTicket('receiver-department'));
           break;
         case 'manage-deleted':
           departmentsData = indexData.querySelector('#departments-data');
           departmentsTotal = departmentsData.children.length;
 
-          departmentName.textContent = `${senderDepartment}`;
-          ticketSubject.value = `${subjectText}`;
-          ticketDescription.innerHTML = `${descriptionText}`;
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.innerHTML = `${getTicket('description-text')}`;
 
-          pendingDate.textContent = `${datePending}`;
-          deletedDate.textContent = `${dateDeleted}`;
-          deletedNote.textContent = `${noteDeleted}`;
+          departmentName.textContent = `${getTicket('sender-department')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          deletedDate.textContent = `${getTicket('date-deleted')}`;
+          deletedNote.textContent = `${getTicket('note-deleted')}`;
           break;
         case 'manage-pending':
-          if (senderName === findUser()) {
+          if (getTicket('sender-name') === findUser()) {
             claimButton.parentElement.style.display = 'grid';
             claimButton.className = 'disabled-button';
           }
@@ -670,9 +674,10 @@ export namespace DataRead {
           departmentsData = indexData.querySelector('#departments-data');
           departmentsTotal = departmentsData.children.length;
 
-          ticketSubject.value = `${subjectText}`;
-          ticketDescription.textContent = `${descriptionText}`;
-          pendingDate.textContent = `${datePending}`;
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
 
           $(departmentSelect).on('change', () => {
             buildColleagues(departmentSelect.value, 'none');

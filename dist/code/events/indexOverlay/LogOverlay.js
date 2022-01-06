@@ -10,7 +10,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var activeButton = indexHeader.querySelector('.active-page');
-                var logAticket = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
@@ -75,14 +74,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                             }
                             break;
                     }
-                }
-                function closeContainer(block) {
-                    var container = document.querySelector("#".concat(block));
-                    var page = block.split('-')[1];
-                    container.style.display = 'none';
-                    logAticket.className = '';
-                    container.innerHTML = '';
-                    container.className = "default-".concat(page);
                 }
                 function toggleButton(colleague) {
                     if (colleague !== 'select-colleague') {
@@ -273,6 +264,16 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
             return initiateEvents;
         }());
         LogOverlay.initiateEvents = initiateEvents;
+        function closeContainer(block) {
+            var indexHeader = document.querySelector('#index-header');
+            var logAticket = indexHeader.querySelector('#log-a-ticket button');
+            var container = document.querySelector("#".concat(block));
+            var page = block.split('-')[1];
+            logAticket.className = '';
+            container.style.display = 'none';
+            container.innerHTML = '';
+            container.className = "default-".concat(page);
+        }
     })(LogOverlay = exports.LogOverlay || (exports.LogOverlay = {}));
 });
 

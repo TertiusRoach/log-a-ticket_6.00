@@ -30,35 +30,20 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], fun
                 var liveAssigned = indexOverlay.querySelector('#assigned-date');
                 var liveDeleted = indexOverlay.querySelector('#deleted-date');
                 var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
-                var ticketStatus = activeTicket.children[3].children[0].innerHTML;
-                var ticketRating = activeTicket.children[3].children[1].innerHTML;
-                var subjectText = activeTicket.children[3].children[2].innerHTML;
-                var descriptionText = activeTicket.children[3].children[3].innerHTML;
-                var senderName = activeTicket.children[3].children[4].innerHTML;
-                var senderDepartment = activeTicket.children[3].children[5].innerHTML;
-                var receiverName = activeTicket.children[3].children[6].innerHTML;
-                var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
-                var dateShort = activeTicket.children[3].children[8].innerHTML;
-                var datePending = activeTicket.children[3].children[9].innerHTML;
-                var dateAssigned = activeTicket.children[3].children[10].innerHTML;
-                var dateResolved = activeTicket.children[3].children[11].innerHTML;
-                var noteResolved = activeTicket.children[3].children[12].innerHTML;
-                var dateDeleted = activeTicket.children[3].children[13].innerHTML;
-                var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                 var indexData = document.querySelector('#index-data');
                 $(restoreButton)
                     .on('mouseenter', function () {
                     pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                     deletedDate.style.display = 'none';
-                    deletedDate.textContent = "".concat(undefined);
+                    deletedDate.textContent = undefined;
                     deletedNote.style.display = 'none';
-                    deletedNote.textContent = "".concat(undefined);
+                    deletedNote.textContent = undefined;
                 })
                     .on('mouseleave', function () {
                     pendingMark.style.background = '';
-                    deletedDate.textContent = "".concat(dateDeleted);
+                    deletedDate.textContent = "".concat(getTicket('date-deleted'));
                     deletedDate.style.display = 'grid';
-                    deletedNote.textContent = "".concat(noteDeleted);
+                    deletedNote.textContent = "".concat(getTicket('note-deleted'));
                     deletedNote.style.display = 'grid';
                 });
                 $(closeOverlay).on('click', function () {

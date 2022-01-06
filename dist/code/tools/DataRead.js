@@ -329,8 +329,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsContainer = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsContainer.querySelector('.active-ticket');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var logButton = indexOverlay.querySelector('#log-ticket button');
@@ -362,21 +360,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var ticketsData;
                 var userDepartment;
                 var userName;
-                var ticketStatus = activeTicket.children[3].children[0].innerHTML;
-                var ticketRating = activeTicket.children[3].children[1].innerHTML;
-                var subjectText = activeTicket.children[3].children[2].innerHTML;
-                var descriptionText = activeTicket.children[3].children[3].innerHTML;
-                var senderName = activeTicket.children[3].children[4].innerHTML;
-                var senderDepartment = activeTicket.children[3].children[5].innerHTML;
-                var receiverName = activeTicket.children[3].children[6].innerHTML;
-                var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
-                var dateShort = activeTicket.children[3].children[8].innerHTML;
-                var datePending = activeTicket.children[3].children[9].innerHTML;
-                var dateAssigned = activeTicket.children[3].children[10].innerHTML;
-                var dateResolved = activeTicket.children[3].children[11].innerHTML;
-                var noteResolved = activeTicket.children[3].children[12].innerHTML;
-                var dateDeleted = activeTicket.children[3].children[13].innerHTML;
-                var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                 switch (page) {
                     case 'log-overlay':
                         departmentsData = indexData.querySelector('#departments-data');
@@ -414,34 +397,34 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     case 'logged-pending':
                         departmentsData = indexData.querySelector('#departments-data');
                         departmentsTotal = departmentsData.children.length;
-                        ticketSubject.value = "".concat(subjectText);
-                        ticketDescription.innerHTML = "".concat(descriptionText);
-                        pendingDate.textContent = "".concat(datePending);
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.innerHTML = "".concat(getTicket('description-text'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
                         $(departmentSelect).on('change', function () {
                             buildColleagues(departmentSelect.value, 'user');
                         });
-                        buildDepartments(receiverDepartment);
+                        buildDepartments(getTicket('receiver-department'));
                         break;
                     case 'manage-deleted':
                         departmentsData = indexData.querySelector('#departments-data');
                         departmentsTotal = departmentsData.children.length;
-                        departmentName.textContent = "".concat(senderDepartment);
-                        ticketSubject.value = "".concat(subjectText);
-                        ticketDescription.innerHTML = "".concat(descriptionText);
-                        pendingDate.textContent = "".concat(datePending);
-                        deletedDate.textContent = "".concat(dateDeleted);
-                        deletedNote.textContent = "".concat(noteDeleted);
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.innerHTML = "".concat(getTicket('description-text'));
+                        departmentName.textContent = "".concat(getTicket('sender-department'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
                         break;
                     case 'manage-pending':
-                        if (senderName === findUser()) {
+                        if (getTicket('sender-name') === findUser()) {
                             claimButton.parentElement.style.display = 'grid';
                             claimButton.className = 'disabled-button';
                         }
                         departmentsData = indexData.querySelector('#departments-data');
                         departmentsTotal = departmentsData.children.length;
-                        ticketSubject.value = "".concat(subjectText);
-                        ticketDescription.textContent = "".concat(descriptionText);
-                        pendingDate.textContent = "".concat(datePending);
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
                         $(departmentSelect).on('change', function () {
                             buildColleagues(departmentSelect.value, 'none');
                         });
