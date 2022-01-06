@@ -62,7 +62,7 @@
         color: white;
         background: none;
 
-        padding-left: 0;
+        padding-left: 8px;
       }
     }
     footer {
@@ -81,11 +81,12 @@
         align-items: center;
         justify-content: center;
 
+        padding: 8px 8px 0 8px;
         border-radius: 1rem;
         line-height: 1rem;
         font-weight: 600;
         font-size: 1rem;
-        padding: 8px 8px 0 8px;
+        height: 100%;
 
         border: 2px solid $primary-light;
         color: $primary-dark;
@@ -104,7 +105,7 @@
         align-items: center;
         justify-content: center;
 
-        padding: 4px 8px 0 0;
+        padding: 0 8px 0 8px;
         border-radius: 1rem;
         line-height: 1rem;
         font-weight: 600;
@@ -1199,11 +1200,45 @@
     grid-column: 2/9;
     grid-row: 5/20;
 
-    #ticket-top {
-      .recycle-ticket {
+    #ticket-top #recycle-ticket {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      button {
+        grid-column: 2/3;
+        grid-row: 2/3;
+
+        display: flex;
+        overflow: visible;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        h1 {
+          white-space: nowrap;
+
+          line-height: 1rem;
+          padding-left: 1rem;
+        }
+        border: none;
         color: white;
+        background: none;
+      }
+      button:hover {
+        color: $secondary-dark;
+      }
+      .disabled-button,
+      .disabled-button:hover {
+        cursor: default;
+        color: $disabled-default;
+        opacity: 0.5;
+        svg {
+          cursor: default;
+        }
       }
     }
+    /*
     #ticket-bot {
       #deleted-note:read-only {
         margin-left: 1rem;
@@ -1211,7 +1246,7 @@
         border: 2px solid $deleted-default;
         color: white;
       }
-    }
+      */
   }
   #overlay-canvas {
     grid-column: 2/9;

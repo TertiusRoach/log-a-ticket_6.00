@@ -26,25 +26,25 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], fun
                 $(unlockButton)
                     .on('mouseenter', function () {
                     unlockButton.style.color = "".concat(GetColor_1.GetColor.assignedDefault());
-                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
-                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
-                    dateResolved.style.display = 'none';
-                    noteResolved.style.display = 'none';
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
                     dateResolved.className = 'disabled-text';
                     noteResolved.className = 'disabled-text';
+                    dateResolved.style.display = 'none';
+                    noteResolved.style.display = 'none';
                     dateResolved.textContent = "".concat(undefined);
                     noteResolved.textContent = "".concat(undefined);
                 })
                     .on('mouseleave', function () {
                     unlockButton.style.color = '';
-                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
-                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                     dateResolved.className = '';
                     noteResolved.className = '';
-                    dateResolved.textContent = "".concat(getTicket('date-resolved'));
-                    noteResolved.textContent = "".concat(getTicket('note-resolved'));
                     dateResolved.style.display = 'flex';
                     noteResolved.style.display = 'flex';
+                    dateResolved.textContent = "".concat(getTicket('date-resolved'));
+                    noteResolved.textContent = "".concat(getTicket('note-resolved'));
                 });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');

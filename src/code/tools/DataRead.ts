@@ -530,7 +530,7 @@ export namespace DataRead {
     }
   }
   export class forOverlay {
-    constructor(page: 'log-overlay' | 'logged-pending' | 'manage-deleted' | 'manage-pending' | 'user-assigned' | 'user-deleted' | 'user-resolved') {
+    constructor(page: 'log-overlay' | 'logged-deleted' | 'logged-pending' | 'manage-deleted' | 'manage-pending' | 'user-assigned' | 'user-deleted' | 'user-resolved') {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -561,6 +561,7 @@ export namespace DataRead {
       let claimButton: HTMLElement = indexOverlay.querySelector('#claim-ticket button');
       let deleteButton: HTMLElement = indexOverlay.querySelector('#delete-ticket button');
       let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let recycleButton: HTMLButtonElement = indexOverlay.querySelector('#recycle-ticket button');
       let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
       let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
       let unlockButton: HTMLButtonElement = indexOverlay.querySelector('#unlock-ticket button');
@@ -620,6 +621,24 @@ export namespace DataRead {
 
           buildDepartments(findDepartment(findUser()));
           break;
+        case 'logged-deleted':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('receiver-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          if (getTicket('receiver-name') === `${undefined}`) {
+            colleagueName.style.display = 'none';
+            assignedDate.style.display = 'none';
+          }
+
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+
+          deletedDate.textContent = `${getTicket('date-deleted')}`;
+          deletedNote.textContent = `${getTicket('note-deleted')}`;
+          break;
         case 'logged-pending':
           ticketSubject.value = `${getTicket('subject-text')}`;
           ticketDescription.innerHTML = `${getTicket('description-text')}`;
@@ -649,12 +668,8 @@ export namespace DataRead {
             claimButton.className = 'disabled-button';
           }
 
-          departmentsData = indexData.querySelector('#departments-data');
-          departmentsTotal = departmentsData.children.length;
-
           ticketSubject.value = `${getTicket('subject-text')}`;
           ticketDescription.textContent = `${getTicket('description-text')}`;
-
           pendingDate.textContent = `${getTicket('date-pending')}`;
 
           $(departmentSelect).on('change', () => {
@@ -675,6 +690,16 @@ export namespace DataRead {
           deletedDate.style.display = 'none';
           break;
         case 'user-deleted':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          deletedDate.textContent = `${getTicket('date-deleted')}`;
+          deletedNote.textContent = `${getTicket('note-deleted')}`;
           break;
         case 'user-resolved':
           ticketSubject.value = `${getTicket('subject-text')}`;

@@ -347,6 +347,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var claimButton = indexOverlay.querySelector('#claim-ticket button');
                 var deleteButton = indexOverlay.querySelector('#delete-ticket button');
                 var moveButton = indexOverlay.querySelector('#move-ticket button');
+                var recycleButton = indexOverlay.querySelector('#recycle-ticket button');
                 var restoreButton = indexOverlay.querySelector('#restore-ticket button');
                 var saveButton = indexOverlay.querySelector('#save-ticket button');
                 var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
@@ -394,6 +395,20 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         });
                         buildDepartments(findDepartment(findUser()));
                         break;
+                    case 'logged-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('receiver-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        if (getTicket('receiver-name') === "".concat(undefined)) {
+                            colleagueName.style.display = 'none';
+                            assignedDate.style.display = 'none';
+                        }
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        break;
                     case 'logged-pending':
                         ticketSubject.value = "".concat(getTicket('subject-text'));
                         ticketDescription.innerHTML = "".concat(getTicket('description-text'));
@@ -418,8 +433,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             claimButton.parentElement.style.display = 'grid';
                             claimButton.className = 'disabled-button';
                         }
-                        departmentsData = indexData.querySelector('#departments-data');
-                        departmentsTotal = departmentsData.children.length;
                         ticketSubject.value = "".concat(getTicket('subject-text'));
                         ticketDescription.textContent = "".concat(getTicket('description-text'));
                         pendingDate.textContent = "".concat(getTicket('date-pending'));
@@ -439,6 +452,14 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         deletedDate.style.display = 'none';
                         break;
                     case 'user-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
                         break;
                     case 'user-resolved':
                         ticketSubject.value = "".concat(getTicket('subject-text'));

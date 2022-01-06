@@ -28,8 +28,7 @@ export namespace ManagePending {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
-      let activeTicket = ticketsContainer.querySelector('.active-ticket');
+
       indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
@@ -102,37 +101,25 @@ export namespace ManagePending {
         }
       }
       function toggleButton() {
-        var senderName: String = activeTicket.children[3].children[4].innerHTML;
         if (colleagueSelect.value === UseValufy.forString(findUser())) {
           assignButton.parentElement.style.display = 'none';
           assignButton.className = 'disabled-button';
-
-          if (senderName === findUser()) {
-            claimButton.parentElement.style.display = 'grid';
-            claimButton.className = 'disabled-button';
-          } else {
-            claimButton.parentElement.style.display = 'grid';
-            claimButton.className = '';
-          }
-
+          claimButton.parentElement.style.display = 'grid';
+          claimButton.className = '';
           moveButton.parentElement.style.display = 'none';
           moveButton.className = 'disabled-button';
         } else if (colleagueSelect.value === 'select-colleague') {
           assignButton.parentElement.style.display = 'none';
           assignButton.className = 'disabled-button';
-
           claimButton.parentElement.style.display = 'none';
           claimButton.className = 'disabled-button';
-
           moveButton.parentElement.style.display = 'grid';
           moveButton.className = '';
         } else if (colleagueSelect.value !== 'select-colleague') {
           assignButton.parentElement.style.display = 'grid';
           assignButton.className = '';
-
-          claimButton.parentElement.style.display = 'none';
+          claimButton.parentElement.style.display = 'grid';
           claimButton.className = 'disabled-button';
-
           moveButton.parentElement.style.display = 'none';
           moveButton.className = 'disabled-button';
         }

@@ -55,32 +55,31 @@ export namespace UserResolved {
         .on('mouseenter', () => {
           unlockButton.style.color = `${GetColor.assignedDefault()}`;
 
-          assignedMark.style.background = `${GetColor.primaryMedium()}`;
-          resolvedMark.style.background = `${GetColor.primaryDark()}`;
-
-          dateResolved.style.display = 'none';
-          noteResolved.style.display = 'none';
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+          resolvedMark.style.background = `${GetColor.primaryMedium()}`;
 
           dateResolved.className = 'disabled-text';
           noteResolved.className = 'disabled-text';
+
+          dateResolved.style.display = 'none';
+          noteResolved.style.display = 'none';
 
           dateResolved.textContent = `${undefined}`;
           noteResolved.textContent = `${undefined}`;
         })
         .on('mouseleave', () => {
           unlockButton.style.color = '';
-
-          assignedMark.style.background = `${GetColor.primaryDark()}`;
-          resolvedMark.style.background = `${GetColor.primaryMedium()}`;
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+          resolvedMark.style.background = `${GetColor.primaryDark()}`;
 
           dateResolved.className = '';
           noteResolved.className = '';
 
-          dateResolved.textContent = `${getTicket('date-resolved')}`;
-          noteResolved.textContent = `${getTicket('note-resolved')}`;
-
           dateResolved.style.display = 'flex';
           noteResolved.style.display = 'flex';
+
+          dateResolved.textContent = `${getTicket('date-resolved')}`;
+          noteResolved.textContent = `${getTicket('note-resolved')}`;
         });
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
