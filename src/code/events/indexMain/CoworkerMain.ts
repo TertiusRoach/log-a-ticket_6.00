@@ -27,10 +27,11 @@ export namespace CoworkerMain {
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
+      let ticketsMain: HTMLElement = indexMain.querySelector('#tickets-container');
+      let ticketMain: HTMLCollection = ticketsMain.getElementsByTagName('article');
       let openCoworkers: HTMLElement = indexMain.querySelector('#open-coworkers');
       let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
       let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
-      let ticketsMain: HTMLElement = indexMain.querySelector('#tickets-container');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -96,7 +97,7 @@ export namespace CoworkerMain {
       /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(ticketsMain).on('click', () => {
+      $(ticketMain).on('click', () => {
         let activeTicket: HTMLElement = document.querySelector('.active-ticket');
         let activeStatus: String = activeTicket.classList[0];
 

@@ -30,11 +30,12 @@ export namespace ManageMain {
       let manageButton: HTMLElement = indexHeader.querySelector('#manage-tickets button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
+      let ticketsMain: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      let ticketMain: HTMLCollection = ticketsMain.getElementsByTagName('article');
       let openUser: HTMLButtonElement = indexMain.querySelector('#open-employees');
       let pendingTab: HTMLButtonElement = indexMain.querySelector('#pending-tab');
       let assignedTab: HTMLButtonElement = indexMain.querySelector('#assigned-tab');
       let deletedTab: HTMLButtonElement = indexMain.querySelector('#deleted-tab');
-      let ticketsMain: HTMLDivElement = indexMain.querySelector('#tickets-container');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -99,7 +100,7 @@ export namespace ManageMain {
       }
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(ticketsMain).on('click', () => {
+      $(ticketMain).on('click', () => {
         let activeTicket: HTMLElement = document.querySelector('.active-ticket');
         let activeStatus: String = activeTicket.classList[0];
 

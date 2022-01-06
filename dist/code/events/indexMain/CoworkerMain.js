@@ -10,10 +10,11 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
+                var ticketMain = ticketsMain.getElementsByTagName('article');
                 var openCoworkers = indexMain.querySelector('#open-coworkers');
                 var resolvedTab = indexMain.querySelector('#resolved-tab');
                 var deletedTab = indexMain.querySelector('#deleted-tab');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
@@ -71,7 +72,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                             break;
                     }
                 }
-                $(ticketsMain).on('click', function () {
+                $(ticketMain).on('click', function () {
                     var activeTicket = document.querySelector('.active-ticket');
                     var activeStatus = activeTicket.classList[0];
                     new GetEvent_1.GetEvent.forPage("coworker-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));

@@ -12,11 +12,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var loggedButton = indexHeader.querySelector('#logged-tickets button');
                 var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
+                var ticketsMain = indexMain.querySelector('#tickets-container');
+                var ticketMain = ticketsMain.getElementsByTagName('article');
                 var openCoworkers = indexMain.querySelector('#open-coworkers');
                 var pendingTab = indexMain.querySelector('#pending-tab');
                 var assignedTab = indexMain.querySelector('#assigned-tab');
                 var deletedTab = indexMain.querySelector('#deleted-tab');
-                var ticketsMain = indexMain.querySelector('#tickets-container');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
@@ -74,7 +75,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                             break;
                     }
                 }
-                $(ticketsMain).on('click', function () {
+                $(ticketMain).on('click', function () {
                     var activeTicket = document.querySelector('.active-ticket');
                     var activeStatus = activeTicket.classList[0];
                     new GetEvent_1.GetEvent.forPage("logged-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
