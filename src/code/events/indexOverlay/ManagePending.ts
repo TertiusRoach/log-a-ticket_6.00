@@ -79,7 +79,7 @@ export namespace ManagePending {
           dateAssigned.style.display = 'none';
           dateDeleted.style.display = 'none';
         } else if (dateAssigned.textContent !== 'undefined') {
-          dateAssigned.style.display = 'flex';
+          dateAssigned.style.display = 'none';
           dateDeleted.style.display = 'none';
         } else if (dateDeleted.textContent !== 'undefined') {
           dateAssigned.style.display = 'none';
@@ -90,22 +90,28 @@ export namespace ManagePending {
         if (colleagueSelect.value === UseValufy.forString(findUser())) {
           assignButton.parentElement.style.display = 'none';
           assignButton.className = 'disabled-button';
+
           claimButton.parentElement.style.display = 'grid';
           claimButton.className = '';
+
           moveButton.parentElement.style.display = 'none';
           moveButton.className = 'disabled-button';
         } else if (colleagueSelect.value === 'select-colleague') {
           assignButton.parentElement.style.display = 'none';
           assignButton.className = 'disabled-button';
+
           claimButton.parentElement.style.display = 'none';
           claimButton.className = 'disabled-button';
+
           moveButton.parentElement.style.display = 'grid';
           moveButton.className = '';
         } else if (colleagueSelect.value !== 'select-colleague') {
           assignButton.parentElement.style.display = 'grid';
           assignButton.className = '';
-          claimButton.parentElement.style.display = 'grid';
+
+          claimButton.parentElement.style.display = 'none';
           claimButton.className = 'disabled-button';
+
           moveButton.parentElement.style.display = 'none';
           moveButton.className = 'disabled-button';
         }
@@ -117,23 +123,29 @@ export namespace ManagePending {
       $(claimButton)
         .on('mouseenter', () => {
           if (claimButton.className !== 'disabled-button') {
+            dateAssigned.style.display = 'flex';
             claimButton.style.color = `${GetColor.primaryLight()}`;
           } else {
+            dateAssigned.style.display = 'none';
             claimButton.style.color = '';
           }
         })
         .on('mouseleave', () => {
+          dateAssigned.style.display = 'none';
           claimButton.style.color = '';
         });
       $(assignButton)
         .on('mouseenter', () => {
           if (assignButton.className !== 'disabled-button') {
+            dateAssigned.style.display = 'flex';
             assignButton.style.color = `${GetColor.primaryLight()}`;
           } else {
+            dateAssigned.style.display = 'none';
             assignButton.style.color = '';
           }
         })
         .on('mouseleave', () => {
+          dateAssigned.style.display = 'none';
           assignButton.style.color = '';
         });
       $(deleteButton)
@@ -155,7 +167,7 @@ export namespace ManagePending {
         .on('mouseleave', () => {
           if (deleteButton.className !== 'disabled-button') {
             if (colleagueSelect.value !== 'select-colleague') {
-              dateAssigned.style.display = 'flex';
+              dateAssigned.style.display = 'none';
               dateAssigned.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
               dateAssigned.className = '';
 

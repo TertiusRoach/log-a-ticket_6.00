@@ -53,7 +53,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         dateDeleted.style.display = 'none';
                     }
                     else if (dateAssigned.textContent !== 'undefined') {
-                        dateAssigned.style.display = 'flex';
+                        dateAssigned.style.display = 'none';
                         dateDeleted.style.display = 'none';
                     }
                     else if (dateDeleted.textContent !== 'undefined') {
@@ -81,7 +81,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     else if (colleagueSelect.value !== 'select-colleague') {
                         assignButton.parentElement.style.display = 'grid';
                         assignButton.className = '';
-                        claimButton.parentElement.style.display = 'grid';
+                        claimButton.parentElement.style.display = 'none';
                         claimButton.className = 'disabled-button';
                         moveButton.parentElement.style.display = 'none';
                         moveButton.className = 'disabled-button';
@@ -90,25 +90,31 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 $(claimButton)
                     .on('mouseenter', function () {
                     if (claimButton.className !== 'disabled-button') {
+                        dateAssigned.style.display = 'flex';
                         claimButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
                     }
                     else {
+                        dateAssigned.style.display = 'none';
                         claimButton.style.color = '';
                     }
                 })
                     .on('mouseleave', function () {
+                    dateAssigned.style.display = 'none';
                     claimButton.style.color = '';
                 });
                 $(assignButton)
                     .on('mouseenter', function () {
                     if (assignButton.className !== 'disabled-button') {
+                        dateAssigned.style.display = 'flex';
                         assignButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
                     }
                     else {
+                        dateAssigned.style.display = 'none';
                         assignButton.style.color = '';
                     }
                 })
                     .on('mouseleave', function () {
+                    dateAssigned.style.display = 'none';
                     assignButton.style.color = '';
                 });
                 $(deleteButton)
@@ -128,7 +134,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     .on('mouseleave', function () {
                     if (deleteButton.className !== 'disabled-button') {
                         if (colleagueSelect.value !== 'select-colleague') {
-                            dateAssigned.style.display = 'flex';
+                            dateAssigned.style.display = 'none';
                             dateAssigned.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
                             dateAssigned.className = '';
                             dateDeleted.style.display = 'none';
