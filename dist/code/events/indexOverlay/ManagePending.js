@@ -29,19 +29,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var dateDeleted = indexOverlay.querySelector('#deleted-date');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
-                var liveSubject = indexOverlay.querySelector('#ticket-subject');
-                var liveDescription = indexOverlay.querySelector('#ticket-description');
-                var liveDepartment = indexOverlay.querySelector('#department-name');
-                var liveColleague = indexOverlay.querySelector('#colleague-name');
-                var livePending = indexOverlay.querySelector('#pending-date');
-                var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                var liveResolved = indexOverlay.querySelector('#resolved-date');
-                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
-                var liveDeleted = indexOverlay.querySelector('#deleted-date');
-                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
-                liveSubject.value = "".concat(getTicket('subject-text'));
-                liveDescription.textContent = "".concat(getTicket('description-text'));
-                livePending.textContent = "".concat(getTicket('date-pending'));
                 var indexData = document.querySelector('#index-data');
                 function toggleDates() {
                     var selectedIndex = colleagueSelect.selectedOptions[0].value;

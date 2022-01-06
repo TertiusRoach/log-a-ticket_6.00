@@ -11,6 +11,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
                 var ticketsMain = indexMain.querySelector('#tickets-container');
+                var ticketMain = ticketsMain.getElementsByTagName('article');
                 var openEmployees = indexMain.querySelector('#open-employees');
                 var assignedTab = indexMain.querySelector('#assigned-tab');
                 var resolvedTab = indexMain.querySelector('#resolved-tab');
@@ -75,7 +76,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                             break;
                     }
                 }
-                $(ticketsMain).on('click', function () {
+                $(ticketMain).on('click', function () {
                     var activeTicket = document.querySelector('.active-ticket');
                     var activeStatus = activeTicket.classList[0];
                     new GetEvent_1.GetEvent.forPage("user-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));

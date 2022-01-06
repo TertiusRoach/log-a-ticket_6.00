@@ -28,6 +28,7 @@ export namespace ColleagueMain {
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
       let ticketsMain: HTMLElement = indexMain.querySelector('#tickets-container');
+      let ticketMain: HTMLCollection = ticketsMain.getElementsByTagName('article');
       let openEmployees: HTMLElement = indexMain.querySelector('#open-employees');
       let assignedTab: HTMLButtonElement = indexMain.querySelector('#assigned-tab');
       let resolvedTab: HTMLButtonElement = indexMain.querySelector('#resolved-tab');
@@ -100,7 +101,7 @@ export namespace ColleagueMain {
       /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
-      $(ticketsMain).on('click', () => {
+      $(ticketMain).on('click', () => {
         let activeTicket: HTMLElement = document.querySelector('.active-ticket');
         let activeStatus: String = activeTicket.classList[0];
 
