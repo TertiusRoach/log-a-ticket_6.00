@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], function (require, exports, DataRead_1, GetColor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserResolved = void 0;
@@ -6,26 +6,46 @@ define(["require", "exports"], function (require, exports) {
     (function (UserResolved) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('user-resolved');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var liveSubject = indexOverlay.querySelector('#ticket-subject');
-                var liveDescription = indexOverlay.querySelector('#ticket-description');
-                var liveDepartment = indexOverlay.querySelector('#department-name');
-                var liveColleague = indexOverlay.querySelector('#colleague-name');
-                var livePending = indexOverlay.querySelector('#pending-date');
-                var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                var liveResolved = indexOverlay.querySelector('#resolved-date');
-                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
-                var liveDeleted = indexOverlay.querySelector('#deleted-date');
-                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
+                var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
+                var datePending = indexOverlay.querySelector('#pending-date');
+                var dateAssigned = indexOverlay.querySelector('#assigned-date');
+                var dateResolved = indexOverlay.querySelector('#resolved-date');
+                var noteResolved = indexOverlay.querySelector('#resolved-note');
+                var assignedMark = indexOverlay.querySelector('.assigned-mark');
+                var resolvedMark = indexOverlay.querySelector('.resolved-mark');
                 var indexData = document.querySelector('#index-data');
+                $(unlockButton)
+                    .on('mouseenter', function () {
+                    unlockButton.style.color = "".concat(GetColor_1.GetColor.assignedDefault());
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    dateResolved.className = 'disabled-text';
+                    noteResolved.className = 'disabled-text';
+                    dateResolved.style.display = 'none';
+                    noteResolved.style.display = 'none';
+                    dateResolved.textContent = "".concat(undefined);
+                    noteResolved.textContent = "".concat(undefined);
+                })
+                    .on('mouseleave', function () {
+                    unlockButton.style.color = '';
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    dateResolved.className = '';
+                    noteResolved.className = '';
+                    dateResolved.style.display = 'flex';
+                    noteResolved.style.display = 'flex';
+                    dateResolved.textContent = "".concat(getTicket('date-resolved'));
+                    noteResolved.textContent = "".concat(getTicket('note-resolved'));
+                });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });

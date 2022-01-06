@@ -19,6 +19,7 @@ export namespace UserAssigned {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('user-assigned');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -27,39 +28,23 @@ export namespace UserAssigned {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      const ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
       indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
-      let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
-      let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
-      let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
-      let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
-      let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      let liveResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
-      let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
-      let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
-      let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let resolveButton: HTMLButtonElement = indexOverlay.querySelector('#resolve-ticket button');
 
-      /*
-      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
-      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
-      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
-      if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
-        liveColleague.style.display = 'none';
-        liveAssigned.style.display = 'none';
-      } else {
-        liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
-        liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
-      }
-      liveDeleted.textContent = `${getTicket('date-deleted', ticketsContainer)}`;
-      liveNoteDeleted.textContent = `${getTicket('note-deleted', ticketsContainer)}`;
-      */
+      let datePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
+      let dateAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
+      let dateResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
+      let dateDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
+
+      let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
+      let resolvedMark: HTMLDivElement = indexOverlay.querySelector('.resolved-mark');
+      let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -68,6 +53,43 @@ export namespace UserAssigned {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(resolveButton)
+        .on('mouseenter', () => {
+          resolveButton.style.color = `${GetColor.resolvedDefault()}`;
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+          resolvedMark.style.background = `${GetColor.primaryDark()}`;
+
+          dateResolved.style.display = 'flex';
+          dateResolved.className = '';
+          dateResolved.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+        })
+        .on('mouseleave', () => {
+          resolveButton.style.color = '';
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+          resolvedMark.style.background = `${GetColor.primaryMedium()}`;
+
+          dateResolved.className = 'disabled-text';
+          dateResolved.textContent = `${undefined}`;
+          dateResolved.style.display = 'none';
+        });
+
+      $(deleteButton)
+        .on('mouseenter', () => {
+          assignedMark.style.background = `${GetColor.primaryMedium()}`;
+          deleteButton.parentElement.style.background = `${GetColor.primaryDark()}`;
+
+          dateDeleted.className = '';
+          dateDeleted.textContent = `${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          dateDeleted.style.display = 'flex';
+        })
+        .on('mouseleave', () => {
+          assignedMark.style.background = `${GetColor.primaryDark()}`;
+          deleteButton.parentElement.style.background = '';
+
+          dateDeleted.style.display = 'none';
+          dateDeleted.className = 'disabled-text';
+          dateDeleted.textContent = `${undefined}`;
+        });
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });

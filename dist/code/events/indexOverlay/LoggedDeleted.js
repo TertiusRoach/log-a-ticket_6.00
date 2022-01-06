@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LoggedDeleted = void 0;
@@ -6,6 +6,7 @@ define(["require", "exports"], function (require, exports) {
     (function (LoggedDeleted) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('logged-deleted');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
@@ -25,20 +26,6 @@ define(["require", "exports"], function (require, exports) {
                 var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
                 var liveDeleted = indexOverlay.querySelector('#deleted-date');
                 var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
-                liveSubject.value = "".concat(getTicket('subject-text'));
-                liveDescription.textContent = "".concat(getTicket('description-text'));
-                liveDepartment.textContent = "".concat(getTicket('receiver-department'));
-                livePending.textContent = "".concat(getTicket('date-pending'));
-                if (getTicket('receiver-name') === "".concat(undefined)) {
-                    liveColleague.style.display = 'none';
-                    liveAssigned.style.display = 'none';
-                }
-                else {
-                    liveColleague.textContent = "".concat(getTicket('receiver-name'));
-                    liveAssigned.textContent = "".concat(getTicket('date-assigned'));
-                }
-                liveDeleted.textContent = "".concat(getTicket('date-deleted'));
-                liveNoteDeleted.textContent = "".concat(getTicket('note-deleted'));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');

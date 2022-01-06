@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserAssigned = void 0;
@@ -6,26 +6,57 @@ define(["require", "exports"], function (require, exports) {
     (function (UserAssigned) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('user-assigned');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var liveSubject = indexOverlay.querySelector('#ticket-subject');
-                var liveDescription = indexOverlay.querySelector('#ticket-description');
-                var liveDepartment = indexOverlay.querySelector('#department-name');
-                var liveColleague = indexOverlay.querySelector('#colleague-name');
-                var livePending = indexOverlay.querySelector('#pending-date');
-                var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                var liveResolved = indexOverlay.querySelector('#resolved-date');
-                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
-                var liveDeleted = indexOverlay.querySelector('#deleted-date');
-                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
+                var deleteButton = indexOverlay.querySelector('#delete-ticket button');
+                var resolveButton = indexOverlay.querySelector('#resolve-ticket button');
+                var datePending = indexOverlay.querySelector('#pending-date');
+                var dateAssigned = indexOverlay.querySelector('#assigned-date');
+                var dateResolved = indexOverlay.querySelector('#resolved-date');
+                var dateDeleted = indexOverlay.querySelector('#deleted-date');
+                var assignedMark = indexOverlay.querySelector('.assigned-mark');
+                var resolvedMark = indexOverlay.querySelector('.resolved-mark');
+                var deletedMark = indexOverlay.querySelector('.deleted-mark');
                 var indexData = document.querySelector('#index-data');
+                $(resolveButton)
+                    .on('mouseenter', function () {
+                    resolveButton.style.color = "".concat(GetColor_1.GetColor.resolvedDefault());
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    dateResolved.style.display = 'flex';
+                    dateResolved.className = '';
+                    dateResolved.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                })
+                    .on('mouseleave', function () {
+                    resolveButton.style.color = '';
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    resolvedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    dateResolved.className = 'disabled-text';
+                    dateResolved.textContent = "".concat(undefined);
+                    dateResolved.style.display = 'none';
+                });
+                $(deleteButton)
+                    .on('mouseenter', function () {
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
+                    deleteButton.parentElement.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    dateDeleted.className = '';
+                    dateDeleted.textContent = "".concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                    dateDeleted.style.display = 'flex';
+                })
+                    .on('mouseleave', function () {
+                    assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    deleteButton.parentElement.style.background = '';
+                    dateDeleted.style.display = 'none';
+                    dateDeleted.className = 'disabled-text';
+                    dateDeleted.textContent = "".concat(undefined);
+                });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });

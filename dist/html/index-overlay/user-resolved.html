@@ -8,17 +8,19 @@
   <header id="ticket-top">
     <input id="ticket-subject" value="${subjectText}" type="text" readonly />
 
-    <button class="unsolved-ticket">
-      <i class="fad fa-lock fa-4x"></i>
-      <div>Unsolved Ticket</div>
-    </button>
+    <div id="unlock-ticket">
+      <button class="">
+        <i class="fad fa-unlock fa-4x"></i>
+        <h1>Unlock Ticket</h1>
+      </button>
+    </div>
   </header>
   <footer id="ticket-bot">
     <textarea id="ticket-description" readonly>${descriptionText}</textarea>
 
     <section>
-      <h4 id="department-name">${departmentName}</h4>
-      <h4 id="colleague-name">${colleagueName}</h4>
+      <h4 id="sender-department">${senderDepartment}</h4>
+      <h4 id="colleague-name">${senderName}</h4>
 
       <h4 id="pending-date">${00 Weekday, Month YYYY}</h4>
       <h4 id="assigned-date">${00 Weekday, Month YYYY}</h4>
@@ -28,8 +30,8 @@
   </footer>
 </section>
 
-<div class="resolved-mark" style="background: #084887"><h1>Resolved</h1></div>
 <div class="assigned-mark"><h1>Assigned</h1></div>
+<div class="resolved-mark" style="background: #084887"><h1>Resolved</h1></div>
 
 <div id="overlay-canvas"></div>
 <div id="overlay-background"></div>

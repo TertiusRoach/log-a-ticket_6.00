@@ -19,6 +19,7 @@ export namespace LoggedDeleted {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('logged-deleted');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -45,6 +46,7 @@ export namespace LoggedDeleted {
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
 
+      /*
       liveSubject.value = `${getTicket('subject-text')}`;
       liveDescription.textContent = `${getTicket('description-text')}`;
       liveDepartment.textContent = `${getTicket('receiver-department')}`;
@@ -58,6 +60,7 @@ export namespace LoggedDeleted {
       }
       liveDeleted.textContent = `${getTicket('date-deleted')}`;
       liveNoteDeleted.textContent = `${getTicket('note-deleted')}`;
+      */
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 

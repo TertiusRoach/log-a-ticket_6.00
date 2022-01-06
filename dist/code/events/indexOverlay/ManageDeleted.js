@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], function (require, exports, DataRead_1, GetColor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ManageDeleted = void 0;
@@ -6,26 +6,38 @@ define(["require", "exports"], function (require, exports) {
     (function (ManageDeleted) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('manage-deleted');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsContainer = indexMain.querySelector('#tickets-container');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var liveSubject = indexOverlay.querySelector('#ticket-subject');
-                var liveDescription = indexOverlay.querySelector('#ticket-description');
-                var liveDepartment = indexOverlay.querySelector('#department-name');
-                var liveColleague = indexOverlay.querySelector('#colleague-name');
-                var livePending = indexOverlay.querySelector('#pending-date');
-                var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                var liveResolved = indexOverlay.querySelector('#resolved-date');
-                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
-                var liveDeleted = indexOverlay.querySelector('#deleted-date');
-                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
+                var restoreButton = indexOverlay.querySelector('#restore-ticket button');
+                var pendingMark = indexOverlay.querySelector('.pending-mark');
+                var deletedMark = indexOverlay.querySelector('.deleted-mark');
+                var deletedDate = indexOverlay.querySelector('#deleted-date');
+                var deletedNote = indexOverlay.querySelector('#deleted-note');
                 var indexData = document.querySelector('#index-data');
+                $(restoreButton)
+                    .on('mouseenter', function () {
+                    pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    deletedMark.style.background = '';
+                    deletedDate.style.display = 'none';
+                    deletedDate.textContent = "".concat(undefined);
+                    deletedNote.style.display = 'none';
+                    deletedNote.textContent = "".concat(undefined);
+                })
+                    .on('mouseleave', function () {
+                    pendingMark.style.background = '';
+                    deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
+                    deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                    deletedDate.style.display = '';
+                    deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                    deletedNote.style.display = '';
+                });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });

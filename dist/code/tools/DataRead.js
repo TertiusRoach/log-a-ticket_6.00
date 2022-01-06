@@ -329,27 +329,35 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
-                var ticketsContainer = indexMain.querySelector('#tickets-container');
-                var activeTicket = ticketsContainer.querySelector('.active-ticket');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
+                var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
+                var ticketDescription = indexOverlay.querySelector('#ticket-description');
+                var senderDepartment = indexOverlay.querySelector('#sender-department');
+                var colleagueName = indexOverlay.querySelector('#colleague-name');
+                var pendingDate = indexOverlay.querySelector('#pending-date');
+                var assignedDate = indexOverlay.querySelector('#assigned-date');
+                var resolvedDate = indexOverlay.querySelector('#resolved-date');
+                var resolvedNote = indexOverlay.querySelector('#resolved-note');
+                var deletedDate = indexOverlay.querySelector('#deleted-date');
+                var deletedNote = indexOverlay.querySelector('#deleted-note');
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var claimButton = indexOverlay.querySelector('#claim-ticket button');
                 var deleteButton = indexOverlay.querySelector('#delete-ticket button');
                 var moveButton = indexOverlay.querySelector('#move-ticket button');
+                var recycleButton = indexOverlay.querySelector('#recycle-ticket button');
+                var restoreButton = indexOverlay.querySelector('#restore-ticket button');
                 var saveButton = indexOverlay.querySelector('#save-ticket button');
+                var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var resolvedMark = indexOverlay.querySelector('.resolved-mark');
                 var deletedMark = indexOverlay.querySelector('.deleted-mark');
-                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
-                var ticketDescription = indexOverlay.querySelector('#ticket-description');
-                var pendingDate = indexOverlay.querySelector('#pending-date');
-                var assignedDate = indexOverlay.querySelector('#assigned-date');
-                var resolvedDate = indexOverlay.querySelector('#resolved-date');
-                var deletedDate = indexOverlay.querySelector('#deleted-date');
+                var departmentName = indexOverlay.querySelector('#department-name h1');
                 var indexData = document.querySelector('#index-data');
                 var departmentsData;
                 var departmentsTotal;
@@ -359,10 +367,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var userName;
                 switch (page) {
                     case 'log-overlay':
-                        departmentsData = indexData.querySelector('#departments-data');
-                        employeesData = indexData.querySelector('#employees-data');
-                        ticketsData = indexData.querySelector('#tickets-data');
-                        userDepartment = findDepartment(findUser());
                         $(departmentSelect)
                             .on('click', function () {
                             if (colleagueSelect.length === 1) {
@@ -391,57 +395,81 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         });
                         buildDepartments(findDepartment(findUser()));
                         break;
+                    case 'logged-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('receiver-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        if (getTicket('receiver-name') === "".concat(undefined)) {
+                            colleagueName.style.display = 'none';
+                            assignedDate.style.display = 'none';
+                        }
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        break;
                     case 'logged-pending':
-                        departmentsData = indexData.querySelector('#departments-data');
-                        departmentsTotal = departmentsData.children.length;
-                        var ticketStatus = activeTicket.children[3].children[0].innerHTML;
-                        var ticketRating = activeTicket.children[3].children[1].innerHTML;
-                        var subjectText = activeTicket.children[3].children[2].innerHTML;
-                        var descriptionText = activeTicket.children[3].children[3].innerHTML;
-                        var senderName = activeTicket.children[3].children[4].innerHTML;
-                        var senderDepartment = activeTicket.children[3].children[5].innerHTML;
-                        var receiverName = activeTicket.children[3].children[6].innerHTML;
-                        var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
-                        var dateShort = activeTicket.children[3].children[8].innerHTML;
-                        var datePending = activeTicket.children[3].children[9].innerHTML;
-                        var dateAssigned = activeTicket.children[3].children[10].innerHTML;
-                        var dateResolved = activeTicket.children[3].children[11].innerHTML;
-                        var noteResolved = activeTicket.children[3].children[12].innerHTML;
-                        var dateDeleted = activeTicket.children[3].children[13].innerHTML;
-                        var noteDeleted = activeTicket.children[3].children[14].innerHTML;
-                        ticketSubject.value = "".concat(subjectText);
-                        ticketDescription.innerHTML = "".concat(descriptionText);
-                        pendingDate.innerHTML = "".concat(datePending);
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.innerHTML = "".concat(getTicket('description-text'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
                         $(departmentSelect).on('change', function () {
                             buildColleagues(departmentSelect.value, 'user');
                         });
-                        buildDepartments(receiverDepartment);
+                        buildDepartments(getTicket('receiver-department'));
+                        break;
+                    case 'manage-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        departmentName.textContent = "".concat(findDepartment(findUser()));
                         break;
                     case 'manage-pending':
-                        departmentsData = indexData.querySelector('#departments-data');
-                        departmentsTotal = departmentsData.children.length;
-                        var ticketStatus = activeTicket.children[3].children[0].innerHTML;
-                        var ticketRating = activeTicket.children[3].children[1].innerHTML;
-                        var subjectText = activeTicket.children[3].children[2].innerHTML;
-                        var descriptionText = activeTicket.children[3].children[3].innerHTML;
-                        var senderName = activeTicket.children[3].children[4].innerHTML;
-                        var senderDepartment = activeTicket.children[3].children[5].innerHTML;
-                        var receiverName = activeTicket.children[3].children[6].innerHTML;
-                        var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
-                        var dateShort = activeTicket.children[3].children[8].innerHTML;
-                        var datePending = activeTicket.children[3].children[9].innerHTML;
-                        var dateAssigned = activeTicket.children[3].children[10].innerHTML;
-                        var dateResolved = activeTicket.children[3].children[11].innerHTML;
-                        var noteResolved = activeTicket.children[3].children[12].innerHTML;
-                        var dateDeleted = activeTicket.children[3].children[13].innerHTML;
-                        var noteDeleted = activeTicket.children[3].children[14].innerHTML;
-                        ticketSubject.value = "".concat(subjectText);
-                        ticketDescription.innerHTML = "".concat(descriptionText);
-                        pendingDate.innerHTML = "".concat(datePending);
+                        if (getTicket('sender-name') === findUser()) {
+                            claimButton.parentElement.style.display = 'grid';
+                            claimButton.className = 'disabled-button';
+                        }
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
                         $(departmentSelect).on('change', function () {
                             buildColleagues(departmentSelect.value, 'none');
                         });
                         buildDepartments(findDepartment(findUser()));
+                        break;
+                    case 'user-assigned':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        resolvedDate.style.display = 'none';
+                        deletedDate.style.display = 'none';
+                        break;
+                    case 'user-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        break;
+                    case 'user-resolved':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        resolvedDate.textContent = "".concat(getTicket('date-resolved'));
+                        resolvedNote.textContent = "".concat(getTicket('note-resolved'));
                         break;
                 }
             }
@@ -634,9 +662,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
             else {
                 buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
             }
-        }
-        function userDepartment() {
-            return "".concat(findDepartment(findUser()));
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
 });
