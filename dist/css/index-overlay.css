@@ -833,14 +833,41 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
-.manage-deleted #ticket-container #ticket-top .recycle-ticket {
-  color: white;
+.manage-deleted #ticket-container #ticket-top #restore-ticket {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
-.manage-deleted #ticket-container #ticket-bot #deleted-note:read-only {
-  margin-left: 1rem;
-  height: 100%;
-  border: 2px solid #f95555;
+.manage-deleted #ticket-container #ticket-top #restore-ticket button {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  overflow: visible;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
   color: white;
+  background: none;
+}
+.manage-deleted #ticket-container #ticket-top #restore-ticket button h1 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.manage-deleted #ticket-container #ticket-top #restore-ticket button:hover {
+  color: #f58a07;
+}
+.manage-deleted #ticket-container #ticket-top #restore-ticket .disabled-button,
+.manage-deleted #ticket-container #ticket-top #restore-ticket .disabled-button:hover {
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.5;
+}
+.manage-deleted #ticket-container #ticket-top #restore-ticket .disabled-button svg,
+.manage-deleted #ticket-container #ticket-top #restore-ticket .disabled-button:hover svg {
+  cursor: default;
 }
 .manage-deleted #department-name {
   grid-column: 4/9;

@@ -530,7 +530,7 @@ export namespace DataRead {
     }
   }
   export class forOverlay {
-    constructor(page: 'log-overlay' | 'logged-pending' | 'manage-pending') {
+    constructor(page: 'log-overlay' | 'logged-pending' | 'manage-deleted' | 'manage-pending') {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -541,13 +541,16 @@ export namespace DataRead {
       const indexMain: HTMLElement = document.querySelector('#index-main');
       let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
       let activeTicket = ticketsContainer.querySelector('.active-ticket');
+
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
       let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
+      let claimButton: HTMLElement = indexOverlay.querySelector('#claim-ticket button');
       let deleteButton: HTMLElement = indexOverlay.querySelector('#delete-ticket button');
       let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
       let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
 
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
@@ -558,12 +561,15 @@ export namespace DataRead {
       let resolvedMark: HTMLDivElement = indexOverlay.querySelector('.resolved-mark');
       let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');
 
+      let departmentName: HTMLHeadingElement = indexOverlay.querySelector('#department-name h1');
       let ticketSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
       let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
       let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
       let resolvedDate: HTMLElement = indexOverlay.querySelector('#resolved-date');
+      let resolvedNote: HTMLElement = indexOverlay.querySelector('#resolved-note');
       let deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
+      let deletedNote: HTMLElement = indexOverlay.querySelector('#deleted-note');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
       let departmentsData: HTMLDivElement;
@@ -572,6 +578,22 @@ export namespace DataRead {
       let ticketsData: HTMLDivElement;
       let userDepartment: String;
       let userName: String;
+
+      var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
+      var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
+      var subjectText: String = activeTicket.children[3].children[2].innerHTML;
+      var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
+      var senderName: String = activeTicket.children[3].children[4].innerHTML;
+      var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
+      var receiverName: String = activeTicket.children[3].children[6].innerHTML;
+      var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
+      var dateShort: String = activeTicket.children[3].children[8].innerHTML;
+      var datePending: String = activeTicket.children[3].children[9].innerHTML;
+      var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
+      var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
+      var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
+      var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
+      var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
@@ -619,53 +641,39 @@ export namespace DataRead {
           departmentsData = indexData.querySelector('#departments-data');
           departmentsTotal = departmentsData.children.length;
 
-          var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
-          var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
-          var subjectText: String = activeTicket.children[3].children[2].innerHTML;
-          var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
-          var senderName: String = activeTicket.children[3].children[4].innerHTML;
-          var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
-          var receiverName: String = activeTicket.children[3].children[6].innerHTML;
-          var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
-          var dateShort: String = activeTicket.children[3].children[8].innerHTML;
-          var datePending: String = activeTicket.children[3].children[9].innerHTML;
-          var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
-          var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
-          var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
-          var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
-          var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
-
           ticketSubject.value = `${subjectText}`;
           ticketDescription.innerHTML = `${descriptionText}`;
-          pendingDate.innerHTML = `${datePending}`;
+          pendingDate.textContent = `${datePending}`;
           $(departmentSelect).on('change', () => {
             buildColleagues(departmentSelect.value, 'user');
           });
           buildDepartments(receiverDepartment);
           break;
-        case 'manage-pending':
+        case 'manage-deleted':
           departmentsData = indexData.querySelector('#departments-data');
           departmentsTotal = departmentsData.children.length;
 
-          var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
-          var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
-          var subjectText: String = activeTicket.children[3].children[2].innerHTML;
-          var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
-          var senderName: String = activeTicket.children[3].children[4].innerHTML;
-          var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
-          var receiverName: String = activeTicket.children[3].children[6].innerHTML;
-          var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
-          var dateShort: String = activeTicket.children[3].children[8].innerHTML;
-          var datePending: String = activeTicket.children[3].children[9].innerHTML;
-          var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
-          var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
-          var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
-          var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
-          var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
-
+          departmentName.textContent = `${senderDepartment}`;
           ticketSubject.value = `${subjectText}`;
           ticketDescription.innerHTML = `${descriptionText}`;
-          pendingDate.innerHTML = `${datePending}`;
+
+          pendingDate.textContent = `${datePending}`;
+          deletedDate.textContent = `${dateDeleted}`;
+          deletedNote.textContent = `${noteDeleted}`;
+          break;
+        case 'manage-pending':
+          if (senderName === findUser()) {
+            claimButton.parentElement.style.display = 'grid';
+            claimButton.className = 'disabled-button';
+          }
+
+          departmentsData = indexData.querySelector('#departments-data');
+          departmentsTotal = departmentsData.children.length;
+
+          ticketSubject.value = `${subjectText}`;
+          ticketDescription.textContent = `${descriptionText}`;
+          pendingDate.textContent = `${datePending}`;
+
           $(departmentSelect).on('change', () => {
             buildColleagues(departmentSelect.value, 'none');
           });

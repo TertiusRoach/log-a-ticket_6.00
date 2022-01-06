@@ -335,8 +335,10 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexOverlay = document.querySelector('#index-overlay');
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var claimButton = indexOverlay.querySelector('#claim-ticket button');
                 var deleteButton = indexOverlay.querySelector('#delete-ticket button');
                 var moveButton = indexOverlay.querySelector('#move-ticket button');
+                var restoreButton = indexOverlay.querySelector('#restore-ticket button');
                 var saveButton = indexOverlay.querySelector('#save-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
@@ -344,12 +346,15 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var resolvedMark = indexOverlay.querySelector('.resolved-mark');
                 var deletedMark = indexOverlay.querySelector('.deleted-mark');
+                var departmentName = indexOverlay.querySelector('#department-name h1');
                 var ticketSubject = indexOverlay.querySelector('#ticket-subject');
                 var ticketDescription = indexOverlay.querySelector('#ticket-description');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
                 var assignedDate = indexOverlay.querySelector('#assigned-date');
                 var resolvedDate = indexOverlay.querySelector('#resolved-date');
+                var resolvedNote = indexOverlay.querySelector('#resolved-note');
                 var deletedDate = indexOverlay.querySelector('#deleted-date');
+                var deletedNote = indexOverlay.querySelector('#deleted-note');
                 var indexData = document.querySelector('#index-data');
                 var departmentsData;
                 var departmentsTotal;
@@ -357,6 +362,21 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var ticketsData;
                 var userDepartment;
                 var userName;
+                var ticketStatus = activeTicket.children[3].children[0].innerHTML;
+                var ticketRating = activeTicket.children[3].children[1].innerHTML;
+                var subjectText = activeTicket.children[3].children[2].innerHTML;
+                var descriptionText = activeTicket.children[3].children[3].innerHTML;
+                var senderName = activeTicket.children[3].children[4].innerHTML;
+                var senderDepartment = activeTicket.children[3].children[5].innerHTML;
+                var receiverName = activeTicket.children[3].children[6].innerHTML;
+                var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
+                var dateShort = activeTicket.children[3].children[8].innerHTML;
+                var datePending = activeTicket.children[3].children[9].innerHTML;
+                var dateAssigned = activeTicket.children[3].children[10].innerHTML;
+                var dateResolved = activeTicket.children[3].children[11].innerHTML;
+                var noteResolved = activeTicket.children[3].children[12].innerHTML;
+                var dateDeleted = activeTicket.children[3].children[13].innerHTML;
+                var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                 switch (page) {
                     case 'log-overlay':
                         departmentsData = indexData.querySelector('#departments-data');
@@ -394,50 +414,34 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     case 'logged-pending':
                         departmentsData = indexData.querySelector('#departments-data');
                         departmentsTotal = departmentsData.children.length;
-                        var ticketStatus = activeTicket.children[3].children[0].innerHTML;
-                        var ticketRating = activeTicket.children[3].children[1].innerHTML;
-                        var subjectText = activeTicket.children[3].children[2].innerHTML;
-                        var descriptionText = activeTicket.children[3].children[3].innerHTML;
-                        var senderName = activeTicket.children[3].children[4].innerHTML;
-                        var senderDepartment = activeTicket.children[3].children[5].innerHTML;
-                        var receiverName = activeTicket.children[3].children[6].innerHTML;
-                        var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
-                        var dateShort = activeTicket.children[3].children[8].innerHTML;
-                        var datePending = activeTicket.children[3].children[9].innerHTML;
-                        var dateAssigned = activeTicket.children[3].children[10].innerHTML;
-                        var dateResolved = activeTicket.children[3].children[11].innerHTML;
-                        var noteResolved = activeTicket.children[3].children[12].innerHTML;
-                        var dateDeleted = activeTicket.children[3].children[13].innerHTML;
-                        var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                         ticketSubject.value = "".concat(subjectText);
                         ticketDescription.innerHTML = "".concat(descriptionText);
-                        pendingDate.innerHTML = "".concat(datePending);
+                        pendingDate.textContent = "".concat(datePending);
                         $(departmentSelect).on('change', function () {
                             buildColleagues(departmentSelect.value, 'user');
                         });
                         buildDepartments(receiverDepartment);
                         break;
-                    case 'manage-pending':
+                    case 'manage-deleted':
                         departmentsData = indexData.querySelector('#departments-data');
                         departmentsTotal = departmentsData.children.length;
-                        var ticketStatus = activeTicket.children[3].children[0].innerHTML;
-                        var ticketRating = activeTicket.children[3].children[1].innerHTML;
-                        var subjectText = activeTicket.children[3].children[2].innerHTML;
-                        var descriptionText = activeTicket.children[3].children[3].innerHTML;
-                        var senderName = activeTicket.children[3].children[4].innerHTML;
-                        var senderDepartment = activeTicket.children[3].children[5].innerHTML;
-                        var receiverName = activeTicket.children[3].children[6].innerHTML;
-                        var receiverDepartment = activeTicket.children[3].children[7].innerHTML;
-                        var dateShort = activeTicket.children[3].children[8].innerHTML;
-                        var datePending = activeTicket.children[3].children[9].innerHTML;
-                        var dateAssigned = activeTicket.children[3].children[10].innerHTML;
-                        var dateResolved = activeTicket.children[3].children[11].innerHTML;
-                        var noteResolved = activeTicket.children[3].children[12].innerHTML;
-                        var dateDeleted = activeTicket.children[3].children[13].innerHTML;
-                        var noteDeleted = activeTicket.children[3].children[14].innerHTML;
+                        departmentName.textContent = "".concat(senderDepartment);
                         ticketSubject.value = "".concat(subjectText);
                         ticketDescription.innerHTML = "".concat(descriptionText);
-                        pendingDate.innerHTML = "".concat(datePending);
+                        pendingDate.textContent = "".concat(datePending);
+                        deletedDate.textContent = "".concat(dateDeleted);
+                        deletedNote.textContent = "".concat(noteDeleted);
+                        break;
+                    case 'manage-pending':
+                        if (senderName === findUser()) {
+                            claimButton.parentElement.style.display = 'grid';
+                            claimButton.className = 'disabled-button';
+                        }
+                        departmentsData = indexData.querySelector('#departments-data');
+                        departmentsTotal = departmentsData.children.length;
+                        ticketSubject.value = "".concat(subjectText);
+                        ticketDescription.textContent = "".concat(descriptionText);
+                        pendingDate.textContent = "".concat(datePending);
                         $(departmentSelect).on('change', function () {
                             buildColleagues(departmentSelect.value, 'none');
                         });

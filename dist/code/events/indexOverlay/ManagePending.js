@@ -11,6 +11,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
+                var ticketsContainer = indexMain.querySelector('#tickets-container');
+                var activeTicket = ticketsContainer.querySelector('.active-ticket');
                 indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
@@ -75,11 +77,18 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     }
                 }
                 function toggleButton() {
+                    var senderName = activeTicket.children[3].children[4].innerHTML;
                     if (colleagueSelect.value === UseValufy_1.UseValufy.forString(findUser())) {
                         assignButton.parentElement.style.display = 'none';
                         assignButton.className = 'disabled-button';
-                        claimButton.parentElement.style.display = 'grid';
-                        claimButton.className = '';
+                        if (senderName === findUser()) {
+                            claimButton.parentElement.style.display = 'grid';
+                            claimButton.className = 'disabled-button';
+                        }
+                        else {
+                            claimButton.parentElement.style.display = 'grid';
+                            claimButton.className = '';
+                        }
                         moveButton.parentElement.style.display = 'none';
                         moveButton.className = 'disabled-button';
                     }
@@ -94,7 +103,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     else if (colleagueSelect.value !== 'select-colleague') {
                         assignButton.parentElement.style.display = 'grid';
                         assignButton.className = '';
-                        claimButton.parentElement.style.display = 'grid';
+                        claimButton.parentElement.style.display = 'none';
                         claimButton.className = 'disabled-button';
                         moveButton.parentElement.style.display = 'none';
                         moveButton.className = 'disabled-button';

@@ -19,6 +19,7 @@ export namespace ManageDeleted {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('manage-deleted');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -27,39 +28,44 @@ export namespace ManageDeleted {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      const ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
+      let activeTicket = ticketsContainer.querySelector('.active-ticket');
       indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+      let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
+      let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
+      let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');
+      let deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
+      let deletedNote: HTMLElement = indexOverlay.querySelector('#deleted-note');
+
       let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
       let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
       let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
       let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
       let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
       let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      let liveResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
-      let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
       let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
       let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
 
-      /*
-      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
-      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
-      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
-      if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
-        liveColleague.style.display = 'none';
-        liveAssigned.style.display = 'none';
-      } else {
-        liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
-        liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
-      }
-      liveDeleted.textContent = `${getTicket('date-deleted', ticketsContainer)}`;
-      liveNoteDeleted.textContent = `${getTicket('note-deleted', ticketsContainer)}`;
-      */
+      var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
+      var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
+      var subjectText: String = activeTicket.children[3].children[2].innerHTML;
+      var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
+      var senderName: String = activeTicket.children[3].children[4].innerHTML;
+      var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
+      var receiverName: String = activeTicket.children[3].children[6].innerHTML;
+      var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
+      var dateShort: String = activeTicket.children[3].children[8].innerHTML;
+      var datePending: String = activeTicket.children[3].children[9].innerHTML;
+      var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
+      var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
+      var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
+      var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
+      var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -68,6 +74,25 @@ export namespace ManageDeleted {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(restoreButton)
+        .on('mouseenter', () => {
+          pendingMark.style.background = `${GetColor.primaryDark()}`;
+
+          deletedDate.style.display = 'none';
+          deletedDate.textContent = `${undefined}`;
+
+          deletedNote.style.display = 'none';
+          deletedNote.textContent = `${undefined}`;
+        })
+        .on('mouseleave', () => {
+          pendingMark.style.background = '';
+
+          deletedDate.textContent = `${dateDeleted}`;
+          deletedDate.style.display = 'grid';
+
+          deletedNote.textContent = `${noteDeleted}`;
+          deletedNote.style.display = 'grid';
+        });
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });
