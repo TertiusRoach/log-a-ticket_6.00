@@ -530,7 +530,7 @@ export namespace DataRead {
     }
   }
   export class forOverlay {
-    constructor(page: 'log-overlay' | 'logged-pending' | 'manage-deleted' | 'manage-pending') {
+    constructor(page: 'log-overlay' | 'logged-pending' | 'manage-deleted' | 'manage-pending' | 'user-assigned' | 'user-deleted' | 'user-resolved') {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -543,6 +543,19 @@ export namespace DataRead {
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+      let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
+      const ticketSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
+      const ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
+      const senderDepartment: HTMLElement = indexOverlay.querySelector('#sender-department');
+      const colleagueName: HTMLElement = indexOverlay.querySelector('#colleague-name');
+
+      const pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
+      const assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
+      const resolvedDate: HTMLElement = indexOverlay.querySelector('#resolved-date');
+      const resolvedNote: HTMLElement = indexOverlay.querySelector('#resolved-note');
+      const deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
+      const deletedNote: HTMLElement = indexOverlay.querySelector('#deleted-note');
+
       let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
       let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
       let claimButton: HTMLElement = indexOverlay.querySelector('#claim-ticket button');
@@ -550,6 +563,7 @@ export namespace DataRead {
       let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
       let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
       let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+      let unlockButton: HTMLButtonElement = indexOverlay.querySelector('#unlock-ticket button');
 
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
@@ -560,14 +574,6 @@ export namespace DataRead {
       let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');
 
       let departmentName: HTMLHeadingElement = indexOverlay.querySelector('#department-name h1');
-      let ticketSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
-      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
-      let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
-      let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
-      let resolvedDate: HTMLElement = indexOverlay.querySelector('#resolved-date');
-      let resolvedNote: HTMLElement = indexOverlay.querySelector('#resolved-note');
-      let deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
-      let deletedNote: HTMLElement = indexOverlay.querySelector('#deleted-note');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
       let departmentsData: HTMLDivElement;
@@ -578,37 +584,12 @@ export namespace DataRead {
       let userName: String;
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
-      /*
-      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
-      let activeTicket = ticketsContainer.querySelector('.active-ticket');
-
-      var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
-      var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
-      var subjectText: String = activeTicket.children[3].children[2].innerHTML;
-      var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
-      var senderName: String = activeTicket.children[3].children[4].innerHTML;
-      var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
-      var receiverName: String = activeTicket.children[3].children[6].innerHTML;
-      var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
-      var dateShort: String = activeTicket.children[3].children[8].innerHTML;
-      var datePending: String = activeTicket.children[3].children[9].innerHTML;
-      var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
-      var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
-      var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
-      var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
-      var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
-      */
 
       /* Events ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
         case 'log-overlay':
-          departmentsData = indexData.querySelector('#departments-data');
-          employeesData = indexData.querySelector('#employees-data');
-          ticketsData = indexData.querySelector('#tickets-data');
-          userDepartment = findDepartment(findUser());
-
           $(departmentSelect)
             .on('click', () => {
               if (colleagueSelect.length === 1) {
@@ -640,9 +621,6 @@ export namespace DataRead {
           buildDepartments(findDepartment(findUser()));
           break;
         case 'logged-pending':
-          departmentsData = indexData.querySelector('#departments-data');
-          departmentsTotal = departmentsData.children.length;
-
           ticketSubject.value = `${getTicket('subject-text')}`;
           ticketDescription.innerHTML = `${getTicket('description-text')}`;
 
@@ -653,17 +631,17 @@ export namespace DataRead {
           buildDepartments(getTicket('receiver-department'));
           break;
         case 'manage-deleted':
-          departmentsData = indexData.querySelector('#departments-data');
-          departmentsTotal = departmentsData.children.length;
-
           ticketSubject.value = `${getTicket('subject-text')}`;
-          ticketDescription.innerHTML = `${getTicket('description-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
 
-          departmentName.textContent = `${getTicket('sender-department')}`;
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
 
           pendingDate.textContent = `${getTicket('date-pending')}`;
           deletedDate.textContent = `${getTicket('date-deleted')}`;
           deletedNote.textContent = `${getTicket('note-deleted')}`;
+
+          departmentName.textContent = `${findDepartment(findUser())}`;
           break;
         case 'manage-pending':
           if (getTicket('sender-name') === findUser()) {
@@ -683,6 +661,32 @@ export namespace DataRead {
             buildColleagues(departmentSelect.value, 'none');
           });
           buildDepartments(findDepartment(findUser()));
+          break;
+        case 'user-assigned':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          resolvedDate.style.display = 'none';
+          deletedDate.style.display = 'none';
+          break;
+        case 'user-deleted':
+          break;
+        case 'user-resolved':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          resolvedDate.textContent = `${getTicket('date-resolved')}`;
+          resolvedNote.textContent = `${getTicket('note-resolved')}`;
           break;
       }
     }
@@ -904,8 +908,5 @@ export namespace DataRead {
     } else {
       buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
     }
-  }
-  function userDepartment() {
-    return `${findDepartment(findUser())}`;
   }
 }

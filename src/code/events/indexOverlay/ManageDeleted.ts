@@ -28,8 +28,6 @@ export namespace ManageDeleted {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
-      let activeTicket = ticketsContainer.querySelector('.active-ticket');
       indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
@@ -37,19 +35,11 @@ export namespace ManageDeleted {
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
       let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
+
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
       let deletedMark: HTMLDivElement = indexOverlay.querySelector('.deleted-mark');
       let deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
       let deletedNote: HTMLElement = indexOverlay.querySelector('#deleted-note');
-
-      let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
-      let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
-      let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
-      let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
-      let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
-      let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
-      let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -58,24 +48,27 @@ export namespace ManageDeleted {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
       $(restoreButton)
         .on('mouseenter', () => {
           pendingMark.style.background = `${GetColor.primaryDark()}`;
+          deletedMark.style.background = '';
 
           deletedDate.style.display = 'none';
-          deletedDate.textContent = undefined;
+          deletedDate.textContent = `${undefined}`;
 
           deletedNote.style.display = 'none';
-          deletedNote.textContent = undefined;
+          deletedNote.textContent = `${undefined}`;
         })
         .on('mouseleave', () => {
           pendingMark.style.background = '';
+          deletedMark.style.background = `${GetColor.primaryDark()}`;
 
           deletedDate.textContent = `${getTicket('date-deleted')}`;
-          deletedDate.style.display = 'grid';
+          deletedDate.style.display = '';
 
           deletedNote.textContent = `${getTicket('note-deleted')}`;
-          deletedNote.style.display = 'grid';
+          deletedNote.style.display = '';
         });
 
       $(closeOverlay).on('click', () => {

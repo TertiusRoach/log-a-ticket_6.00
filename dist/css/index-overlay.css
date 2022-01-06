@@ -110,11 +110,6 @@
   font-size: 1rem;
   color: white;
 }
-#index-overlay section footer [id*=note]:read-only {
-  height: 100%;
-  margin-left: 1rem;
-  color: white;
-}
 #index-overlay section footer #resolved-note {
   color: #cce2cc;
 }
@@ -168,6 +163,16 @@
 }
 #index-overlay section footer section [id*=deleted] {
   color: #e7c3c3;
+}
+#index-overlay section footer section #sender-department {
+  cursor: default;
+  grid-column: 4/9;
+  grid-row: 3/5;
+  z-index: -1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: white;
 }
 #index-overlay section footer section .disabled-text {
   color: #646e7e;
@@ -921,17 +926,41 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
-.user-assigned #ticket-container #ticket-top .resolve-ticket {
-  color: #08870c;
+.user-assigned #ticket-container #ticket-top #resolve-ticket {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
-.user-assigned #ticket-container #ticket-bot #deleted-note:read-only {
-  margin-left: 1rem;
-  height: 100%;
-  border: 2px solid #f95555;
+.user-assigned #ticket-container #ticket-top #resolve-ticket button {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  overflow: visible;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
   color: white;
+  background: none;
 }
-.user-assigned #ticket-container #ticket-bot .delete-ticket {
-  color: #f95555;
+.user-assigned #ticket-container #ticket-top #resolve-ticket button h1 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.user-assigned #ticket-container #ticket-top #resolve-ticket button:hover {
+  color: #f58a07;
+}
+.user-assigned #ticket-container #ticket-top #resolve-ticket .disabled-button,
+.user-assigned #ticket-container #ticket-top #resolve-ticket .disabled-button:hover {
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.5;
+}
+.user-assigned #ticket-container #ticket-top #resolve-ticket .disabled-button svg,
+.user-assigned #ticket-container #ticket-top #resolve-ticket .disabled-button:hover svg {
+  cursor: default;
 }
 .user-assigned #overlay-canvas {
   grid-column: 2/9;
@@ -939,6 +968,50 @@
   z-index: -1;
   border-radius: 1rem 0 0 1rem;
   background-color: #084887;
+}
+.user-assigned #delete-ticket {
+  grid-column: 8/9;
+  grid-row: 20/22;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  border-radius: 0 0 1rem 1rem;
+  background: #909cc2;
+}
+.user-assigned #delete-ticket button {
+  cursor: pointer;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  width: 100%;
+  display: flex;
+  overflow: visible;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  background: none;
+}
+.user-assigned #delete-ticket button h2 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.user-assigned #delete-ticket button:hover {
+  color: #f95555;
+}
+.user-assigned #delete-ticket .disabled-button,
+.user-assigned #delete-ticket .disabled-button:hover {
+  filter: drop-shadow(0 0 8px black);
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.75;
+}
+.user-assigned #delete-ticket .disabled-button svg,
+.user-assigned #delete-ticket .disabled-button:hover svg {
+  cursor: default;
+}
+.user-assigned #delete-ticket:hover {
+  background: #4c72a4;
 }
 
 /*--▼ .user-resolved ▼--*/
@@ -973,14 +1046,41 @@
   grid-column: 2/9;
   grid-row: 5/20;
 }
-.user-resolved #ticket-container #ticket-top .unsolved-ticket {
-  color: #4c72a4;
+.user-resolved #ticket-container #ticket-top #unlock-ticket {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
-.user-resolved #ticket-container #ticket-bot #resolved-note:read-only {
-  margin-left: 1rem;
-  height: 100%;
-  border: 2px solid #08870c;
+.user-resolved #ticket-container #ticket-top #unlock-ticket button {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: flex;
+  overflow: visible;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
   color: white;
+  background: none;
+}
+.user-resolved #ticket-container #ticket-top #unlock-ticket button h1 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.user-resolved #ticket-container #ticket-top #unlock-ticket button:hover {
+  color: #f58a07;
+}
+.user-resolved #ticket-container #ticket-top #unlock-ticket .disabled-button,
+.user-resolved #ticket-container #ticket-top #unlock-ticket .disabled-button:hover {
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.5;
+}
+.user-resolved #ticket-container #ticket-top #unlock-ticket .disabled-button svg,
+.user-resolved #ticket-container #ticket-top #unlock-ticket .disabled-button:hover svg {
+  cursor: default;
 }
 .user-resolved #overlay-canvas {
   grid-column: 2/9;

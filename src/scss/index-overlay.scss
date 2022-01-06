@@ -112,12 +112,7 @@
 
         color: white;
       }
-      [id*='note']:read-only {
-        height: 100%;
-        margin-left: 1rem;
 
-        color: white;
-      }
       #resolved-note {
         color: $resolved-note;
       }
@@ -178,10 +173,21 @@
           color: $deleted-note;
         }
 
-        .disabled-text {
-          color: $disabled-default;
-          opacity: 0.5;
+        #sender-department {
+          cursor: default;
+          grid-column: 4/9;
+          grid-row: 3/5;
+          z-index: -1;
+
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+          color: white;
         }
+      }
+      section .disabled-text {
+        color: $disabled-default;
+        opacity: 0.5;
       }
       button {
         grid-column: 2/3;
@@ -802,6 +808,7 @@
     border-radius: 0 1rem 0 1rem;
     background-color: $primary-dark;
   }
+
   #delete-ticket {
     grid-column: 8/9;
     grid-row: 20/22;
@@ -979,23 +986,46 @@
     grid-column: 2/9;
     grid-row: 5/20;
 
-    #ticket-top {
-      .resolve-ticket {
-        color: $resolved-default;
-      }
-    }
-    #ticket-bot {
-      #deleted-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $deleted-default;
+    #ticket-top #resolve-ticket {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      button {
+        grid-column: 2/3;
+        grid-row: 2/3;
+
+        display: flex;
+        overflow: visible;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        h1 {
+          white-space: nowrap;
+
+          line-height: 1rem;
+          padding-left: 1rem;
+        }
+        border: none;
         color: white;
+        background: none;
       }
-      .delete-ticket {
-        color: $deleted-default;
+      button:hover {
+        color: $secondary-dark;
+      }
+      .disabled-button,
+      .disabled-button:hover {
+        cursor: default;
+        color: $disabled-default;
+        opacity: 0.5;
+        svg {
+          cursor: default;
+        }
       }
     }
   }
+
   #overlay-canvas {
     grid-column: 2/9;
     grid-row: 5/20;
@@ -1003,6 +1033,54 @@
 
     border-radius: 1rem 0 0 1rem;
     background-color: $primary-dark;
+  }
+
+  #delete-ticket {
+    grid-column: 8/9;
+    grid-row: 20/22;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    button {
+      cursor: pointer;
+      grid-column: 2/3;
+      grid-row: 2/3;
+      width: 100%;
+
+      display: flex;
+      overflow: visible;
+      align-items: center;
+      justify-content: center;
+      h2 {
+        white-space: nowrap;
+
+        line-height: 1rem;
+        padding-left: 1rem;
+      }
+      border: none;
+      color: white;
+      background: none;
+    }
+    button:hover {
+      color: $deleted-default;
+    }
+    .disabled-button,
+    .disabled-button:hover {
+      filter: drop-shadow(0 0 8px black);
+      cursor: default;
+      color: $disabled-default;
+      opacity: 0.75;
+      svg {
+        cursor: default;
+      }
+    }
+
+    border-radius: 0 0 1rem 1rem;
+    background: $primary-light;
+  }
+  #delete-ticket:hover {
+    background: $primary-medium;
   }
   /*
   @media only screen and (max-width: 1920px) {
@@ -1039,17 +1117,42 @@
     grid-column: 2/9;
     grid-row: 5/20;
 
-    #ticket-top {
-      .unsolved-ticket {
-        color: $assigned-default;
-      }
-    }
-    #ticket-bot {
-      #resolved-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $resolved-default;
+    #ticket-top #unlock-ticket {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      button {
+        grid-column: 2/3;
+        grid-row: 2/3;
+
+        display: flex;
+        overflow: visible;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        h1 {
+          white-space: nowrap;
+
+          line-height: 1rem;
+          padding-left: 1rem;
+        }
+        border: none;
         color: white;
+        background: none;
+      }
+      button:hover {
+        color: $secondary-dark;
+      }
+      .disabled-button,
+      .disabled-button:hover {
+        cursor: default;
+        color: $disabled-default;
+        opacity: 0.5;
+        svg {
+          cursor: default;
+        }
       }
     }
   }

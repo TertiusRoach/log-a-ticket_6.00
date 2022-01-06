@@ -331,6 +331,17 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
+                var closeOverlay = indexOverlay.querySelector('#close-overlay');
+                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
+                var ticketDescription = indexOverlay.querySelector('#ticket-description');
+                var senderDepartment = indexOverlay.querySelector('#sender-department');
+                var colleagueName = indexOverlay.querySelector('#colleague-name');
+                var pendingDate = indexOverlay.querySelector('#pending-date');
+                var assignedDate = indexOverlay.querySelector('#assigned-date');
+                var resolvedDate = indexOverlay.querySelector('#resolved-date');
+                var resolvedNote = indexOverlay.querySelector('#resolved-note');
+                var deletedDate = indexOverlay.querySelector('#deleted-date');
+                var deletedNote = indexOverlay.querySelector('#deleted-note');
                 var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
                 var claimButton = indexOverlay.querySelector('#claim-ticket button');
@@ -338,6 +349,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var moveButton = indexOverlay.querySelector('#move-ticket button');
                 var restoreButton = indexOverlay.querySelector('#restore-ticket button');
                 var saveButton = indexOverlay.querySelector('#save-ticket button');
+                var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
@@ -345,14 +357,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var resolvedMark = indexOverlay.querySelector('.resolved-mark');
                 var deletedMark = indexOverlay.querySelector('.deleted-mark');
                 var departmentName = indexOverlay.querySelector('#department-name h1');
-                var ticketSubject = indexOverlay.querySelector('#ticket-subject');
-                var ticketDescription = indexOverlay.querySelector('#ticket-description');
-                var pendingDate = indexOverlay.querySelector('#pending-date');
-                var assignedDate = indexOverlay.querySelector('#assigned-date');
-                var resolvedDate = indexOverlay.querySelector('#resolved-date');
-                var resolvedNote = indexOverlay.querySelector('#resolved-note');
-                var deletedDate = indexOverlay.querySelector('#deleted-date');
-                var deletedNote = indexOverlay.querySelector('#deleted-note');
                 var indexData = document.querySelector('#index-data');
                 var departmentsData;
                 var departmentsTotal;
@@ -362,10 +366,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var userName;
                 switch (page) {
                     case 'log-overlay':
-                        departmentsData = indexData.querySelector('#departments-data');
-                        employeesData = indexData.querySelector('#employees-data');
-                        ticketsData = indexData.querySelector('#tickets-data');
-                        userDepartment = findDepartment(findUser());
                         $(departmentSelect)
                             .on('click', function () {
                             if (colleagueSelect.length === 1) {
@@ -395,8 +395,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         buildDepartments(findDepartment(findUser()));
                         break;
                     case 'logged-pending':
-                        departmentsData = indexData.querySelector('#departments-data');
-                        departmentsTotal = departmentsData.children.length;
                         ticketSubject.value = "".concat(getTicket('subject-text'));
                         ticketDescription.innerHTML = "".concat(getTicket('description-text'));
                         pendingDate.textContent = "".concat(getTicket('date-pending'));
@@ -406,14 +404,14 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         buildDepartments(getTicket('receiver-department'));
                         break;
                     case 'manage-deleted':
-                        departmentsData = indexData.querySelector('#departments-data');
-                        departmentsTotal = departmentsData.children.length;
                         ticketSubject.value = "".concat(getTicket('subject-text'));
-                        ticketDescription.innerHTML = "".concat(getTicket('description-text'));
-                        departmentName.textContent = "".concat(getTicket('sender-department'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
                         pendingDate.textContent = "".concat(getTicket('date-pending'));
                         deletedDate.textContent = "".concat(getTicket('date-deleted'));
                         deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        departmentName.textContent = "".concat(findDepartment(findUser()));
                         break;
                     case 'manage-pending':
                         if (getTicket('sender-name') === findUser()) {
@@ -429,6 +427,28 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             buildColleagues(departmentSelect.value, 'none');
                         });
                         buildDepartments(findDepartment(findUser()));
+                        break;
+                    case 'user-assigned':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        resolvedDate.style.display = 'none';
+                        deletedDate.style.display = 'none';
+                        break;
+                    case 'user-deleted':
+                        break;
+                    case 'user-resolved':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        resolvedDate.textContent = "".concat(getTicket('date-resolved'));
+                        resolvedNote.textContent = "".concat(getTicket('note-resolved'));
                         break;
                 }
             }
@@ -621,9 +641,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
             else {
                 buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
             }
-        }
-        function userDepartment() {
-            return "".concat(findDepartment(findUser()));
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));
 });
