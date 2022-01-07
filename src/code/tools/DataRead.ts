@@ -535,6 +535,8 @@ export namespace DataRead {
         | 'colleague-assigned'
         | 'colleague-deleted'
         | 'colleague-resolved'
+        | 'coworker-deleted'
+        | 'coworker-resolved'
         | 'log-overlay'
         | 'logged-deleted'
         | 'logged-pending'
@@ -560,6 +562,7 @@ export namespace DataRead {
       const ticketSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
       const ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
       const senderDepartment: HTMLElement = indexOverlay.querySelector('#sender-department');
+      const receiverDepartment: HTMLElement = indexOverlay.querySelector('#receiver-department');
       const colleagueName: HTMLElement = indexOverlay.querySelector('#colleague-name');
 
       const pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
@@ -637,6 +640,30 @@ export namespace DataRead {
 
           senderDepartment.textContent = `${getTicket('sender-department')}`;
           colleagueName.textContent = `${getTicket('sender-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          resolvedDate.textContent = `${getTicket('date-resolved')}`;
+          resolvedNote.textContent = `${getTicket('note-resolved')}`;
+          break;
+        case 'coworker-deleted':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          receiverDepartment.textContent = `${getTicket('receiver-department')}`;
+          colleagueName.textContent = `${getTicket('receiver-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          deletedDate.textContent = `${getTicket('date-deleted')}`;
+          deletedNote.textContent = `${getTicket('note-deleted')}`;
+          break;
+        case 'coworker-resolved':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          receiverDepartment.textContent = `${getTicket('receiver-department')}`;
+          colleagueName.textContent = `${getTicket('receiver-name')}`;
 
           pendingDate.textContent = `${getTicket('date-pending')}`;
           assignedDate.textContent = `${getTicket('date-assigned')}`;

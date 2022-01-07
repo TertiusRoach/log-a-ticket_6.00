@@ -174,7 +174,8 @@
           color: $deleted-note;
         }
 
-        #sender-department {
+        #sender-department,
+        #receiver-department {
           cursor: default;
           display: flex;
           align-items: flex-start;

@@ -43,21 +43,10 @@ export namespace DataUpdate {
       let departmentsContainer: HTMLDivElement = indexData.querySelector('#departments-data');
       let employeesContainer: HTMLDivElement = indexData.querySelector('#employees-data');
       let employeesTotal: Number = employeesContainer.children.length;
-
       let ticketsContainer: HTMLDivElement = indexData.querySelector('#tickets-data');
-
       let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
       let ticketsTotal: Number = ticketsCollection.length;
 
-      function closeContainer(block: 'index-overlay') {
-        let page: String = block.split('-')[1];
-        indexOverlay.className = `default-${page}`;
-        indexOverlay.style.display = 'none';
-        indexMain.style.display = 'grid';
-        indexOverlay.innerHTML = '';
-        logAticket.className = '';
-      }
-      function highlightButton(role: String | 'Manager' | 'Employee') {}
       function receiverDefault(receiverName: String | `${undefined}`, receiverDepartment: String) {
         switch (receiverName) {
           case `${undefined}`:
@@ -168,22 +157,29 @@ export namespace DataUpdate {
           refreshPages();
           break;
         case 'resolved':
-          console.log(`Ticket: ${UseCapify.forString(' ', status)}`);
-
           closeContainer('index-overlay');
           refreshPages();
           break;
         case 'deleted':
-          console.log(`Ticket: ${UseCapify.forString(' ', status)}`);
-
           closeContainer('index-overlay');
           refreshPages();
           break;
       }
-      console.log('--DataUpdate.js Loaded');
+      /*--► console.log('--DataUpdate.js Loaded'); ◄--*/
     }
   }
-
+  function closeContainer(block: 'index-overlay') {
+    const indexHeader: HTMLElement = document.querySelector('#index-header');
+    let logAticket: HTMLButtonElement = indexHeader.querySelector('#log-a-ticket button');
+    const indexMain: HTMLElement = document.querySelector('#index-main');
+    const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
+    let page: String = block.split('-')[1];
+    indexOverlay.className = `default-${page}`;
+    indexOverlay.style.display = 'none';
+    indexMain.style.display = 'grid';
+    indexOverlay.innerHTML = '';
+    logAticket.className = '';
+  }
   function findDepartment(userName: String) {
     const employeesData: HTMLDivElement = document.querySelector('#employees-data');
     let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');

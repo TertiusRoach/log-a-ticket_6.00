@@ -34,15 +34,6 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                 var ticketsContainer = indexData.querySelector('#tickets-data');
                 var ticketsCollection = ticketsData.getElementsByTagName('article');
                 var ticketsTotal = ticketsCollection.length;
-                function closeContainer(block) {
-                    var page = block.split('-')[1];
-                    indexOverlay.className = "default-".concat(page);
-                    indexOverlay.style.display = 'none';
-                    indexMain.style.display = 'grid';
-                    indexOverlay.innerHTML = '';
-                    logAticket.className = '';
-                }
-                function highlightButton(role) { }
                 function receiverDefault(receiverName, receiverDepartment) {
                     switch (receiverName) {
                         case "".concat(undefined):
@@ -98,21 +89,30 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         refreshPages();
                         break;
                     case 'resolved':
-                        console.log("Ticket: ".concat(UseCapify_1.UseCapify.forString(' ', status)));
                         closeContainer('index-overlay');
                         refreshPages();
                         break;
                     case 'deleted':
-                        console.log("Ticket: ".concat(UseCapify_1.UseCapify.forString(' ', status)));
                         closeContainer('index-overlay');
                         refreshPages();
                         break;
                 }
-                console.log('--DataUpdate.js Loaded');
             }
             return forTicket;
         }());
         DataUpdate.forTicket = forTicket;
+        function closeContainer(block) {
+            var indexHeader = document.querySelector('#index-header');
+            var logAticket = indexHeader.querySelector('#log-a-ticket button');
+            var indexMain = document.querySelector('#index-main');
+            var indexOverlay = document.querySelector('#index-overlay');
+            var page = block.split('-')[1];
+            indexOverlay.className = "default-".concat(page);
+            indexOverlay.style.display = 'none';
+            indexMain.style.display = 'grid';
+            indexOverlay.innerHTML = '';
+            logAticket.className = '';
+        }
         function findDepartment(userName) {
             var employeesData = document.querySelector('#employees-data');
             var employeesCollection = employeesData.getElementsByTagName('article');

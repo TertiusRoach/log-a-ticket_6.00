@@ -335,6 +335,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var ticketSubject = indexOverlay.querySelector('#ticket-subject');
                 var ticketDescription = indexOverlay.querySelector('#ticket-description');
                 var senderDepartment = indexOverlay.querySelector('#sender-department');
+                var receiverDepartment = indexOverlay.querySelector('#receiver-department');
                 var colleagueName = indexOverlay.querySelector('#colleague-name');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
                 var assignedDate = indexOverlay.querySelector('#assigned-date');
@@ -396,6 +397,26 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         ticketDescription.textContent = "".concat(getTicket('description-text'));
                         senderDepartment.textContent = "".concat(getTicket('sender-department'));
                         colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        resolvedDate.textContent = "".concat(getTicket('date-resolved'));
+                        resolvedNote.textContent = "".concat(getTicket('note-resolved'));
+                        break;
+                    case 'coworker-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        receiverDepartment.textContent = "".concat(getTicket('receiver-department'));
+                        colleagueName.textContent = "".concat(getTicket('receiver-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        break;
+                    case 'coworker-resolved':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        receiverDepartment.textContent = "".concat(getTicket('receiver-department'));
+                        colleagueName.textContent = "".concat(getTicket('receiver-name'));
                         pendingDate.textContent = "".concat(getTicket('date-pending'));
                         assignedDate.textContent = "".concat(getTicket('date-assigned'));
                         resolvedDate.textContent = "".concat(getTicket('date-resolved'));

@@ -165,7 +165,8 @@
 #index-overlay section footer section [id*=deleted] {
   color: #e7c3c3;
 }
-#index-overlay section footer section #sender-department {
+#index-overlay section footer section #sender-department,
+#index-overlay section footer section #receiver-department {
   cursor: default;
   display: flex;
   align-items: flex-start;
