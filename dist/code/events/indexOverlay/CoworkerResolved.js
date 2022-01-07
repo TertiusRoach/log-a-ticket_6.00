@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CoworkerResolved = void 0;
@@ -6,6 +6,7 @@ define(["require", "exports"], function (require, exports) {
     (function (CoworkerResolved) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('coworker-resolved');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');
@@ -15,30 +16,6 @@ define(["require", "exports"], function (require, exports) {
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var liveSubject = indexOverlay.querySelector('#ticket-subject');
-                var liveDescription = indexOverlay.querySelector('#ticket-description');
-                var liveDepartment = indexOverlay.querySelector('#department-name');
-                var liveColleague = indexOverlay.querySelector('#colleague-name');
-                var livePending = indexOverlay.querySelector('#pending-date');
-                var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                var liveResolved = indexOverlay.querySelector('#resolved-date');
-                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
-                var liveDeleted = null;
-                var liveNoteDeleted = null;
-                liveSubject.value = "".concat(getTicket('subject-text'));
-                liveDescription.textContent = "".concat(getTicket('description-text'));
-                liveDepartment.textContent = "".concat(getTicket('receiver-department'));
-                livePending.textContent = "".concat(getTicket('date-pending'));
-                if (getTicket('receiver-name') === "".concat(undefined)) {
-                    liveColleague.style.display = 'none';
-                    liveAssigned.style.display = 'none';
-                }
-                else {
-                    liveColleague.textContent = "".concat(getTicket('receiver-name'));
-                    liveAssigned.textContent = "".concat(getTicket('date-assigned'));
-                }
-                liveResolved.textContent = "".concat(getTicket('date-resolved'));
-                liveNoteResolved.textContent = "".concat(getTicket('note-resolved'));
                 var indexData = document.querySelector('#index-data');
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');

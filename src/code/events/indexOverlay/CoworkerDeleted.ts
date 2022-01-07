@@ -19,6 +19,7 @@ export namespace CoworkerDeleted {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('coworker-deleted');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -34,30 +35,6 @@ export namespace CoworkerDeleted {
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
-      let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
-      let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
-      let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
-      let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
-      let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      let liveResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
-      let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
-      let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
-      let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
-
-      liveSubject.value = `${getTicket('subject-text')}`;
-      liveDescription.textContent = `${getTicket('description-text')}`;
-      liveDepartment.textContent = `${getTicket('receiver-department')}`;
-      livePending.textContent = `${getTicket('date-pending')}`;
-      if (getTicket('receiver-name') === `${undefined}`) {
-        liveColleague.style.display = 'none';
-        liveAssigned.style.display = 'none';
-      } else {
-        liveColleague.textContent = `${getTicket('receiver-name')}`;
-        liveAssigned.textContent = `${getTicket('date-assigned')}`;
-      }
-      liveDeleted.textContent = `${getTicket('date-deleted')}`;
-      liveNoteDeleted.textContent = `${getTicket('note-deleted')}`;
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
