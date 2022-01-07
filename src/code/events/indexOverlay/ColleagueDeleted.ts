@@ -19,6 +19,7 @@ export namespace ColleagueDeleted {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('colleague-deleted');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');

@@ -19,6 +19,7 @@ export namespace ColleagueAssigned {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('colleague-assigned');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
@@ -27,39 +28,14 @@ export namespace ColleagueAssigned {
       let logButton: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      const ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
       indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
-      let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
-      let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
-      let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
-      let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
-      let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      let liveResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
-      let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
-      let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
-      let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
-
-      /*
-      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
-      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
-      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
-      if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
-        liveColleague.style.display = 'none';
-        liveAssigned.style.display = 'none';
-      } else {
-        liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
-        liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
-      }
-      liveDeleted.textContent = `${getTicket('date-deleted', ticketsContainer)}`;
-      liveNoteDeleted.textContent = `${getTicket('note-deleted', ticketsContainer)}`;
-      */
+      let takeButton: HTMLButtonElement = indexOverlay.querySelector('#take-ticket button');
+      let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -68,11 +44,23 @@ export namespace ColleagueAssigned {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(takeButton)
+        .on('mouseenter', () => {
+          if (takeButton.className !== 'disabled-button') {
+            takeButton.style.color = `${GetColor.assignedDefault()}`;
+            assignedDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
+          }
+        })
+        .on('mouseleave', () => {
+          takeButton.style.color = '';
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+        });
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      /*--► console.log('--ColleagueAssigned.js Loaded'); ◄--*/
       console.log('--ColleagueAssigned.js Loaded');
     }
   }
@@ -88,6 +76,13 @@ export namespace ColleagueAssigned {
     activeTicket.className = activeTicket.classList[0];
 
     indexMain.style.display = 'grid';
+  }
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
   }
   function getTicket(
     info:

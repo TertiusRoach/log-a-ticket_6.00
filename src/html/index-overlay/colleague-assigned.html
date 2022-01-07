@@ -8,22 +8,18 @@
   <header id="ticket-top">
     <input id="ticket-subject" value="${subjectText}" type="text" readonly />
 
-    <button class="claim-ticket"></button>
-    <!--▼ Button Sample ▼-->
-    <div id="log-ticket">
-      <!--► class="disabled-button" ◄-->
-      <button class="disabled-button">
-        <i class="fad fa-plus fa-4x"></i>
-        <h1>Claim Ticket</h1>
+    <div id="take-ticket">
+      <button class="">
+        <i class="fad fa-flag fa-4x"></i>
+        <h1>Take Ticket</h1>
       </button>
     </div>
-    <!--▲ Button Sample ▲-->
   </header>
   <footer id="ticket-bot">
     <textarea id="ticket-description" readonly>${descriptionText}</textarea>
 
     <section>
-      <h4 id="department-name">${departmentName}</h4>
+      <h4 id="sender-department">${senderDepartment}</h4>
       <h4 id="colleague-name">${colleagueName}</h4>
 
       <h4 id="pending-date">${00 Weekday, Month YYYY}</h4>

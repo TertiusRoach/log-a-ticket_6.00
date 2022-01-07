@@ -530,7 +530,20 @@ export namespace DataRead {
     }
   }
   export class forOverlay {
-    constructor(page: 'log-overlay' | 'logged-deleted' | 'logged-pending' | 'manage-deleted' | 'manage-pending' | 'user-assigned' | 'user-deleted' | 'user-resolved') {
+    constructor(
+      page:
+        | 'colleague-assigned'
+        | 'colleague-deleted'
+        | 'colleague-resolved'
+        | 'log-overlay'
+        | 'logged-deleted'
+        | 'logged-pending'
+        | 'manage-deleted'
+        | 'manage-pending'
+        | 'user-assigned'
+        | 'user-deleted'
+        | 'user-resolved'
+    ) {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -564,6 +577,7 @@ export namespace DataRead {
       let recycleButton: HTMLButtonElement = indexOverlay.querySelector('#recycle-ticket button');
       let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
       let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+      let takeButton: HTMLButtonElement = indexOverlay.querySelector('#take-ticket button');
       let unlockButton: HTMLButtonElement = indexOverlay.querySelector('#unlock-ticket button');
 
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
@@ -590,6 +604,45 @@ export namespace DataRead {
 
       /* Last ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       switch (page) {
+        case 'colleague-assigned':
+          if (findUser() === getTicket('sender-name')) {
+            takeButton.className = 'disabled-button';
+          } else {
+            takeButton.className = '';
+          }
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('receiver-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          break;
+        case 'colleague-deleted':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          deletedDate.textContent = `${getTicket('date-deleted')}`;
+          deletedNote.textContent = `${getTicket('note-deleted')}`;
+          break;
+        case 'colleague-resolved':
+          ticketSubject.value = `${getTicket('subject-text')}`;
+          ticketDescription.textContent = `${getTicket('description-text')}`;
+
+          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
+
+          pendingDate.textContent = `${getTicket('date-pending')}`;
+          assignedDate.textContent = `${getTicket('date-assigned')}`;
+          resolvedDate.textContent = `${getTicket('date-resolved')}`;
+          resolvedNote.textContent = `${getTicket('note-resolved')}`;
+          break;
         case 'log-overlay':
           $(departmentSelect)
             .on('click', () => {
