@@ -86,7 +86,7 @@
         line-height: 1rem;
         font-weight: 600;
         font-size: 1rem;
-        height: 100%;
+        height: 98%;
 
         border: 2px solid $primary-light;
         color: $primary-dark;
@@ -176,10 +176,6 @@
 
         #sender-department {
           cursor: default;
-          grid-column: 4/9;
-          grid-row: 3/5;
-          z-index: -1;
-
           display: flex;
           align-items: flex-start;
           justify-content: flex-start;
@@ -1292,20 +1288,42 @@
     grid-column: 2/9;
     grid-row: 5/20;
 
-    #ticket-top {
-      .claim-ticket {
-        color: $assigned-default;
-      }
-    }
-    #ticket-bot {
-      #deleted-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $deleted-default;
+    #ticket-top #take-ticket {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      button {
+        grid-column: 2/3;
+        grid-row: 2/3;
+
+        display: flex;
+        overflow: visible;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        h1 {
+          white-space: nowrap;
+
+          line-height: 1rem;
+          padding-left: 1rem;
+        }
+        border: none;
         color: white;
+        background: none;
       }
-      .delete-ticket {
-        color: $deleted-default;
+      button:hover {
+        color: $secondary-dark;
+      }
+      .disabled-button,
+      .disabled-button:hover {
+        cursor: default;
+        color: $disabled-default;
+        opacity: 0.5;
+        svg {
+          cursor: default;
+        }
       }
     }
   }
@@ -1351,15 +1369,6 @@
   #ticket-container {
     grid-column: 2/9;
     grid-row: 5/20;
-
-    #ticket-bot {
-      #resolved-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $resolved-default;
-        color: white;
-      }
-    }
   }
   #overlay-canvas {
     grid-column: 2/9;
@@ -1403,15 +1412,6 @@
   #ticket-container {
     grid-column: 2/9;
     grid-row: 5/20;
-
-    #ticket-bot {
-      #deleted-note:read-only {
-        margin-left: 1rem;
-        height: 100%;
-        border: 2px solid $deleted-default;
-        color: white;
-      }
-    }
   }
   #overlay-canvas {
     grid-column: 2/9;

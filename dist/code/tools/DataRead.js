@@ -350,6 +350,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var recycleButton = indexOverlay.querySelector('#recycle-ticket button');
                 var restoreButton = indexOverlay.querySelector('#restore-ticket button');
                 var saveButton = indexOverlay.querySelector('#save-ticket button');
+                var takeButton = indexOverlay.querySelector('#take-ticket button');
                 var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
@@ -366,6 +367,40 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var userDepartment;
                 var userName;
                 switch (page) {
+                    case 'colleague-assigned':
+                        if (findUser() === getTicket('sender-name')) {
+                            takeButton.className = 'disabled-button';
+                        }
+                        else {
+                            takeButton.className = '';
+                        }
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('receiver-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        break;
+                    case 'colleague-deleted':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        deletedDate.textContent = "".concat(getTicket('date-deleted'));
+                        deletedNote.textContent = "".concat(getTicket('note-deleted'));
+                        break;
+                    case 'colleague-resolved':
+                        ticketSubject.value = "".concat(getTicket('subject-text'));
+                        ticketDescription.textContent = "".concat(getTicket('description-text'));
+                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
+                        pendingDate.textContent = "".concat(getTicket('date-pending'));
+                        assignedDate.textContent = "".concat(getTicket('date-assigned'));
+                        resolvedDate.textContent = "".concat(getTicket('date-resolved'));
+                        resolvedNote.textContent = "".concat(getTicket('note-resolved'));
+                        break;
                     case 'log-overlay':
                         $(departmentSelect)
                             .on('click', function () {

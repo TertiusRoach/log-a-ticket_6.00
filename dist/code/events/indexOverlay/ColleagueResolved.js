@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataRead"], function (require, exports, DataRead_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ColleagueResolved = void 0;
@@ -6,6 +6,7 @@ define(["require", "exports"], function (require, exports) {
     (function (ColleagueResolved) {
         var initiateEvents = (function () {
             function initiateEvents() {
+                new DataRead_1.DataRead.forOverlay('colleague-resolved');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var logButton = indexHeader.querySelector('#log-a-ticket button');

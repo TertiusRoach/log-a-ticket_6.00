@@ -105,7 +105,7 @@ export namespace ColleagueMain {
         let activeTicket: HTMLElement = document.querySelector('.active-ticket');
         let activeStatus: String = activeTicket.classList[0];
 
-        new GetEvent.forPage(`user-${activeStatus}`, GetPath.forHTML('overlay'));
+        new GetEvent.forPage(`colleague-${activeStatus}`, GetPath.forHTML('overlay'));
         indexOverlay.style.display = 'grid';
       });
       $(openEmployees).on('click', () => {

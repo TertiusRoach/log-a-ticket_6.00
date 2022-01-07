@@ -19,6 +19,7 @@ export namespace ColleagueResolved {
   export class initiateEvents {
     constructor() {
       /* First ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new DataRead.forOverlay('colleague-resolved');
 
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');

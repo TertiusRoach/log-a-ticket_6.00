@@ -79,7 +79,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 $(ticketMain).on('click', function () {
                     var activeTicket = document.querySelector('.active-ticket');
                     var activeStatus = activeTicket.classList[0];
-                    new GetEvent_1.GetEvent.forPage("user-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
+                    new GetEvent_1.GetEvent.forPage("colleague-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
                     indexOverlay.style.display = 'grid';
                 });
                 $(openEmployees).on('click', function () {
