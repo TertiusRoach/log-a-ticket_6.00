@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseCapify", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, UseCapify_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseDatefy"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1, GetEvent_1, GetPath_1, UseCapify_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.LoggedPending = void 0;
@@ -13,18 +13,23 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var indexMain = document.querySelector('#index-main');
                 var ticketsContainer = indexMain.querySelector('#tickets-container');
                 var activeTicket = ticketsContainer.querySelector('.active-ticket');
-                indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var assignButton = indexOverlay.querySelector('#assign-ticket button');
-                var deleteButton = indexOverlay.querySelector('#delete-ticket button');
-                var moveButton = indexOverlay.querySelector('#move-ticket button');
-                var saveButton = indexOverlay.querySelector('#save-ticket button');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
                 var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
                 var ticketSubject = indexOverlay.querySelector('#ticket-subject');
                 var ticketDescription = indexOverlay.querySelector('#ticket-description');
+                var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var claimButton = indexOverlay.querySelector('#claim-ticket button');
+                var deleteButton = indexOverlay.querySelector('#delete-ticket button');
+                var logButton = indexOverlay.querySelector('#log-ticket button');
+                var moveButton = indexOverlay.querySelector('#move-ticket button');
+                var recycleButton = indexOverlay.querySelector('#recycle-ticket button');
+                var restoreButton = indexOverlay.querySelector('#restore-ticket button');
+                var saveButton = indexOverlay.querySelector('#save-ticket button');
+                var takeButton = indexOverlay.querySelector('#take-ticket button');
+                var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
                 var pendingMark = indexOverlay.querySelector('.pending-mark');
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var deletedMark = indexOverlay.querySelector('.deleted-mark');
@@ -131,23 +136,12 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         saveButton.className = 'disabled-button';
                     }
                 }
-                $(ticketSubject)
-                    .on('keydown', function () { })
-                    .on('keyup', function () {
-                    toggleButton();
-                });
-                $(ticketDescription)
-                    .on('keydown', function () { })
-                    .on('keyup', function () {
-                    toggleButton();
-                });
-                $(departmentSelect).on('click', function () {
-                    toggleButton();
-                });
-                $(colleagueSelect).on('click', function () {
-                    toggleButton();
-                });
                 $(assignButton)
+                    .on('click', function () {
+                    if (assignButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('assign');
+                    }
+                })
                     .on('mouseenter', function () {
                     assignButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
                     assignedDate.style.display = 'grid';
@@ -157,6 +151,11 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     assignedDate.style.display = 'none';
                 });
                 $(deleteButton)
+                    .on('click', function () {
+                    if (deleteButton.className !== 'disabled-button') {
+                        new GetEvent_1.GetEvent.forPage('delete-overlay', GetPath_1.GetPath.forHTML('overlay'));
+                    }
+                })
                     .on('mouseenter', function () {
                     deletedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                     pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryMedium());
@@ -174,6 +173,46 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     deletedDate.style.display = 'none';
                     deletedDate.textContent = 'undefined';
                     deletedDate.className = 'disabled-text';
+                });
+                $(moveButton)
+                    .on('click', function () {
+                    if (moveButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('move');
+                    }
+                })
+                    .on('mouseenter', function () {
+                    moveButton.style.color = "".concat(GetColor_1.GetColor.pendingDefault());
+                })
+                    .on('mouseleave', function () {
+                    moveButton.style.color = '';
+                });
+                $(saveButton)
+                    .on('click', function () {
+                    if (saveButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('save');
+                    }
+                })
+                    .on('mouseenter', function () {
+                    saveButton.style.color = "".concat(GetColor_1.GetColor.secondaryDark());
+                })
+                    .on('mouseleave', function () {
+                    saveButton.style.color = '';
+                });
+                $(ticketSubject)
+                    .on('keydown', function () { })
+                    .on('keyup', function () {
+                    toggleButton();
+                });
+                $(ticketDescription)
+                    .on('keydown', function () { })
+                    .on('keyup', function () {
+                    toggleButton();
+                });
+                $(departmentSelect).on('click', function () {
+                    toggleButton();
+                });
+                $(colleagueSelect).on('click', function () {
+                    toggleButton();
                 });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');

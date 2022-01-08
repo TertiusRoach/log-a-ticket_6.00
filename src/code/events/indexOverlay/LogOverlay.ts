@@ -28,24 +28,31 @@ export namespace LogOverlay {
       let activeButton: HTMLButtonElement = indexHeader.querySelector('.active-page');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
-      indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
-      let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
-      let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
-      let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
+      let mainButtons: String = '[id*="-ticket"] button';
+      let ticketSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
+      let ticketDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
       let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
       let pendingDate: HTMLElement = indexOverlay.querySelector('#pending-date');
       let assignedDate: HTMLElement = indexOverlay.querySelector('#assigned-date');
-      let mainButton: String = '[id*="-ticket"] button';
-      pendingDate.innerText = UseDatefy.forToday('Weekday, 00 Month YYYY');
+
+      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
+      let claimButton: HTMLButtonElement = indexOverlay.querySelector('#claim-ticket button');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let logButton: HTMLButtonElement = indexOverlay.querySelector('#log-ticket button');
+      let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let recycleButton: HTMLButtonElement = indexOverlay.querySelector('#recycle-ticket button');
+      let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
+      let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+      let takeButton: HTMLButtonElement = indexOverlay.querySelector('#take-ticket button');
+      let unlockButton: HTMLButtonElement = indexOverlay.querySelector('#unlock-ticket button');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
@@ -92,7 +99,6 @@ export namespace LogOverlay {
             break;
         }
       }
-
       function toggleButton(colleague: String | 'select-colleague') {
         if (colleague !== 'select-colleague') {
           logButton.parentElement.style.display = 'none';
@@ -102,33 +108,32 @@ export namespace LogOverlay {
           assignedMark.style.background = `${GetColor.primaryDark()}`;
         }
       }
-
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(mainButton).on('click', () => {
-        if (logButton.className !== 'disabled-button') {
-          switch (assignButton.className) {
-            case 'disabled-button':
-              new DataUpdate.forTicket('pending');
-              break;
-            default:
-              new DataUpdate.forTicket('assigned');
+      $(logButton)
+        .on('click', () => {
+          if (logButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('log');
           }
-        }
-        if ($(ticketSubject).val() === '') {
-          ticketSubject.style.border = `2px solid ${GetColor.secondaryDark()}`;
-        } else {
-          ticketSubject.style.border = '';
-        }
-        if ($(ticketDescription).val() === '') {
-          ticketDescription.style.border = `2px solid ${GetColor.secondaryDark()}`;
-        } else {
-          ticketDescription.style.border = '';
-        }
-      });
+        })
+        .on('mouseenter', () => {
+          if (logButton.className !== 'disabled-button') {
+            logButton.style.color = `${GetColor.pendingDefault()}`;
+          } else {
+            logButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          logButton.style.color = '';
+        });
 
       $(assignButton)
+        .on('click', () => {
+          if (assignButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('assign');
+          }
+        })
         .on('mouseenter', () => {
           if (assignButton.className !== 'disabled-button') {
             assignButton.style.color = `${GetColor.primaryLight()}`;
@@ -271,11 +276,26 @@ export namespace LogOverlay {
         closeContainer('index-overlay');
         indexMain.style.display = 'grid';
       });
+      $(mainButtons).on('click', () => {
+        if ($(ticketSubject).val() === '') {
+          ticketSubject.style.border = `2px solid ${GetColor.secondaryDark()}`;
+        } else {
+          ticketSubject.style.border = '';
+        }
+        if ($(ticketDescription).val() === '') {
+          ticketDescription.style.border = `2px solid ${GetColor.secondaryDark()}`;
+        } else {
+          ticketDescription.style.border = '';
+        }
+      });
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       checkState('log-ticket');
       console.log('--LogOverlay.js Loaded');
     }
   }
+  /* ▼ A=-=-=A ▼ */
+  /* ▼ B=-=-=B ▼ */
+  /* ▼ C=-=-=C ▼ */
   function closeContainer(block: String | 'index-body' | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {
     const indexHeader: HTMLElement = document.querySelector('#index-header');
     var logAticket: HTMLElement = indexHeader.querySelector('#log-a-ticket button');
@@ -287,4 +307,27 @@ export namespace LogOverlay {
     container.innerHTML = '';
     container.className = `default-${page}`;
   }
+  /* ▼ D=-=-=D ▼ */
+  /* ▼ E=-=-=E ▼ */
+  /* ▼ F=-=-=F ▼ */
+  /* ▼ G=-=-=G ▼ */
+  /* ▼ H=-=-=H ▼ */
+  /* ▼ I=-=-=I ▼ */
+  /* ▼ J=-=-=J ▼ */
+  /* ▼ K=-=-=K ▼ */
+  /* ▼ L=-=-=L ▼ */
+  /* ▼ M=-=-=M ▼ */
+  /* ▼ N=-=-=N ▼ */
+  /* ▼ O=-=-=O ▼ */
+  /* ▼ P=-=-=P ▼ */
+  /* ▼ Q=-=-=Q ▼ */
+  /* ▼ R=-=-=R ▼ */
+  /* ▼ S=-=-=S ▼ */
+  /* ▼ T=-=-=T ▼ */
+  /* ▼ U=-=-=U ▼ */
+  /* ▼ V=-=-=V ▼ */
+  /* ▼ W=-=-=W ▼ */
+  /* ▼ X=-=-=X ▼ */
+  /* ▼ Y=-=-=Y ▼ */
+  /* ▼ Z=-=-=Z ▼ */
 }

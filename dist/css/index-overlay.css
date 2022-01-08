@@ -1442,7 +1442,7 @@
   grid-column: 5/9;
   grid-row: 5/20;
 }
-.resolve-overlay #ticket-container #ticket-description {
+.resolve-overlay #ticket-container #ticket-note {
   grid-column: 2/3;
   grid-row: 3/4;
   resize: none;
@@ -1458,7 +1458,7 @@
   border: 2px solid #909cc2;
   color: #084887;
 }
-.resolve-overlay #ticket-container #ticket-description:hover {
+.resolve-overlay #ticket-container #ticket-note:hover {
   border: 2px solid #08870c;
 }
 .resolve-overlay #ticket-container .resolve-ticket {
@@ -1514,7 +1514,7 @@
   grid-column: 5/9;
   grid-row: 5/20;
 }
-.delete-overlay #ticket-container #ticket-description {
+.delete-overlay #ticket-container #ticket-note {
   grid-column: 2/3;
   grid-row: 3/4;
   resize: none;
@@ -1530,21 +1530,46 @@
   border: 2px solid #909cc2;
   color: #084887;
 }
-.delete-overlay #ticket-container #ticket-description:hover {
+.delete-overlay #ticket-container #ticket-note:hover {
   border: 2px solid #f95555;
 }
-.delete-overlay #ticket-container .delete-ticket {
-  grid-column: 2/4;
+.delete-overlay #ticket-container #delete-ticket {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+.delete-overlay #ticket-container #delete-ticket button {
+  grid-column: 2/3;
   grid-row: 2/3;
   display: flex;
-  align-items: center;
+  overflow: visible;
+  width: 100%;
   justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: none;
+}
+.delete-overlay #ticket-container #delete-ticket button h1 {
+  white-space: nowrap;
+  line-height: 1rem;
+  padding-left: 1rem;
+}
+.delete-overlay #ticket-container #delete-ticket button:hover {
   color: #f95555;
 }
-.delete-overlay #ticket-container .delete-ticket div {
-  font-size: 2rem;
-  padding-left: 1rem;
-  font-weight: bolder;
+.delete-overlay #ticket-container #delete-ticket .disabled-button,
+.delete-overlay #ticket-container #delete-ticket .disabled-button:hover {
+  cursor: default;
+  color: #646e7e;
+  opacity: 0.5;
+}
+.delete-overlay #ticket-container #delete-ticket .disabled-button svg,
+.delete-overlay #ticket-container #delete-ticket .disabled-button:hover svg {
+  cursor: default;
 }
 .delete-overlay #overlay-canvas {
   grid-column: 5/9;

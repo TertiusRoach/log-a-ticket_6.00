@@ -11,12 +11,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 var indexHeader = document.querySelector('#index-header');
                 var activeButton = indexHeader.querySelector('.active-page');
                 var indexMain = document.querySelector('#index-main');
-                indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var logButton = indexOverlay.querySelector('#log-ticket button');
-                var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var mainButtons = '[id*="-ticket"] button';
                 var ticketSubject = indexOverlay.querySelector('#ticket-subject');
                 var ticketDescription = indexOverlay.querySelector('#ticket-description');
                 var departmentSelect = indexOverlay.querySelector('#department-form select');
@@ -25,8 +23,16 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 var assignedMark = indexOverlay.querySelector('.assigned-mark');
                 var pendingDate = indexOverlay.querySelector('#pending-date');
                 var assignedDate = indexOverlay.querySelector('#assigned-date');
-                var mainButton = '[id*="-ticket"] button';
-                pendingDate.innerText = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                var assignButton = indexOverlay.querySelector('#assign-ticket button');
+                var claimButton = indexOverlay.querySelector('#claim-ticket button');
+                var deleteButton = indexOverlay.querySelector('#delete-ticket button');
+                var logButton = indexOverlay.querySelector('#log-ticket button');
+                var moveButton = indexOverlay.querySelector('#move-ticket button');
+                var recycleButton = indexOverlay.querySelector('#recycle-ticket button');
+                var restoreButton = indexOverlay.querySelector('#restore-ticket button');
+                var saveButton = indexOverlay.querySelector('#save-ticket button');
+                var takeButton = indexOverlay.querySelector('#take-ticket button');
+                var unlockButton = indexOverlay.querySelector('#unlock-ticket button');
                 var indexData = document.querySelector('#index-data');
                 function checkState(button) {
                     var subjectJQ = "".concat($('#ticket-subject').val());
@@ -83,30 +89,29 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                         assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                     }
                 }
-                $(mainButton).on('click', function () {
+                $(logButton)
+                    .on('click', function () {
                     if (logButton.className !== 'disabled-button') {
-                        switch (assignButton.className) {
-                            case 'disabled-button':
-                                new DataUpdate_1.DataUpdate.forTicket('pending');
-                                break;
-                            default:
-                                new DataUpdate_1.DataUpdate.forTicket('assigned');
-                        }
+                        new DataUpdate_1.DataUpdate.forButton('log');
                     }
-                    if ($(ticketSubject).val() === '') {
-                        ticketSubject.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                })
+                    .on('mouseenter', function () {
+                    if (logButton.className !== 'disabled-button') {
+                        logButton.style.color = "".concat(GetColor_1.GetColor.pendingDefault());
                     }
                     else {
-                        ticketSubject.style.border = '';
+                        logButton.style.color = '';
                     }
-                    if ($(ticketDescription).val() === '') {
-                        ticketDescription.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
-                    }
-                    else {
-                        ticketDescription.style.border = '';
-                    }
+                })
+                    .on('mouseleave', function () {
+                    logButton.style.color = '';
                 });
                 $(assignButton)
+                    .on('click', function () {
+                    if (assignButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('assign');
+                    }
+                })
                     .on('mouseenter', function () {
                     if (assignButton.className !== 'disabled-button') {
                         assignButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
@@ -257,6 +262,20 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                     indexMain.style.display = 'grid';
+                });
+                $(mainButtons).on('click', function () {
+                    if ($(ticketSubject).val() === '') {
+                        ticketSubject.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketSubject.style.border = '';
+                    }
+                    if ($(ticketDescription).val() === '') {
+                        ticketDescription.style.border = "2px solid ".concat(GetColor_1.GetColor.secondaryDark());
+                    }
+                    else {
+                        ticketDescription.style.border = '';
+                    }
                 });
                 checkState('log-ticket');
                 console.log('--LogOverlay.js Loaded');

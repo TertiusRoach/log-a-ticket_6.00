@@ -131,7 +131,7 @@ export namespace DataCreate {
             };
 
             $('#tickets-data').append(
-              `<article class="ticket ${ticketStatus.toLowerCase()}">
+              `<article class="${ticketStatus.toLowerCase()}">
                 <header>
                   <p class="shortdate">${dateShort}</p>
                   <p class="subject">${subjectText}</p>
@@ -162,6 +162,7 @@ export namespace DataCreate {
       }
     }
   }
+
   function findDepartment(userName: String) {
     const employeesData: HTMLDivElement = document.querySelector('#employees-data');
     let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');

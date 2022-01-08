@@ -554,6 +554,7 @@ export namespace DataRead {
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
+      indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
@@ -572,10 +573,10 @@ export namespace DataRead {
       const deletedDate: HTMLElement = indexOverlay.querySelector('#deleted-date');
       const deletedNote: HTMLElement = indexOverlay.querySelector('#deleted-note');
 
-      let logButton: HTMLElement = indexOverlay.querySelector('#log-ticket button');
-      let assignButton: HTMLElement = indexOverlay.querySelector('#assign-ticket button');
-      let claimButton: HTMLElement = indexOverlay.querySelector('#claim-ticket button');
-      let deleteButton: HTMLElement = indexOverlay.querySelector('#delete-ticket button');
+      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
+      let claimButton: HTMLButtonElement = indexOverlay.querySelector('#claim-ticket button');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let logButton: HTMLButtonElement = indexOverlay.querySelector('#log-ticket button');
       let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
       let recycleButton: HTMLButtonElement = indexOverlay.querySelector('#recycle-ticket button');
       let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
@@ -647,6 +648,14 @@ export namespace DataRead {
           resolvedNote.textContent = `${getTicket('note-resolved')}`;
           break;
         case 'coworker-deleted':
+          if (`${getTicket('date-assigned')}` === `${undefined}`) {
+            colleagueName.style.display = 'none';
+            assignedDate.style.display = 'none';
+          } else {
+            colleagueName.style.display = 'flex';
+            assignedDate.style.display = 'flex';
+          }
+
           ticketSubject.value = `${getTicket('subject-text')}`;
           ticketDescription.textContent = `${getTicket('description-text')}`;
 
@@ -655,6 +664,7 @@ export namespace DataRead {
 
           pendingDate.textContent = `${getTicket('date-pending')}`;
           assignedDate.textContent = `${getTicket('date-assigned')}`;
+
           deletedDate.textContent = `${getTicket('date-deleted')}`;
           deletedNote.textContent = `${getTicket('note-deleted')}`;
           break;
@@ -671,6 +681,8 @@ export namespace DataRead {
           resolvedNote.textContent = `${getTicket('note-resolved')}`;
           break;
         case 'log-overlay':
+          pendingDate.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
+
           $(departmentSelect)
             .on('click', () => {
               if (colleagueSelect.length === 1) {
@@ -698,7 +710,6 @@ export namespace DataRead {
 
               buildColleagues(departmentSelect.selectedOptions[0].value, 'user');
             });
-
           buildDepartments(findDepartment(findUser()));
           break;
         case 'logged-deleted':
