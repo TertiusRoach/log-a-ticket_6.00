@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseValufy"], function (require, exports, GetColor_1, GetEvent_1, GetPath_1, UseCapify_1, UseValufy_1) {
+define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseCapify", "code/tools/UseDatefy", "code/tools/UseValufy"], function (require, exports, GetColor_1, GetEvent_1, GetPath_1, UseCapify_1, UseDatefy_1, UseValufy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DataRead = void 0;
@@ -329,6 +329,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
+                indexMain.style.display = 'none';
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
@@ -343,10 +344,10 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var resolvedNote = indexOverlay.querySelector('#resolved-note');
                 var deletedDate = indexOverlay.querySelector('#deleted-date');
                 var deletedNote = indexOverlay.querySelector('#deleted-note');
-                var logButton = indexOverlay.querySelector('#log-ticket button');
                 var assignButton = indexOverlay.querySelector('#assign-ticket button');
                 var claimButton = indexOverlay.querySelector('#claim-ticket button');
                 var deleteButton = indexOverlay.querySelector('#delete-ticket button');
+                var logButton = indexOverlay.querySelector('#log-ticket button');
                 var moveButton = indexOverlay.querySelector('#move-ticket button');
                 var recycleButton = indexOverlay.querySelector('#recycle-ticket button');
                 var restoreButton = indexOverlay.querySelector('#restore-ticket button');
@@ -403,6 +404,14 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         resolvedNote.textContent = "".concat(getTicket('note-resolved'));
                         break;
                     case 'coworker-deleted':
+                        if ("".concat(getTicket('date-assigned')) === "".concat(undefined)) {
+                            colleagueName.style.display = 'none';
+                            assignedDate.style.display = 'none';
+                        }
+                        else {
+                            colleagueName.style.display = 'flex';
+                            assignedDate.style.display = 'flex';
+                        }
                         ticketSubject.value = "".concat(getTicket('subject-text'));
                         ticketDescription.textContent = "".concat(getTicket('description-text'));
                         receiverDepartment.textContent = "".concat(getTicket('receiver-department'));
@@ -423,6 +432,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         resolvedNote.textContent = "".concat(getTicket('note-resolved'));
                         break;
                     case 'log-overlay':
+                        pendingDate.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                         $(departmentSelect)
                             .on('click', function () {
                             if (colleagueSelect.length === 1) {

@@ -30,20 +30,26 @@ export namespace LoggedPending {
       const indexMain: HTMLElement = document.querySelector('#index-main');
       let ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
       let activeTicket = ticketsContainer.querySelector('.active-ticket');
-      indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
-      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
-      let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
-      let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
       let departmentSelect: HTMLSelectElement = indexOverlay.querySelector('#department-form select');
       let colleagueSelect: HTMLSelectElement = indexOverlay.querySelector('#colleague-form select');
       let ticketSubject: HTMLElement = indexOverlay.querySelector('#ticket-subject');
       let ticketDescription: HTMLElement = indexOverlay.querySelector('#ticket-description');
+
+      let assignButton: HTMLButtonElement = indexOverlay.querySelector('#assign-ticket button');
+      let claimButton: HTMLButtonElement = indexOverlay.querySelector('#claim-ticket button');
+      let deleteButton: HTMLButtonElement = indexOverlay.querySelector('#delete-ticket button');
+      let logButton: HTMLButtonElement = indexOverlay.querySelector('#log-ticket button');
+      let moveButton: HTMLButtonElement = indexOverlay.querySelector('#move-ticket button');
+      let recycleButton: HTMLButtonElement = indexOverlay.querySelector('#recycle-ticket button');
+      let restoreButton: HTMLButtonElement = indexOverlay.querySelector('#restore-ticket button');
+      let saveButton: HTMLButtonElement = indexOverlay.querySelector('#save-ticket button');
+      let takeButton: HTMLButtonElement = indexOverlay.querySelector('#take-ticket button');
+      let unlockButton: HTMLButtonElement = indexOverlay.querySelector('#unlock-ticket button');
 
       let pendingMark: HTMLDivElement = indexOverlay.querySelector('.pending-mark');
       let assignedMark: HTMLDivElement = indexOverlay.querySelector('.assigned-mark');
@@ -167,26 +173,12 @@ export namespace LoggedPending {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(ticketSubject)
-        .on('keydown', () => {})
-        .on('keyup', () => {
-          toggleButton();
-        });
-      $(ticketDescription)
-        .on('keydown', () => {})
-        .on('keyup', () => {
-          toggleButton();
-        });
-
-      $(departmentSelect).on('click', () => {
-        toggleButton();
-      });
-
-      $(colleagueSelect).on('click', () => {
-        toggleButton();
-      });
-
       $(assignButton)
+        .on('click', () => {
+          if (assignButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('assign');
+          }
+        })
         .on('mouseenter', () => {
           assignButton.style.color = `${GetColor.primaryLight()}`;
           assignedDate.style.display = 'grid';
@@ -197,6 +189,11 @@ export namespace LoggedPending {
         });
 
       $(deleteButton)
+        .on('click', () => {
+          if (deleteButton.className !== 'disabled-button') {
+            new GetEvent.forPage('delete-overlay', GetPath.forHTML('overlay'));
+          }
+        })
         .on('mouseenter', () => {
           deletedMark.style.background = `${GetColor.primaryDark()}`;
 
@@ -219,6 +216,52 @@ export namespace LoggedPending {
           deletedDate.textContent = 'undefined';
           deletedDate.className = 'disabled-text';
         });
+
+      $(moveButton)
+        .on('click', () => {
+          if (moveButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('move');
+          }
+        })
+        .on('mouseenter', () => {
+          moveButton.style.color = `${GetColor.pendingDefault()}`;
+        })
+        .on('mouseleave', () => {
+          moveButton.style.color = '';
+        });
+
+      $(saveButton)
+        .on('click', () => {
+          if (saveButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('save');
+          }
+        })
+        .on('mouseenter', () => {
+          saveButton.style.color = `${GetColor.secondaryDark()}`;
+        })
+        .on('mouseleave', () => {
+          saveButton.style.color = '';
+        });
+
+      $(ticketSubject)
+        .on('keydown', () => {})
+        .on('keyup', () => {
+          toggleButton();
+        });
+      $(ticketDescription)
+        .on('keydown', () => {})
+        .on('keyup', () => {
+          toggleButton();
+        });
+
+      $(departmentSelect).on('click', () => {
+        toggleButton();
+      });
+
+      $(colleagueSelect).on('click', () => {
+        toggleButton();
+      });
+
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });

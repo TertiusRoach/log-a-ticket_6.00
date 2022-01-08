@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "code/tools/DataUpdate", "code/tools/GetColor"], function (require, exports, DataUpdate_1, GetColor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DeleteOverlay = void 0;
@@ -8,28 +8,47 @@ define(["require", "exports"], function (require, exports) {
             function initiateEvents() {
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
-                var logButton = indexHeader.querySelector('#log-a-ticket button');
                 var indexMain = document.querySelector('#index-main');
                 var ticketsContainer = indexMain.querySelector('#tickets-container');
-                indexMain.style.display = 'none';
+                var activeTicket = ticketsContainer.querySelector('.active-ticket');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var closeOverlay = indexOverlay.querySelector('#close-overlay');
-                var liveSubject = indexOverlay.querySelector('#ticket-subject');
-                var liveDescription = indexOverlay.querySelector('#ticket-description');
-                var liveDepartment = indexOverlay.querySelector('#department-name');
-                var liveColleague = indexOverlay.querySelector('#colleague-name');
-                var livePending = indexOverlay.querySelector('#pending-date');
-                var liveAssigned = indexOverlay.querySelector('#assigned-date');
-                var liveResolved = indexOverlay.querySelector('#resolved-date');
-                var liveNoteResolved = indexOverlay.querySelector('#resolved-note');
-                var liveDeleted = indexOverlay.querySelector('#deleted-date');
-                var liveNoteDeleted = indexOverlay.querySelector('#deleted-note');
+                var deleteButton = indexOverlay.querySelector('#delete-ticket button');
+                var ticketNote = indexOverlay.querySelector('section #ticket-note');
                 var indexData = document.querySelector('#index-data');
+                function highlightButton() {
+                    deleteButton.className = '';
+                    ticketNote.style.border = '';
+                }
+                $(deleteButton).on('click', function () {
+                    if ($(ticketNote).val() === '') {
+                        ticketNote.style.border = "2px solid ".concat(GetColor_1.GetColor.deletedDefault());
+                    }
+                    else if (deleteButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('delete');
+                    }
+                });
+                $(ticketNote)
+                    .on('keyup', function () {
+                    if ($(ticketNote).val() === '') {
+                        deleteButton.className = 'disabled-button';
+                    }
+                    else {
+                        highlightButton();
+                    }
+                })
+                    .on('keydown', function () {
+                    if ($(ticketNote).val() === '') {
+                        deleteButton.className = 'disabled-button';
+                    }
+                    else {
+                        highlightButton();
+                    }
+                });
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });
-                console.log('--DeleteOverlay.js Loaded');
             }
             return initiateEvents;
         }());
