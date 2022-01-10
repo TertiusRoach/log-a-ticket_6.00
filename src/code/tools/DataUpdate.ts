@@ -748,18 +748,27 @@ export namespace DataUpdate {
   }
   function refreshBlocks() {
     const indexMain: HTMLElement = document.querySelector('#index-main');
+    let mainClass: String = indexMain.className;
+
+    const indexData: HTMLElement = document.querySelector('#index-data');
+    let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
+    let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
+
     new GetEvent.forPage('default-header', GetPath.forHTML('header'));
-    new GetEvent.forPage(`${indexMain.className}`, GetPath.forHTML('main'));
-    switch (indexMain.className) {
+    switch (mainClass) {
       case 'logged-main':
+        new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
         new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
         break;
       case 'manage-main':
+        new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
+        new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
+        break;
+      case 'colleague-main':
+        new GetEvent.forPage('user-main', GetPath.forHTML('main'));
         new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
         break;
     }
-
-    console.log(indexMain.className);
   }
   /* ▼ S=-=-=S ▼ */
   /* ▼ T=-=-=T ▼ */
