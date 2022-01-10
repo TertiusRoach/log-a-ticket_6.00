@@ -12,7 +12,7 @@ import { UseValufy } from 'code/tools/UseValufy';
 //--|►| DataUpdate (Tool) |◄|--//
 export namespace DataUpdate {
   export class forButton {
-    constructor(type: 'assign' | 'claim' | 'delete' | 'log' | 'move' | 'recycle' | 'restore' | 'save' | 'take' | 'unlock') {
+    constructor(type: 'assign' | 'claim' | 'delete' | 'log' | 'move' | 'recycle' | 'resolve' | 'restore' | 'save' | 'take' | 'unlock') {
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
@@ -105,6 +105,9 @@ export namespace DataUpdate {
                 </footer>
               </article>`
             );
+
+            closeContainer();
+            refreshBlocks();
           } else {
             //--▼ Update ticket inside data container: Default response ▼--//
             markedTicket.className = 'assigned';
@@ -113,14 +116,23 @@ export namespace DataUpdate {
             receiverNameInfo.textContent = `${UseCapify.forString('-', liveReceiverName.value)}`;
             receiverDepartmentInfo.textContent = `${UseCapify.forString('-', liveReceiverDepartment.value)}`;
             dateAssignedInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
+
+            closeContainer();
+            refreshBlocks();
           }
-
-          closeContainer();
-          refreshBlocks();
-
           //--► console.log('Assign Ticket'); ◄--//
           break;
         case 'claim':
+          //--▼ Default response between Switch('assign' and 'claim') ▼--//
+          markedTicket.className = 'assigned';
+          statusInfo.textContent = 'Assigned';
+
+          receiverNameInfo.textContent = `${UseCapify.forString('-', liveReceiverName.value)}`;
+          receiverDepartmentInfo.textContent = `${UseCapify.forString('-', liveReceiverDepartment.value)}`;
+          dateAssignedInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
+
+          closeContainer();
+          refreshBlocks();
           //--► console.log('Claim Ticket'); ◄--//
           console.log('Claim Ticket');
           break;
@@ -174,9 +186,15 @@ export namespace DataUpdate {
           console.log('Log Ticket');
           break;
         case 'move':
+          /*
           markedTicket.className = 'pending';
           statusInfo.textContent = 'Pending';
+          */
+
           receiverDepartmentInfo.textContent = `${UseCapify.forString('-', liveReceiverDepartment.value)}`;
+          descriptionInfo.textContent = `${$(liveDescription).val()}
+          
+          Ticket moved to ${findDepartment(findUser())} on ${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
           datePendingInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
 
           closeContainer();
@@ -184,12 +202,36 @@ export namespace DataUpdate {
           //--► console.log('Move Ticket'); ◄--//
           break;
         case 'recycle':
+          markedTicket.className = 'assigned';
+          statusInfo.textContent = 'Assigned';
+
+          descriptionInfo.textContent = `${$(liveDescription).val()}
+          
+          Ticket resycled by ${findUser()} on ${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          dateAssignedInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
+
+          closeContainer();
+          refreshBlocks();
           //--► console.log('Recycle Ticket'); ◄--//
-          console.log('Recycle Ticket');
+          break;
+        case 'resolve':
+          //--▼ From Assigned to ▼--//
+          markedTicket.className = 'resolved';
+          statusInfo.textContent = 'Resolved';
+
+          dateResolvedInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
+
+          closeContainer();
+          refreshBlocks();
+          //--► console.log('Resolve Ticket'); ◄--//
           break;
         case 'restore':
+          markedTicket.className = 'pending';
+          statusInfo.textContent = 'Pending';
+
+          closeContainer();
+          refreshBlocks();
           //--► console.log('Restore Ticket'); ◄--//
-          console.log('Restore Ticket');
           break;
         case 'save':
           markedTicket.className = 'pending';
@@ -200,16 +242,28 @@ export namespace DataUpdate {
 
           closeContainer();
           refreshBlocks();
-
           //--► console.log('Save Ticket'); ◄--//
           break;
         case 'take':
+          markedTicket.className = 'assigned';
+          statusInfo.textContent = 'Assigned';
+          receiverNameInfo.textContent = `${findUser()}`;
+          receiverDepartmentInfo.textContent = `${findDepartment(findUser())}`;
+          descriptionInfo.textContent = `${$(liveDescription).val()}
+          
+          Taken over by ${findUser()} on ${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+
+          closeContainer();
+          refreshBlocks();
           //--► console.log('Take Ticket'); ◄--//
-          console.log('Take Ticket');
           break;
         case 'unlock':
+          markedTicket.className = 'assigned';
+          statusInfo.textContent = 'Assigned';
+
+          closeContainer();
+          refreshBlocks();
           //--► console.log('Unlock Ticket'); ◄--//
-          console.log('Unlock Ticket');
           break;
       }
     }
@@ -695,8 +749,17 @@ export namespace DataUpdate {
   function refreshBlocks() {
     const indexMain: HTMLElement = document.querySelector('#index-main');
     new GetEvent.forPage('default-header', GetPath.forHTML('header'));
-    new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
     new GetEvent.forPage(`${indexMain.className}`, GetPath.forHTML('main'));
+    switch (indexMain.className) {
+      case 'logged-main':
+        new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
+        break;
+      case 'manage-main':
+        new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
+        break;
+    }
+
+    console.log(indexMain.className);
   }
   /* ▼ S=-=-=S ▼ */
   /* ▼ T=-=-=T ▼ */

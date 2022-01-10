@@ -52,6 +52,9 @@ export namespace UserResolved {
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(unlockButton)
+        .on('click', () => {
+          new DataUpdate.forButton('unlock');
+        })
         .on('mouseenter', () => {
           unlockButton.style.color = `${GetColor.assignedDefault()}`;
 

@@ -266,7 +266,7 @@ export namespace LoggedPending {
         closeContainer('index-overlay');
       });
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      console.log('--LoggedPending.js Loaded');
+      /*--► console.log('--LoggedPending.js Loaded'); ◄--*/
     }
   }
   function getTicket(

@@ -49,6 +49,9 @@ export namespace UserDeleted {
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(recycleButton)
+        .on('click', () => {
+          new DataUpdate.forButton('recycle');
+        })
         .on('mouseenter', () => {
           recycleButton.style.color = `${GetColor.assignedDefault()}`;
           assignedMark.style.background = `${GetColor.primaryDark()}`;

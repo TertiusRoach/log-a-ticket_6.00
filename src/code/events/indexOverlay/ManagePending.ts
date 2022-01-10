@@ -120,21 +120,10 @@ export namespace ManagePending {
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(claimButton)
-        .on('mouseenter', () => {
-          if (claimButton.className !== 'disabled-button') {
-            dateAssigned.style.display = 'flex';
-            claimButton.style.color = `${GetColor.primaryLight()}`;
-          } else {
-            dateAssigned.style.display = 'none';
-            claimButton.style.color = '';
-          }
-        })
-        .on('mouseleave', () => {
-          dateAssigned.style.display = 'none';
-          claimButton.style.color = '';
-        });
       $(assignButton)
+        .on('click', () => {
+          new DataUpdate.forButton('assign');
+        })
         .on('mouseenter', () => {
           if (assignButton.className !== 'disabled-button') {
             dateAssigned.style.display = 'flex';
@@ -148,7 +137,30 @@ export namespace ManagePending {
           dateAssigned.style.display = 'none';
           assignButton.style.color = '';
         });
+      $(claimButton)
+        .on('click', () => {
+          if (claimButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('claim');
+          }
+        })
+        .on('mouseenter', () => {
+          if (claimButton.className !== 'disabled-button') {
+            dateAssigned.style.display = 'flex';
+            claimButton.style.color = `${GetColor.primaryLight()}`;
+          } else {
+            dateAssigned.style.display = 'none';
+            claimButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          dateAssigned.style.display = 'none';
+          claimButton.style.color = '';
+        });
+
       $(deleteButton)
+        .on('click', () => {
+          new DataUpdate.forButton('assign');
+        })
         .on('mouseenter', () => {
           if (deleteButton.className !== 'disabled-button') {
             dateAssigned.style.display = 'none';
@@ -192,7 +204,23 @@ export namespace ManagePending {
             deleteButton.parentElement.style.background = '';
           }
         });
-
+      $(moveButton)
+        .on('click', () => {
+          new DataUpdate.forButton('move');
+        })
+        .on('mouseenter', () => {
+          if (assignButton.className !== 'disabled-button') {
+            dateAssigned.style.display = 'flex';
+            assignButton.style.color = `${GetColor.primaryLight()}`;
+          } else {
+            dateAssigned.style.display = 'none';
+            assignButton.style.color = '';
+          }
+        })
+        .on('mouseleave', () => {
+          dateAssigned.style.display = 'none';
+          assignButton.style.color = '';
+        });
       $(departmentSelect)
         .on('click', () => {
           if (colleagueSelect.value !== UseValufy.forString(findUser())) {
@@ -207,6 +235,7 @@ export namespace ManagePending {
         .on('change', () => {
           toggleButton();
         });
+
       $(colleagueSelect)
         .on('click', () => {
           if (colleagueSelect.value === 'select-colleague') {
@@ -224,20 +253,20 @@ export namespace ManagePending {
           toggleButton();
         });
 
+      /* Done ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(dateAssigned).on('change', () => {
         toggleDates();
       });
-
       $(dateDeleted).on('change', () => {
         toggleDates();
       });
-
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       toggleDates();
+
       console.log('--ManagePending.js Loaded');
     }
   }

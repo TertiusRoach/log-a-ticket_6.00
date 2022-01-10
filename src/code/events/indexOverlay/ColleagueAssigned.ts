@@ -45,6 +45,11 @@ export namespace ColleagueAssigned {
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(takeButton)
+        .on('click', () => {
+          if (takeButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('take');
+          }
+        })
         .on('mouseenter', () => {
           if (takeButton.className !== 'disabled-button') {
             takeButton.style.color = `${GetColor.assignedDefault()}`;
@@ -55,6 +60,7 @@ export namespace ColleagueAssigned {
           takeButton.style.color = '';
           assignedDate.textContent = `${getTicket('date-assigned')}`;
         });
+
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });

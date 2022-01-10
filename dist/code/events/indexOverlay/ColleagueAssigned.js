@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor", "code/tools/UseDatefy"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ColleagueAssigned = void 0;
@@ -19,6 +19,11 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 var assignedDate = indexOverlay.querySelector('#assigned-date');
                 var indexData = document.querySelector('#index-data');
                 $(takeButton)
+                    .on('click', function () {
+                    if (takeButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('take');
+                    }
+                })
                     .on('mouseenter', function () {
                     if (takeButton.className !== 'disabled-button') {
                         takeButton.style.color = "".concat(GetColor_1.GetColor.assignedDefault());
