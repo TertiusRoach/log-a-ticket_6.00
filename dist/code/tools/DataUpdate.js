@@ -556,13 +556,22 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
         }
         function refreshBlocks() {
             var indexMain = document.querySelector('#index-main');
+            var mainClass = indexMain.className;
+            var indexData = document.querySelector('#index-data');
+            var ticketsData = indexData.querySelector('#tickets-data');
+            var ticketsCollection = ticketsData.getElementsByTagName('article');
             new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
-            new GetEvent_1.GetEvent.forPage("".concat(indexMain.className), GetPath_1.GetPath.forHTML('main'));
-            switch (indexMain.className) {
+            switch (mainClass) {
                 case 'logged-main':
+                    new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     break;
                 case 'manage-main':
+                    new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
+                    new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    break;
+                case 'colleague-main':
+                    new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     break;
             }
