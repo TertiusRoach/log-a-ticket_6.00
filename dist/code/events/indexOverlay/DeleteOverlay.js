@@ -49,6 +49,7 @@ define(["require", "exports", "code/tools/DataUpdate", "code/tools/GetColor"], f
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });
+                console.log('--DeleteOverlay.js Loaded');
             }
             return initiateEvents;
         }());

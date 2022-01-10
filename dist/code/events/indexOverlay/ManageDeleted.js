@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], function (require, exports, DataRead_1, GetColor_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ManageDeleted = void 0;
@@ -22,6 +22,11 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], fun
                 var deletedNote = indexOverlay.querySelector('#deleted-note');
                 var indexData = document.querySelector('#index-data');
                 $(restoreButton)
+                    .on('click', function () {
+                    if (restoreButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('restore');
+                    }
+                })
                     .on('mouseenter', function () {
                     pendingMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());
                     deletedMark.style.background = '';

@@ -54,6 +54,9 @@ export namespace UserAssigned {
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(resolveButton)
+        .on('click', () => {
+          new DataUpdate.forButton('resolve');
+        })
         .on('mouseenter', () => {
           resolveButton.style.color = `${GetColor.resolvedDefault()}`;
           assignedMark.style.background = `${GetColor.primaryMedium()}`;
@@ -74,6 +77,9 @@ export namespace UserAssigned {
         });
 
       $(deleteButton)
+        .on('click', () => {
+          new GetEvent.forPage('delete-overlay', GetPath.forHTML('overlay'));
+        })
         .on('mouseenter', () => {
           assignedMark.style.background = `${GetColor.primaryMedium()}`;
           deleteButton.parentElement.style.background = `${GetColor.primaryDark()}`;
@@ -90,6 +96,7 @@ export namespace UserAssigned {
           dateDeleted.className = 'disabled-text';
           dateDeleted.textContent = `${undefined}`;
         });
+
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });

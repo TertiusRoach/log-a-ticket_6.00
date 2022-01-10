@@ -60,6 +60,8 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                             var receiverName = "".concat(updateData('receiver', 'Assigned'));
                             var dateShort = "".concat(updateData('date-short', 'Assigned'));
                             $(ticketsData).append("<article class=\"ticket ".concat(status.toLowerCase(), "\">\n                <header>\n                  <p class=\"shortdate\">").concat(dateShort, "</p>\n                  <p class=\"subject\">").concat(subject, "</p>\n                  <p class=\"receiver\">").concat(receiverName, "</p>\n                </header>                  \n                <footer>\n                  <p class=\"ticket-status\">").concat(updateData('status', 'Assigned'), "</p>\n                  <p class=\"ticket-rating\">").concat(updateData('rating', 'Assigned'), "</p>\n                  <p class=\"subject-text\">").concat(updateData('subject', 'Assigned'), "</p>\n                  <p class=\"description-text\">").concat(updateData('description', 'Assigned'), "</p>\n                  <p class=\"sender-name\">").concat(updateData('sender', 'Assigned'), "</p>\n                  <p class=\"sender-department\">").concat(updateData('sender-department', 'Assigned'), "</p>\n                  <p class=\"receiver-name\">").concat(updateData('receiver', 'Assigned'), "</p>\n                  <p class=\"receiver-department\">").concat(updateData('receiver-department', 'Assigned'), "</p>\n                  <p class=\"date-short\">").concat(updateData('date-short', 'Assigned'), "</p>\n                  <p class=\"date-pending\">").concat(updateData('date-pending', 'Assigned'), "</p>\n                  <p class=\"date-assigned\">").concat(updateData('date-assigned', 'Assigned'), "</p>\n                  <p class=\"date-resolved\">").concat(updateData('date-resolved', 'Assigned'), "</p>\n                  <p class=\"note-resolved\">").concat(updateData('resolved-note', 'Assigned'), "</p>\n                  <p class=\"date-deleted\">").concat(updateData('date-deleted', 'Assigned'), "</p>\n                  <p class=\"note-deleted\">").concat(updateData('deleted-note', 'Assigned'), "</p>\n                </footer>\n              </article>"));
+                            closeContainer();
+                            refreshBlocks();
                         }
                         else {
                             markedTicket.className = 'assigned';
@@ -67,11 +69,18 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                             receiverNameInfo.textContent = "".concat(UseCapify_1.UseCapify.forString('-', liveReceiverName.value));
                             receiverDepartmentInfo.textContent = "".concat(UseCapify_1.UseCapify.forString('-', liveReceiverDepartment.value));
                             dateAssignedInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                            closeContainer();
+                            refreshBlocks();
                         }
-                        closeContainer();
-                        refreshBlocks();
                         break;
                     case 'claim':
+                        markedTicket.className = 'assigned';
+                        statusInfo.textContent = 'Assigned';
+                        receiverNameInfo.textContent = "".concat(UseCapify_1.UseCapify.forString('-', liveReceiverName.value));
+                        receiverDepartmentInfo.textContent = "".concat(UseCapify_1.UseCapify.forString('-', liveReceiverDepartment.value));
+                        dateAssignedInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                        closeContainer();
+                        refreshBlocks();
                         console.log('Claim Ticket');
                         break;
                     case 'delete':
@@ -94,18 +103,32 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         console.log('Log Ticket');
                         break;
                     case 'move':
-                        markedTicket.className = 'pending';
-                        statusInfo.textContent = 'Pending';
                         receiverDepartmentInfo.textContent = "".concat(UseCapify_1.UseCapify.forString('-', liveReceiverDepartment.value));
+                        descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Ticket moved to ").concat(findDepartment(findUser()), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
                         datePendingInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                         closeContainer();
                         refreshBlocks();
                         break;
                     case 'recycle':
-                        console.log('Recycle Ticket');
+                        markedTicket.className = 'assigned';
+                        statusInfo.textContent = 'Assigned';
+                        descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Ticket resycled by ").concat(findUser(), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                        dateAssignedInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                        closeContainer();
+                        refreshBlocks();
+                        break;
+                    case 'resolve':
+                        markedTicket.className = 'resolved';
+                        statusInfo.textContent = 'Resolved';
+                        dateResolvedInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                        closeContainer();
+                        refreshBlocks();
                         break;
                     case 'restore':
-                        console.log('Restore Ticket');
+                        markedTicket.className = 'pending';
+                        statusInfo.textContent = 'Pending';
+                        closeContainer();
+                        refreshBlocks();
                         break;
                     case 'save':
                         markedTicket.className = 'pending';
@@ -117,10 +140,19 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         refreshBlocks();
                         break;
                     case 'take':
-                        console.log('Take Ticket');
+                        markedTicket.className = 'assigned';
+                        statusInfo.textContent = 'Assigned';
+                        receiverNameInfo.textContent = "".concat(findUser());
+                        receiverDepartmentInfo.textContent = "".concat(findDepartment(findUser()));
+                        descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Taken over by ").concat(findUser(), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                        closeContainer();
+                        refreshBlocks();
                         break;
                     case 'unlock':
-                        console.log('Unlock Ticket');
+                        markedTicket.className = 'assigned';
+                        statusInfo.textContent = 'Assigned';
+                        closeContainer();
+                        refreshBlocks();
                         break;
                 }
             }
@@ -525,8 +557,16 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
         function refreshBlocks() {
             var indexMain = document.querySelector('#index-main');
             new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
-            new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
             new GetEvent_1.GetEvent.forPage("".concat(indexMain.className), GetPath_1.GetPath.forHTML('main'));
+            switch (indexMain.className) {
+                case 'logged-main':
+                    new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    break;
+                case 'manage-main':
+                    new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    break;
+            }
+            console.log(indexMain.className);
         }
     })(DataUpdate = exports.DataUpdate || (exports.DataUpdate = {}));
 });

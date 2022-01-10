@@ -50,6 +50,11 @@ export namespace ManageDeleted {
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       $(restoreButton)
+        .on('click', () => {
+          if (restoreButton.className !== 'disabled-button') {
+            new DataUpdate.forButton('restore');
+          }
+        })
         .on('mouseenter', () => {
           pendingMark.style.background = `${GetColor.primaryDark()}`;
           deletedMark.style.background = '';

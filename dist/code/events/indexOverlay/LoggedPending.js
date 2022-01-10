@@ -217,7 +217,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 $(closeOverlay).on('click', function () {
                     closeContainer('index-overlay');
                 });
-                console.log('--LoggedPending.js Loaded');
             }
             return initiateEvents;
         }());

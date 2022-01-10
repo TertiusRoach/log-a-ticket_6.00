@@ -75,6 +75,7 @@ export namespace DeleteOverlay {
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       /*--► console.log('--DeleteOverlay.js Loaded'); ◄--*/
+      console.log('--DeleteOverlay.js Loaded');
     }
   }
   function closeContainer(block: String | 'index-header' | 'index-main' | 'index-sidebar' | 'index-overlay') {

@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], function (require, exports, DataRead_1, GetColor_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserResolved = void 0;
@@ -24,6 +24,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor"], fun
                 var resolvedMark = indexOverlay.querySelector('.resolved-mark');
                 var indexData = document.querySelector('#index-data');
                 $(unlockButton)
+                    .on('click', function () {
+                    new DataUpdate_1.DataUpdate.forButton('unlock');
+                })
                     .on('mouseenter', function () {
                     unlockButton.style.color = "".concat(GetColor_1.GetColor.assignedDefault());
                     assignedMark.style.background = "".concat(GetColor_1.GetColor.primaryDark());

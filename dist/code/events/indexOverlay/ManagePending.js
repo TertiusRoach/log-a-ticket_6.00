@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/UseDatefy", "code/tools/UseValufy"], function (require, exports, DataRead_1, GetColor_1, UseDatefy_1, UseValufy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor", "code/tools/UseDatefy", "code/tools/UseValufy"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1, UseDatefy_1, UseValufy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ManagePending = void 0;
@@ -87,22 +87,10 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         moveButton.className = 'disabled-button';
                     }
                 }
-                $(claimButton)
-                    .on('mouseenter', function () {
-                    if (claimButton.className !== 'disabled-button') {
-                        dateAssigned.style.display = 'flex';
-                        claimButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
-                    }
-                    else {
-                        dateAssigned.style.display = 'none';
-                        claimButton.style.color = '';
-                    }
-                })
-                    .on('mouseleave', function () {
-                    dateAssigned.style.display = 'none';
-                    claimButton.style.color = '';
-                });
                 $(assignButton)
+                    .on('click', function () {
+                    new DataUpdate_1.DataUpdate.forButton('assign');
+                })
                     .on('mouseenter', function () {
                     if (assignButton.className !== 'disabled-button') {
                         dateAssigned.style.display = 'flex';
@@ -117,7 +105,30 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     dateAssigned.style.display = 'none';
                     assignButton.style.color = '';
                 });
+                $(claimButton)
+                    .on('click', function () {
+                    if (claimButton.className !== 'disabled-button') {
+                        new DataUpdate_1.DataUpdate.forButton('claim');
+                    }
+                })
+                    .on('mouseenter', function () {
+                    if (claimButton.className !== 'disabled-button') {
+                        dateAssigned.style.display = 'flex';
+                        claimButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
+                    }
+                    else {
+                        dateAssigned.style.display = 'none';
+                        claimButton.style.color = '';
+                    }
+                })
+                    .on('mouseleave', function () {
+                    dateAssigned.style.display = 'none';
+                    claimButton.style.color = '';
+                });
                 $(deleteButton)
+                    .on('click', function () {
+                    new DataUpdate_1.DataUpdate.forButton('assign');
+                })
                     .on('mouseenter', function () {
                     if (deleteButton.className !== 'disabled-button') {
                         dateAssigned.style.display = 'none';
@@ -155,6 +166,24 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                         }
                         deleteButton.parentElement.style.background = '';
                     }
+                });
+                $(moveButton)
+                    .on('click', function () {
+                    new DataUpdate_1.DataUpdate.forButton('move');
+                })
+                    .on('mouseenter', function () {
+                    if (assignButton.className !== 'disabled-button') {
+                        dateAssigned.style.display = 'flex';
+                        assignButton.style.color = "".concat(GetColor_1.GetColor.primaryLight());
+                    }
+                    else {
+                        dateAssigned.style.display = 'none';
+                        assignButton.style.color = '';
+                    }
+                })
+                    .on('mouseleave', function () {
+                    dateAssigned.style.display = 'none';
+                    assignButton.style.color = '';
                 });
                 $(departmentSelect)
                     .on('click', function () {
