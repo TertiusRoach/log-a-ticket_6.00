@@ -194,6 +194,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var userSelect = indexBody.querySelector('#user-form select');
                 var userTotal = userSelect.getElementsByTagName('option').length;
                 var indexHeader = document.querySelector('#index-header');
+                var loggedButton = indexHeader.querySelector('#logged-tickets button');
+                var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var indexOverlay = document.querySelector('#index-overlay');
@@ -279,6 +281,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         coworkerButtons = coworkerFooter_1.getElementsByTagName('span');
                         var recall_1 = function (coworkerButtons) {
                             $(coworkerButtons).on('click', function () {
+                                manageButton.className = '';
+                                loggedButton.className = '';
                                 indexSidebar.style.display = 'none';
                                 new GetEvent_1.GetEvent.forPage('coworker-main', GetPath_1.GetPath.forHTML('main'));
                             });
@@ -379,7 +383,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         ticketSubject.value = "".concat(getTicket('subject-text'));
                         ticketDescription.textContent = "".concat(getTicket('description-text'));
                         senderDepartment.textContent = "".concat(getTicket('sender-department'));
-                        colleagueName.textContent = "".concat(getTicket('receiver-name'));
+                        colleagueName.textContent = "".concat(getTicket('sender-name'));
                         pendingDate.textContent = "".concat(getTicket('date-pending'));
                         assignedDate.textContent = "".concat(getTicket('date-assigned'));
                         break;

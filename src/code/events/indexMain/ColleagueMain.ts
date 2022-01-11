@@ -148,6 +148,7 @@ export namespace ColleagueMain {
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ◄ */
       countTickets('active');
       /*--► console.log('--ColleagueMain.js Loaded'); ◄--*/
+      console.log('--ColleagueMain.js Loaded');
     }
   }
 }

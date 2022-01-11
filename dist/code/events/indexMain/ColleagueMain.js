@@ -116,6 +116,7 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                     countTickets('active');
                 });
                 countTickets('active');
+                console.log('--ColleagueMain.js Loaded');
             }
             return initiateEvents;
         }());

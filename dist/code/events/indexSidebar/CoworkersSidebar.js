@@ -9,6 +9,8 @@ define(["require", "exports", "code/tools/DataRead"], function (require, exports
                 new DataRead_1.DataRead.forSidebar('coworkers-sidebar');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
+                var loggedButton = indexHeader.querySelector('#logged-tickets button');
+                var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var closeCoworkers = document.querySelector('#close-coworkers');

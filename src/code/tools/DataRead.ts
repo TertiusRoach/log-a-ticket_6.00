@@ -349,6 +349,8 @@ export namespace DataRead {
       let userTotal: Number = userSelect.getElementsByTagName('option').length;
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
+      let loggedButton: HTMLElement = indexHeader.querySelector('#logged-tickets button');
+      let manageButton: HTMLElement = indexHeader.querySelector('#manage-tickets button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
 
@@ -472,6 +474,8 @@ export namespace DataRead {
           coworkerButtons = coworkerFooter.getElementsByTagName('span');
           let recall = (coworkerButtons: HTMLCollection) => {
             $(coworkerButtons).on('click', () => {
+              manageButton.className = '';
+              loggedButton.className = '';
               indexSidebar.style.display = 'none';
               new GetEvent.forPage('coworker-main', GetPath.forHTML('main'));
             });
@@ -618,7 +622,7 @@ export namespace DataRead {
           ticketDescription.textContent = `${getTicket('description-text')}`;
 
           senderDepartment.textContent = `${getTicket('sender-department')}`;
-          colleagueName.textContent = `${getTicket('receiver-name')}`;
+          colleagueName.textContent = `${getTicket('sender-name')}`;
 
           pendingDate.textContent = `${getTicket('date-pending')}`;
           assignedDate.textContent = `${getTicket('date-assigned')}`;
