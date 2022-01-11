@@ -103,6 +103,8 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         console.log('Log Ticket');
                         break;
                     case 'move':
+                        markedTicket.className = 'pending';
+                        statusInfo.textContent = 'Pending';
                         receiverDepartmentInfo.textContent = "".concat(UseCapify_1.UseCapify.forString('-', liveReceiverDepartment.value));
                         descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Ticket moved to ").concat(findDepartment(findUser()), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
                         datePendingInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');

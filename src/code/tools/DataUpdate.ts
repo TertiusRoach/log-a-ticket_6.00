@@ -186,10 +186,9 @@ export namespace DataUpdate {
           console.log('Log Ticket');
           break;
         case 'move':
-          /*
+          //--▼ This resets the 'active-data' article to none ▼--//
           markedTicket.className = 'pending';
           statusInfo.textContent = 'Pending';
-          */
 
           receiverDepartmentInfo.textContent = `${UseCapify.forString('-', liveReceiverDepartment.value)}`;
           descriptionInfo.textContent = `${$(liveDescription).val()}
