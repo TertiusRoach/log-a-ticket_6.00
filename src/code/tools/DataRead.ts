@@ -355,6 +355,10 @@ export namespace DataRead {
       const indexMain: HTMLElement = document.querySelector('#index-main');
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
+      let activeEmployee: HTMLSpanElement = indexSidebar.querySelector('#view-employees header .active-colleague');
+      let employeesFooter: HTMLSelectElement = indexSidebar.querySelector('#view-employees footer');
+      let userHeader: HTMLHeadingElement = indexSidebar.querySelector('#view-employees header span .text');
+      let userNotification: HTMLHeadingElement = indexSidebar.querySelector('#view-employees header span .notification');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
 
@@ -495,12 +499,12 @@ export namespace DataRead {
           break;
         case 'employees-sidebar':
           /* First ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
-          indexSidebar.querySelector('#view-employees header span .text').textContent = `${findUser()}`;
-          indexSidebar.querySelector('#view-employees header span .notification').textContent = `${countTickets('assigned', findUser())}`;
-          indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
+
           /* Function ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           let buildEmployees = () => {
-            let employeesFooter: HTMLSelectElement = indexSidebar.querySelector('#view-employees footer');
+            userHeader.textContent = `${findUser()}`;
+            userNotification.textContent = `${countTickets('assigned', findUser())}`;
+
             userDepartment = findDepartment(findUser());
             employeesFooter.innerHTML = '';
 
@@ -524,12 +528,28 @@ export namespace DataRead {
                                             </span>`);
                 }
               }
-
-              // var employeesButton: HTMLSpanElement = employeesFooter.querySelector('span');
+            }
+          };
+          let highlightEmployee = () => {
+            if (indexMain.querySelector('#index-main #user-name') !== null) {
+              indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
+            } else if (indexMain.querySelector('#index-main #colleague-name') !== null) {
+              activeEmployee.className = '';
+              let colleaguesTotal: Number = employeesFooter.getElementsByTagName('span').length;
+              for (let i = 0; i < colleaguesTotal; i++) {
+                let colleagueName: String = indexMain.querySelector('#index-main #colleague-name').textContent;
+                let colleaguesContainer: HTMLElement = indexSidebar.querySelector('#view-employees footer');
+                let colleagues: HTMLCollection = colleaguesContainer.getElementsByTagName('span');
+                let liveColleague: String = colleagues[i].querySelector('.text').textContent;
+                if (colleagueName === liveColleague) {
+                  colleagues[i].querySelector('h1').parentElement.className = 'active-colleague';
+                }
+              }
             }
           };
           /* Last ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           buildEmployees();
+          highlightEmployee();
           break;
       }
     }
@@ -1058,6 +1078,32 @@ export namespace DataRead {
       if (employeeName === userName) {
         return department;
       }
+    }
+  }
+  function findEmployee(index: number, data: String | 'first-name' | 'middle-name' | 'last-name' | 'department' | 'occupation' | 'role') {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+
+    let firstName: String = employeesCollection[index].children[0].textContent;
+    let middleName: String = employeesCollection[index].children[1].textContent;
+    let lastName: String = employeesCollection[index].children[2].textContent;
+    let department: String = employeesCollection[index].children[3].textContent;
+    let occupation: String = employeesCollection[index].children[4].textContent;
+    let role: String = employeesCollection[index].children[5].textContent;
+    switch (data) {
+      case 'first-name':
+        return firstName;
+      case 'middle-name':
+        return middleName;
+      case 'last-name':
+        return lastName;
+      case 'department':
+        return department;
+      case 'occupation':
+        return occupation;
+      case 'role':
+        return role;
     }
   }
   function findUser() {

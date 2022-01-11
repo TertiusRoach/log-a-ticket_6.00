@@ -198,6 +198,10 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
+                var activeEmployee = indexSidebar.querySelector('#view-employees header .active-colleague');
+                var employeesFooter = indexSidebar.querySelector('#view-employees footer');
+                var userHeader = indexSidebar.querySelector('#view-employees header span .text');
+                var userNotification = indexSidebar.querySelector('#view-employees header span .notification');
                 var indexOverlay = document.querySelector('#index-overlay');
                 var indexData = document.querySelector('#index-data');
                 var departmentsData;
@@ -297,11 +301,9 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     case 'default-sidebar':
                         break;
                     case 'employees-sidebar':
-                        indexSidebar.querySelector('#view-employees header span .text').textContent = "".concat(findUser());
-                        indexSidebar.querySelector('#view-employees header span .notification').textContent = "".concat(countTickets('assigned', findUser()));
-                        indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
                         var buildEmployees = function () {
-                            var employeesFooter = indexSidebar.querySelector('#view-employees footer');
+                            userHeader.textContent = "".concat(findUser());
+                            userNotification.textContent = "".concat(countTickets('assigned', findUser()));
                             userDepartment = findDepartment(findUser());
                             employeesFooter.innerHTML = '';
                             employeesData = indexData.querySelector('#employees-data');
@@ -321,7 +323,26 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                 }
                             }
                         };
+                        var highlightEmployee = function () {
+                            if (indexMain.querySelector('#index-main #user-name') !== null) {
+                                indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
+                            }
+                            else if (indexMain.querySelector('#index-main #colleague-name') !== null) {
+                                activeEmployee.className = '';
+                                var colleaguesTotal = employeesFooter.getElementsByTagName('span').length;
+                                for (var i = 0; i < colleaguesTotal; i++) {
+                                    var colleagueName = indexMain.querySelector('#index-main #colleague-name').textContent;
+                                    var colleaguesContainer = indexSidebar.querySelector('#view-employees footer');
+                                    var colleagues = colleaguesContainer.getElementsByTagName('span');
+                                    var liveColleague = colleagues[i].querySelector('.text').textContent;
+                                    if (colleagueName === liveColleague) {
+                                        colleagues[i].querySelector('h1').parentElement.className = 'active-colleague';
+                                    }
+                                }
+                            }
+                        };
                         buildEmployees();
+                        highlightEmployee();
                         break;
                 }
             }
@@ -775,6 +796,31 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 if (employeeName === userName) {
                     return department;
                 }
+            }
+        }
+        function findEmployee(index, data) {
+            var employeesData = document.querySelector('#employees-data');
+            var employeesCollection = employeesData.getElementsByTagName('article');
+            var employeesTotal = employeesData.getElementsByTagName('article').length;
+            var firstName = employeesCollection[index].children[0].textContent;
+            var middleName = employeesCollection[index].children[1].textContent;
+            var lastName = employeesCollection[index].children[2].textContent;
+            var department = employeesCollection[index].children[3].textContent;
+            var occupation = employeesCollection[index].children[4].textContent;
+            var role = employeesCollection[index].children[5].textContent;
+            switch (data) {
+                case 'first-name':
+                    return firstName;
+                case 'middle-name':
+                    return middleName;
+                case 'last-name':
+                    return lastName;
+                case 'department':
+                    return department;
+                case 'occupation':
+                    return occupation;
+                case 'role':
+                    return role;
             }
         }
         function findUser() {
