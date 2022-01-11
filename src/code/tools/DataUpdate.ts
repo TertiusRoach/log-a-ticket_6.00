@@ -756,6 +756,10 @@ export namespace DataUpdate {
 
     new GetEvent.forPage('default-header', GetPath.forHTML('header'));
     switch (mainClass) {
+      case 'colleague-main':
+        new GetEvent.forPage('user-main', GetPath.forHTML('main'));
+        new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
+        break;
       case 'logged-main':
         new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
         new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
@@ -764,7 +768,7 @@ export namespace DataUpdate {
         new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
         new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
         break;
-      case 'colleague-main':
+      case 'user-main':
         new GetEvent.forPage('user-main', GetPath.forHTML('main'));
         new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
         break;
