@@ -761,7 +761,8 @@ export namespace DataUpdate {
     switch (mainClass) {
       case 'colleague-main':
         new GetEvent.forPage('colleague-main', GetPath.forHTML('main'));
-        //--► new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar')); ◄--//
+        //--► Select active colleague inside get event...I think. ◄--//
+        new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
         break;
       case 'logged-main':
         new GetEvent.forPage('logged-main', GetPath.forHTML('main'));

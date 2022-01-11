@@ -217,7 +217,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         employeesData = indexData.querySelector('#employees-data');
                         ticketsData = indexData.querySelector('#tickets-data');
                         var appendCoworker_1 = function (coworkerFooter, nameClass, firstName, lastName) {
-                            $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                            onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                        <h1 class=\"notification\">0</h1>\n                                        <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                      </span>"));
+                            $(coworkerFooter).append("<span class=\"".concat(nameClass, "\"\n                                            onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                        <h1 class=\"notification\">").concat(countTickets('resolved', "".concat(firstName, " ").concat(lastName)), "</h1>\n                                        <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                      </span>"));
                         };
                         var buildCoworkers_1 = function (selectedDepartment, recall) {
                             coworkerFooter_1.innerHTML = '';
@@ -241,7 +241,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                     switch (recall) {
                                         case true:
                                             if (activeName === indexName) {
-                                                $(coworkerFooter_1).append("<span class=\"".concat(classValue, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">0</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
+                                                $(coworkerFooter_1).append("<span class=\"".concat(classValue, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">").concat(countTickets('resolved', "".concat(firstName, " ").concat(lastName)), "</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
                                             }
                                             else {
                                                 appendCoworker_1(coworkerFooter_1, classValue, firstName, lastName);
@@ -249,7 +249,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                             break;
                                         case false:
                                             if (userName === indexName) {
-                                                $(coworkerFooter_1).append("<span class=\"".concat(classValue, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">0</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
+                                                $(coworkerFooter_1).append("<span class=\"".concat(classValue, " active-colleague\"\n                                                      onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                                  <h1 class=\"notification\">").concat(countTickets('resolved', "".concat(firstName, " ").concat(lastName)), "</h1>\n                                                  <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                                </span>"));
                                             }
                                             else {
                                                 appendCoworker_1(coworkerFooter_1, classValue, firstName, lastName);
@@ -298,6 +298,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                         break;
                     case 'employees-sidebar':
                         indexSidebar.querySelector('#view-employees header span .text').textContent = "".concat(findUser());
+                        indexSidebar.querySelector('#view-employees header span .notification').textContent = "".concat(countTickets('assigned', findUser()));
                         indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
                         var buildEmployees = function () {
                             var employeesFooter = indexSidebar.querySelector('#view-employees footer');
@@ -315,10 +316,9 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                                 var classValue = UseValufy_1.UseValufy.forString("".concat(firstName, " ").concat(lastName));
                                 if (userDepartment === department) {
                                     if ("".concat(firstName, " ").concat(lastName) !== "".concat(findUser())) {
-                                        $(employeesFooter).append("<span class=\"".concat(classValue, "\"\n                                                  onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">0</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
+                                        $(employeesFooter).append("<span class=\"".concat(classValue, "\"\n                                                  onClick=\"$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');\">\n                                              <h1 class=\"notification\">").concat(countTickets('assigned', "".concat(firstName, " ").concat(lastName)), "</h1>\n                                              <h1 class=\"text\">").concat(firstName, " ").concat(lastName, "</h1>\n                                            </span>"));
                                     }
                                 }
-                                var employeesButton = employeesFooter.querySelector('span');
                             }
                         };
                         buildEmployees();
@@ -546,6 +546,220 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
             return forOverlay;
         }());
         DataRead.forOverlay = forOverlay;
+        function buildColleagues(selectedDepartment, filter) {
+            var indexMain = document.querySelector('#index-main');
+            var indexOverlay = document.querySelector('#index-overlay');
+            var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
+            colleagueSelect.innerHTML = "<option value=\"select-colleague\" selected disabled>Select Colleague</option>";
+            var employeesData = document.querySelector('#employees-data');
+            var employeesTotal = employeesData.children.length;
+            switch (filter) {
+                case 'none':
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var firstName = getData(i, 'first-name');
+                        var middleName = getData(i, 'middle-name');
+                        var lastName = getData(i, 'last-name');
+                        var department = getData(i, 'department');
+                        var occupation = getData(i, 'occupation');
+                        var role = getData(i, 'role');
+                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                            var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                            var mainHeader = indexMain.getElementsByTagName('header');
+                            var activeName;
+                            if (typeof mainHeader[0] !== "".concat(undefined)) {
+                                activeName = mainHeader[0].lastChild.textContent;
+                            }
+                            var indexName = "".concat(firstName, " ").concat(lastName);
+                            var userName = findUser();
+                            if (userName === indexName) {
+                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\" selected>").concat(firstName, " ").concat(lastName, "</option>"));
+                            }
+                            else {
+                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                            }
+                        }
+                    }
+                    break;
+                case 'user':
+                    for (var i = 0; i < employeesTotal; i++) {
+                        var firstName = getData(i, 'first-name');
+                        var middleName = getData(i, 'middle-name');
+                        var lastName = getData(i, 'last-name');
+                        var department = getData(i, 'department');
+                        var occupation = getData(i, 'occupation');
+                        var role = getData(i, 'role');
+                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
+                            var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
+                            var mainHeader = indexMain.getElementsByTagName('header');
+                            var activeName;
+                            if (typeof mainHeader[0] !== "".concat(undefined)) {
+                                activeName = mainHeader[0].lastChild.textContent;
+                            }
+                            var indexName = "".concat(firstName, " ").concat(lastName);
+                            var userName = findUser();
+                            if (userName !== indexName) {
+                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+        function buildDepartments(userDepartment) {
+            var indexMain = document.querySelector('#index-main');
+            var indexOverlay = document.querySelector('#index-overlay');
+            var departmentSelect = indexOverlay.querySelector('#department-form select');
+            var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
+            var indexData = document.querySelector('#index-data');
+            var departmentsData = indexData.querySelector('#departments-data');
+            departmentSelect.innerHTML = '';
+            var departmentsTotal = departmentsData.children.length;
+            for (var i = 0; i < departmentsTotal; i++) {
+                var department = "".concat(departmentsData.children[i].id);
+                var option = document.createElement('option');
+                option.value = UseValufy_1.UseValufy.forString(department);
+                option.textContent = UseCapify_1.UseCapify.forString(' ', department);
+                if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
+                    option.selected = true;
+                }
+                else {
+                    option.selected = false;
+                }
+                departmentSelect.append(option);
+            }
+            if (indexOverlay.className === 'log-overlay' || indexOverlay.className === 'logged-pending') {
+                buildColleagues(departmentSelect.selectedOptions[0].value, 'user');
+            }
+            else {
+                buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
+            }
+        }
+        function countTickets(status, employeeName) {
+            var indexMain = document.querySelector('#index-main');
+            var indexData = document.querySelector('#index-data');
+            var ticketsData = indexData.querySelector('#tickets-data');
+            var ticketsCollection = ticketsData.getElementsByTagName('article');
+            switch (status) {
+                case 'pending':
+                    var pending = 0;
+                    for (var i = 0; i < ticketsCollection.length; i++) {
+                        var statusInfo = "".concat(ticketsData.children[i].children[1].children[0].textContent);
+                        var senderNameInfo = "".concat(ticketsData.children[i].children[1].children[4].textContent);
+                        var receiverNameInfo = "".concat(ticketsData.children[i].children[1].children[6].textContent);
+                        if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+                            if (senderNameInfo === employeeName) {
+                                if (statusInfo === 'Pending') {
+                                    pending++;
+                                }
+                            }
+                        }
+                        else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+                            if (receiverNameInfo === employeeName) {
+                                if (statusInfo === 'Pending') {
+                                    pending++;
+                                }
+                            }
+                        }
+                    }
+                    return pending;
+                case 'assigned':
+                    var assigned = 0;
+                    for (var i = 0; i < ticketsCollection.length; i++) {
+                        var statusInfo = "".concat(ticketsData.children[i].children[1].children[0].textContent);
+                        var senderNameInfo = "".concat(ticketsData.children[i].children[1].children[4].textContent);
+                        var receiverNameInfo = "".concat(ticketsData.children[i].children[1].children[6].textContent);
+                        if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+                            if (senderNameInfo === employeeName) {
+                                if (statusInfo === 'Assigned') {
+                                    assigned++;
+                                }
+                            }
+                        }
+                        else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+                            if (receiverNameInfo === employeeName) {
+                                if (statusInfo === 'Assigned') {
+                                    assigned++;
+                                }
+                            }
+                        }
+                    }
+                    return assigned;
+                case 'resolved':
+                    var resolved = 0;
+                    for (var i = 0; i < ticketsCollection.length; i++) {
+                        var statusInfo = "".concat(ticketsData.children[i].children[1].children[0].textContent);
+                        var senderNameInfo = "".concat(ticketsData.children[i].children[1].children[4].textContent);
+                        var receiverNameInfo = "".concat(ticketsData.children[i].children[1].children[6].textContent);
+                        if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+                            if (senderNameInfo === employeeName) {
+                                if (statusInfo === 'Resolved') {
+                                    resolved++;
+                                }
+                            }
+                        }
+                        else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+                            if (receiverNameInfo === employeeName) {
+                                if (statusInfo === 'Resolved') {
+                                    resolved++;
+                                }
+                            }
+                        }
+                    }
+                    return resolved;
+                case 'deleted':
+                    var deleted = 0;
+                    for (var i = 0; i < ticketsCollection.length; i++) {
+                        var statusInfo = "".concat(ticketsData.children[i].children[1].children[0].textContent);
+                        var senderNameInfo = "".concat(ticketsData.children[i].children[1].children[4].textContent);
+                        var receiverNameInfo = "".concat(ticketsData.children[i].children[1].children[6].textContent);
+                        if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+                            if (senderNameInfo === employeeName) {
+                                if (statusInfo === 'Deleted') {
+                                    deleted++;
+                                }
+                            }
+                        }
+                        else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+                            if (receiverNameInfo === employeeName) {
+                                if (statusInfo === 'Deleted') {
+                                    deleted++;
+                                }
+                            }
+                        }
+                    }
+                    return deleted;
+                case 'everything':
+                    var everything = 0;
+                    for (var i = 0; i < ticketsCollection.length; i++) {
+                        var statusInfo = "".concat(ticketsData.children[i].children[1].children[0].textContent);
+                        var ratingInfo = "".concat(ticketsData.children[i].children[1].children[1].textContent);
+                        var subjectInfo = "".concat(ticketsData.children[i].children[1].children[2].textContent);
+                        var descriptionInfo = "".concat(ticketsData.children[i].children[1].children[3].textContent);
+                        var senderNameInfo = "".concat(ticketsData.children[i].children[1].children[4].textContent);
+                        var senderDepartmentInfo = "".concat(ticketsData.children[i].children[1].children[5].textContent);
+                        var receiverNameInfo = "".concat(ticketsData.children[i].children[1].children[6].textContent);
+                        var receiverDepartmentInfo = "".concat(ticketsData.children[i].children[1].children[7].textContent);
+                        var dateShortInfo = "".concat(ticketsData.children[i].children[1].children[8].textContent);
+                        var datePendingInfo = "".concat(ticketsData.children[i].children[1].children[9].textContent);
+                        var dateAssignedInfo = "".concat(ticketsData.children[i].children[1].children[10].textContent);
+                        var dateResolvedInfo = "".concat(ticketsData.children[i].children[1].children[11].textContent);
+                        var noteResolvedInfo = "".concat(ticketsData.children[i].children[1].children[12].textContent);
+                        var dateDeletedInfo = "".concat(ticketsData.children[i].children[1].children[13].textContent);
+                        var noteDeletedInfo = "".concat(ticketsData.children[i].children[1].children[14].textContent);
+                        if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+                            if (senderNameInfo === employeeName) {
+                                everything++;
+                            }
+                        }
+                        else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+                            if (receiverNameInfo === employeeName) {
+                                everything++;
+                            }
+                        }
+                    }
+                    return everything;
+            }
+        }
         function findDepartment(userName) {
             var employeesData = document.querySelector('#employees-data');
             var employeesCollection = employeesData.getElementsByTagName('article');
@@ -643,94 +857,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 case 'note-deleted':
                     var noteDeleted = activeTicket.children[3].children[14].innerHTML;
                     return noteDeleted;
-            }
-        }
-        function buildColleagues(selectedDepartment, filter) {
-            var indexMain = document.querySelector('#index-main');
-            var indexOverlay = document.querySelector('#index-overlay');
-            var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
-            colleagueSelect.innerHTML = "<option value=\"select-colleague\" selected disabled>Select Colleague</option>";
-            var employeesData = document.querySelector('#employees-data');
-            var employeesTotal = employeesData.children.length;
-            switch (filter) {
-                case 'none':
-                    for (var i = 0; i < employeesTotal; i++) {
-                        var firstName = getData(i, 'first-name');
-                        var middleName = getData(i, 'middle-name');
-                        var lastName = getData(i, 'last-name');
-                        var department = getData(i, 'department');
-                        var occupation = getData(i, 'occupation');
-                        var role = getData(i, 'role');
-                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
-                            var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
-                            var mainHeader = indexMain.getElementsByTagName('header');
-                            var activeName;
-                            if (typeof mainHeader[0] !== "".concat(undefined)) {
-                                activeName = mainHeader[0].lastChild.textContent;
-                            }
-                            var indexName = "".concat(firstName, " ").concat(lastName);
-                            var userName = findUser();
-                            if (userName === indexName) {
-                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\" selected>").concat(firstName, " ").concat(lastName, "</option>"));
-                            }
-                            else {
-                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
-                            }
-                        }
-                    }
-                    break;
-                case 'user':
-                    for (var i = 0; i < employeesTotal; i++) {
-                        var firstName = getData(i, 'first-name');
-                        var middleName = getData(i, 'middle-name');
-                        var lastName = getData(i, 'last-name');
-                        var department = getData(i, 'department');
-                        var occupation = getData(i, 'occupation');
-                        var role = getData(i, 'role');
-                        if (UseValufy_1.UseValufy.forString(department) === "".concat(selectedDepartment)) {
-                            var classValue = "".concat(firstName.toLowerCase(), "-").concat(lastName.toLowerCase());
-                            var mainHeader = indexMain.getElementsByTagName('header');
-                            var activeName;
-                            if (typeof mainHeader[0] !== "".concat(undefined)) {
-                                activeName = mainHeader[0].lastChild.textContent;
-                            }
-                            var indexName = "".concat(firstName, " ").concat(lastName);
-                            var userName = findUser();
-                            if (userName !== indexName) {
-                                $(colleagueSelect).append("<option value=\"".concat(UseValufy_1.UseValufy.forString(indexName), "\">").concat(firstName, " ").concat(lastName, "</option>"));
-                            }
-                        }
-                    }
-                    break;
-            }
-        }
-        function buildDepartments(userDepartment) {
-            var indexMain = document.querySelector('#index-main');
-            var indexOverlay = document.querySelector('#index-overlay');
-            var departmentSelect = indexOverlay.querySelector('#department-form select');
-            var colleagueSelect = indexOverlay.querySelector('#colleague-form select');
-            var indexData = document.querySelector('#index-data');
-            var departmentsData = indexData.querySelector('#departments-data');
-            departmentSelect.innerHTML = '';
-            var departmentsTotal = departmentsData.children.length;
-            for (var i = 0; i < departmentsTotal; i++) {
-                var department = "".concat(departmentsData.children[i].id);
-                var option = document.createElement('option');
-                option.value = UseValufy_1.UseValufy.forString(department);
-                option.textContent = UseCapify_1.UseCapify.forString(' ', department);
-                if (userDepartment === UseCapify_1.UseCapify.forString(' ', department)) {
-                    option.selected = true;
-                }
-                else {
-                    option.selected = false;
-                }
-                departmentSelect.append(option);
-            }
-            if (indexOverlay.className === 'log-overlay' || indexOverlay.className === 'logged-pending') {
-                buildColleagues(departmentSelect.selectedOptions[0].value, 'user');
-            }
-            else {
-                buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
             }
         }
     })(DataRead = exports.DataRead || (exports.DataRead = {}));

@@ -389,7 +389,7 @@ export namespace DataRead {
           let appendCoworker = (coworkerFooter: HTMLElement, nameClass: String, firstName: String, lastName: String) => {
             $(coworkerFooter).append(`<span class="${nameClass}"
                                             onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                        <h1 class="notification">0</h1>
+                                        <h1 class="notification">${countTickets('resolved', `${firstName} ${lastName}`)}</h1>
                                         <h1 class="text">${firstName} ${lastName}</h1>
                                       </span>`);
           };
@@ -429,7 +429,7 @@ export namespace DataRead {
                     if (activeName === indexName) {
                       $(coworkerFooter).append(`<span class="${classValue} active-colleague"
                                                       onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                                  <h1 class="notification">0</h1>
+                                                  <h1 class="notification">${countTickets('resolved', `${firstName} ${lastName}`)}</h1>
                                                   <h1 class="text">${firstName} ${lastName}</h1>
                                                 </span>`);
                     } else {
@@ -440,7 +440,7 @@ export namespace DataRead {
                     if (userName === indexName) {
                       $(coworkerFooter).append(`<span class="${classValue} active-colleague"
                                                       onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                                  <h1 class="notification">0</h1>
+                                                  <h1 class="notification">${countTickets('resolved', `${firstName} ${lastName}`)}</h1>
                                                   <h1 class="text">${firstName} ${lastName}</h1>
                                                 </span>`);
                     } else {
@@ -496,6 +496,7 @@ export namespace DataRead {
         case 'employees-sidebar':
           /* First ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           indexSidebar.querySelector('#view-employees header span .text').textContent = `${findUser()}`;
+          indexSidebar.querySelector('#view-employees header span .notification').textContent = `${countTickets('assigned', findUser())}`;
           indexSidebar.querySelector('#view-employees header span').className = 'active-colleague';
           /* Function ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
           let buildEmployees = () => {
@@ -518,13 +519,13 @@ export namespace DataRead {
                 if (`${firstName} ${lastName}` !== `${findUser()}`) {
                   $(employeesFooter).append(`<span class="${classValue}"
                                                   onClick="$('.active-colleague').removeClass('active-colleague'); $(this).addClass('active-colleague');">
-                                              <h1 class="notification">0</h1>
+                                              <h1 class="notification">${countTickets('assigned', `${firstName} ${lastName}`)}</h1>
                                               <h1 class="text">${firstName} ${lastName}</h1>
                                             </span>`);
                 }
               }
 
-              var employeesButton: HTMLSpanElement = employeesFooter.querySelector('span');
+              // var employeesButton: HTMLSpanElement = employeesFooter.querySelector('span');
             }
           };
           /* Last ▼ =-=-=-=-=-=-=-=-=-=-=- ◄ */
@@ -812,127 +813,8 @@ export namespace DataRead {
     }
   }
 
-  function findDepartment(userName: String) {
-    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
-    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
-    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
-    for (let i = 0; i < employeesTotal; i++) {
-      let firstName: String = employeesCollection[i].children[0].textContent;
-      let middleName: String = employeesCollection[i].children[1].textContent;
-      let lastName: String = employeesCollection[i].children[2].textContent;
-      let department: String = employeesCollection[i].children[3].textContent;
-      let occupation: String = employeesCollection[i].children[4].textContent;
-      let role: String = employeesCollection[i].children[5].textContent;
-
-      let employeeName: String = `${firstName} ${lastName}`;
-      if (employeeName === userName) {
-        return department;
-      }
-    }
-  }
-  function findUser() {
-    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
-    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
-    let userIndex: number = userSelect.selectedIndex;
-    let userName: String = userSelect.children[userIndex].textContent;
-    return `${userName}`;
-  }
-  function getData(index: number, data: String | 'first-name' | 'middle-name' | 'last-name' | 'department' | 'occupation' | 'role') {
-    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
-    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
-    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
-
-    let firstName: String = employeesCollection[index].children[0].textContent;
-    let middleName: String = employeesCollection[index].children[1].textContent;
-    let lastName: String = employeesCollection[index].children[2].textContent;
-    let department: String = employeesCollection[index].children[3].textContent;
-    let occupation: String = employeesCollection[index].children[4].textContent;
-    let role: String = employeesCollection[index].children[5].textContent;
-    switch (data) {
-      case 'first-name':
-        return firstName;
-      case 'middle-name':
-        return middleName;
-      case 'last-name':
-        return lastName;
-      case 'department':
-        return department;
-      case 'occupation':
-        return occupation;
-      case 'role':
-        return role;
-    }
-  }
-  function getTicket(
-    info:
-      | String
-      | 'ticket-status'
-      | 'ticket-rating'
-      | 'subject-text'
-      | 'description-text'
-      | 'sender-name'
-      | 'sender-department'
-      | 'receiver-name'
-      | 'receiver-department'
-      | 'date-short'
-      | 'date-pending'
-      | 'date-assigned'
-      | 'date-resolved'
-      | 'note-resolved'
-      | 'date-deleted'
-      | 'note-deleted'
-  ) {
-    var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
-
-    switch (info) {
-      case 'ticket-status':
-        var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
-        return ticketStatus;
-      case 'ticket-rating':
-        var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
-        return ticketRating;
-      case 'subject-text':
-        var subjectText: String = activeTicket.children[3].children[2].innerHTML;
-        return subjectText;
-      case 'description-text':
-        var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
-        return descriptionText;
-      case 'sender-name':
-        var senderName: String = activeTicket.children[3].children[4].innerHTML;
-        return senderName;
-      case 'sender-department':
-        var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
-        return senderDepartment;
-      case 'receiver-name':
-        var receiverName: String = activeTicket.children[3].children[6].innerHTML;
-        return receiverName;
-      case 'receiver-department':
-        var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
-        return receiverDepartment;
-      case 'date-short':
-        var dateShort: String = activeTicket.children[3].children[8].innerHTML;
-        return dateShort;
-      case 'date-pending':
-        var datePending: String = activeTicket.children[3].children[9].innerHTML;
-        return datePending;
-      case 'date-assigned':
-        var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
-        return dateAssigned;
-      case 'date-resolved':
-        var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
-        return dateResolved;
-      case 'note-resolved':
-        var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
-        return noteResolved;
-      case 'date-deleted':
-        var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
-        return dateDeleted;
-      case 'note-deleted':
-        var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
-        return noteDeleted;
-    }
-  }
-
+  /* ▼ A=-=-=A ▼ */
+  /* ▼ B=-=-=B ▼ */
   function buildColleagues(selectedDepartment: String, filter: 'none' | 'user') {
     const indexMain: HTMLElement = document.querySelector('#index-main');
 
@@ -1029,4 +911,275 @@ export namespace DataRead {
       buildColleagues(departmentSelect.selectedOptions[0].value, 'none');
     }
   }
+  /* ▼ C=-=-=C ▼ */
+  function countTickets(status: 'pending' | 'assigned' | 'resolved' | 'deleted' | 'everything', employeeName: String) {
+    const indexMain: HTMLElement = document.querySelector('#index-main');
+
+    const indexData: HTMLElement = document.querySelector('#index-data');
+    let ticketsData: HTMLDivElement = indexData.querySelector('#tickets-data');
+    let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
+    switch (status) {
+      case 'pending':
+        var pending: number = 0;
+        for (let i = 0; i < ticketsCollection.length; i++) {
+          var statusInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[0].textContent}`;
+          var senderNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[4].textContent}`;
+          var receiverNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[6].textContent}`;
+
+          if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+            if (senderNameInfo === employeeName) {
+              if (statusInfo === 'Pending') {
+                pending++;
+              }
+            }
+          } else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+            if (receiverNameInfo === employeeName) {
+              if (statusInfo === 'Pending') {
+                pending++;
+              }
+            }
+          }
+        }
+        return pending;
+      case 'assigned':
+        var assigned: number = 0;
+        for (let i = 0; i < ticketsCollection.length; i++) {
+          var statusInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[0].textContent}`;
+          var senderNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[4].textContent}`;
+          var receiverNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[6].textContent}`;
+
+          if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+            if (senderNameInfo === employeeName) {
+              if (statusInfo === 'Assigned') {
+                assigned++;
+              }
+            }
+          } else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+            if (receiverNameInfo === employeeName) {
+              if (statusInfo === 'Assigned') {
+                assigned++;
+              }
+            }
+          }
+        }
+        return assigned;
+      case 'resolved':
+        var resolved: number = 0;
+        for (let i = 0; i < ticketsCollection.length; i++) {
+          var statusInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[0].textContent}`;
+          var senderNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[4].textContent}`;
+          var receiverNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[6].textContent}`;
+
+          if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+            if (senderNameInfo === employeeName) {
+              if (statusInfo === 'Resolved') {
+                resolved++;
+              }
+            }
+          } else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+            if (receiverNameInfo === employeeName) {
+              if (statusInfo === 'Resolved') {
+                resolved++;
+              }
+            }
+          }
+        }
+        return resolved;
+      case 'deleted':
+        var deleted: number = 0;
+        for (let i = 0; i < ticketsCollection.length; i++) {
+          var statusInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[0].textContent}`;
+          var senderNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[4].textContent}`;
+          var receiverNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[6].textContent}`;
+
+          if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+            if (senderNameInfo === employeeName) {
+              if (statusInfo === 'Deleted') {
+                deleted++;
+              }
+            }
+          } else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+            if (receiverNameInfo === employeeName) {
+              if (statusInfo === 'Deleted') {
+                deleted++;
+              }
+            }
+          }
+        }
+        return deleted;
+      case 'everything':
+        var everything: number = 0;
+        for (let i = 0; i < ticketsCollection.length; i++) {
+          var statusInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[0].textContent}`;
+          var ratingInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[1].textContent}`;
+          var subjectInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[2].textContent}`;
+          var descriptionInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[3].textContent}`;
+          var senderNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[4].textContent}`;
+          var senderDepartmentInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[5].textContent}`;
+          var receiverNameInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[6].textContent}`;
+          var receiverDepartmentInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[7].textContent}`;
+          var dateShortInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[8].textContent}`;
+          var datePendingInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[9].textContent}`;
+          var dateAssignedInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[10].textContent}`;
+          var dateResolvedInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[11].textContent}`;
+          var noteResolvedInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[12].textContent}`;
+          var dateDeletedInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[13].textContent}`;
+          var noteDeletedInfo: String | HTMLParagraphElement = `${ticketsData.children[i].children[1].children[14].textContent}`;
+
+          if (indexMain.className === 'logged-main' || indexMain.className === 'coworker-main') {
+            if (senderNameInfo === employeeName) {
+              everything++;
+            }
+          } else if (indexMain.className === 'manage-main' || indexMain.className === 'user-main' || indexMain.className === 'colleague-main') {
+            if (receiverNameInfo === employeeName) {
+              everything++;
+            }
+          }
+        }
+        return everything;
+    }
+  }
+  /* ▼ D=-=-=D ▼ */
+  /* ▼ E=-=-=E ▼ */
+  /* ▼ F=-=-=F ▼ */
+  function findDepartment(userName: String) {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+    for (let i = 0; i < employeesTotal; i++) {
+      let firstName: String = employeesCollection[i].children[0].textContent;
+      let middleName: String = employeesCollection[i].children[1].textContent;
+      let lastName: String = employeesCollection[i].children[2].textContent;
+      let department: String = employeesCollection[i].children[3].textContent;
+      let occupation: String = employeesCollection[i].children[4].textContent;
+      let role: String = employeesCollection[i].children[5].textContent;
+
+      let employeeName: String = `${firstName} ${lastName}`;
+      if (employeeName === userName) {
+        return department;
+      }
+    }
+  }
+  function findUser() {
+    const indexBody: HTMLBodyElement = document.querySelector('#index-body');
+    let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
+    let userIndex: number = userSelect.selectedIndex;
+    let userName: String = userSelect.children[userIndex].textContent;
+    return `${userName}`;
+  }
+  /* ▼ G=-=-=G ▼ */
+  function getData(index: number, data: String | 'first-name' | 'middle-name' | 'last-name' | 'department' | 'occupation' | 'role') {
+    const employeesData: HTMLDivElement = document.querySelector('#employees-data');
+    let employeesCollection: HTMLCollection = employeesData.getElementsByTagName('article');
+    let employeesTotal: Number = employeesData.getElementsByTagName('article').length;
+
+    let firstName: String = employeesCollection[index].children[0].textContent;
+    let middleName: String = employeesCollection[index].children[1].textContent;
+    let lastName: String = employeesCollection[index].children[2].textContent;
+    let department: String = employeesCollection[index].children[3].textContent;
+    let occupation: String = employeesCollection[index].children[4].textContent;
+    let role: String = employeesCollection[index].children[5].textContent;
+    switch (data) {
+      case 'first-name':
+        return firstName;
+      case 'middle-name':
+        return middleName;
+      case 'last-name':
+        return lastName;
+      case 'department':
+        return department;
+      case 'occupation':
+        return occupation;
+      case 'role':
+        return role;
+    }
+  }
+  function getTicket(
+    info:
+      | String
+      | 'ticket-status'
+      | 'ticket-rating'
+      | 'subject-text'
+      | 'description-text'
+      | 'sender-name'
+      | 'sender-department'
+      | 'receiver-name'
+      | 'receiver-department'
+      | 'date-short'
+      | 'date-pending'
+      | 'date-assigned'
+      | 'date-resolved'
+      | 'note-resolved'
+      | 'date-deleted'
+      | 'note-deleted'
+  ) {
+    var activeTicket = document.querySelector('#index-main #tickets-container .active-ticket');
+
+    switch (info) {
+      case 'ticket-status':
+        var ticketStatus: String = activeTicket.children[3].children[0].innerHTML;
+        return ticketStatus;
+      case 'ticket-rating':
+        var ticketRating: String = activeTicket.children[3].children[1].innerHTML;
+        return ticketRating;
+      case 'subject-text':
+        var subjectText: String = activeTicket.children[3].children[2].innerHTML;
+        return subjectText;
+      case 'description-text':
+        var descriptionText: String = activeTicket.children[3].children[3].innerHTML;
+        return descriptionText;
+      case 'sender-name':
+        var senderName: String = activeTicket.children[3].children[4].innerHTML;
+        return senderName;
+      case 'sender-department':
+        var senderDepartment: String = activeTicket.children[3].children[5].innerHTML;
+        return senderDepartment;
+      case 'receiver-name':
+        var receiverName: String = activeTicket.children[3].children[6].innerHTML;
+        return receiverName;
+      case 'receiver-department':
+        var receiverDepartment: String = activeTicket.children[3].children[7].innerHTML;
+        return receiverDepartment;
+      case 'date-short':
+        var dateShort: String = activeTicket.children[3].children[8].innerHTML;
+        return dateShort;
+      case 'date-pending':
+        var datePending: String = activeTicket.children[3].children[9].innerHTML;
+        return datePending;
+      case 'date-assigned':
+        var dateAssigned: String = activeTicket.children[3].children[10].innerHTML;
+        return dateAssigned;
+      case 'date-resolved':
+        var dateResolved: String = activeTicket.children[3].children[11].innerHTML;
+        return dateResolved;
+      case 'note-resolved':
+        var noteResolved: String = activeTicket.children[3].children[12].innerHTML;
+        return noteResolved;
+      case 'date-deleted':
+        var dateDeleted: String = activeTicket.children[3].children[13].innerHTML;
+        return dateDeleted;
+      case 'note-deleted':
+        var noteDeleted: String = activeTicket.children[3].children[14].innerHTML;
+        return noteDeleted;
+    }
+  }
+  /* ▼ H=-=-=H ▼ */
+  /* ▼ I=-=-=I ▼ */
+  /* ▼ J=-=-=J ▼ */
+  /* ▼ K=-=-=K ▼ */
+  /* ▼ L=-=-=L ▼ */
+  /* ▼ M=-=-=M ▼ */
+  /* ▼ N=-=-=N ▼ */
+  /* ▼ O=-=-=O ▼ */
+  /* ▼ P=-=-=P ▼ */
+  /* ▼ Q=-=-=Q ▼ */
+  /* ▼ R=-=-=R ▼ */
+  /* ▼ S=-=-=S ▼ */
+  /* ▼ T=-=-=T ▼ */
+  /* ▼ U=-=-=U ▼ */
+  /* ▼ V=-=-=V ▼ */
+  /* ▼ W=-=-=W ▼ */
+  /* ▼ X=-=-=X ▼ */
+  /* ▼ Y=-=-=Y ▼ */
+  /* ▼ Z=-=-=Z ▼ */
 }

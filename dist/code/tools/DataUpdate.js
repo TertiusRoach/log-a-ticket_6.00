@@ -568,6 +568,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
             switch (mainClass) {
                 case 'colleague-main':
                     new GetEvent_1.GetEvent.forPage('colleague-main', GetPath_1.GetPath.forHTML('main'));
+                    new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     break;
                 case 'logged-main':
                     new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
