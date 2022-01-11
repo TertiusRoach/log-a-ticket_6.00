@@ -99,6 +99,7 @@ export namespace LoggedMain {
       }
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+
       $(ticketMain).on('click', () => {
         let activeTicket: HTMLElement = document.querySelector('.active-ticket');
         let activeStatus: String = activeTicket.classList[0];
