@@ -102,8 +102,8 @@ export namespace DefaultOverlay {
 
       $(managerButton)
         .on('mouseenter', () => {
-          new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
           new GetEvent.forPage('logged-main', GetPath.forHTML('main'));
+          new GetEvent.forPage('coworkers-sidebar', GetPath.forHTML('sidebar'));
 
           buildEmployees(selectUser('Manager'));
           highlightButton('manager-button');
@@ -117,8 +117,8 @@ export namespace DefaultOverlay {
         });
       $(employeeButton)
         .on('mouseenter', () => {
-          new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
           new GetEvent.forPage('manage-main', GetPath.forHTML('main'));
+          new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
 
           buildEmployees(selectUser('Employee'));
           highlightButton('employee-button');
