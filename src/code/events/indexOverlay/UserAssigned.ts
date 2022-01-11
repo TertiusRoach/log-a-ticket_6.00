@@ -55,7 +55,9 @@ export namespace UserAssigned {
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       $(resolveButton)
         .on('click', () => {
-          new DataUpdate.forButton('resolve');
+          if (resolveButton.className !== 'disabled-button') {
+            new GetEvent.forPage('resolve-overlay', GetPath.forHTML('overlay'));
+          }
         })
         .on('mouseenter', () => {
           resolveButton.style.color = `${GetColor.resolvedDefault()}`;

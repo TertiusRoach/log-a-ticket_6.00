@@ -121,6 +121,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                         markedTicket.className = 'resolved';
                         statusInfo.textContent = 'Resolved';
                         dateResolvedInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
+                        noteResolvedInfo.textContent = "".concat($(liveNote).val());
                         closeContainer();
                         refreshBlocks();
                         break;

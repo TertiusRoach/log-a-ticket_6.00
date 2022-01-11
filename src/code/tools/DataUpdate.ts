@@ -215,11 +215,12 @@ export namespace DataUpdate {
           //--► console.log('Recycle Ticket'); ◄--//
           break;
         case 'resolve':
-          //--▼ From Assigned to ▼--//
+          //--▼ From Assigned to... ▼--//
           markedTicket.className = 'resolved';
           statusInfo.textContent = 'Resolved';
 
           dateResolvedInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
+          noteResolvedInfo.textContent = `${$(liveNote).val()}`;
 
           closeContainer();
           refreshBlocks();
