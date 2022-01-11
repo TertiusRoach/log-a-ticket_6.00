@@ -9,6 +9,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                 new DataRead_1.DataRead.forSidebar('employees-sidebar');
                 var indexBody = document.querySelector('#index-body');
                 var indexHeader = document.querySelector('#index-header');
+                var loggedButton = indexHeader.querySelector('#logged-tickets button');
+                var manageButton = indexHeader.querySelector('#manage-tickets button');
                 var indexMain = document.querySelector('#index-main');
                 var indexSidebar = document.querySelector('#index-sidebar');
                 var closeEmployees = indexSidebar.querySelector('#close-employees');
@@ -24,6 +26,8 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetEvent", "cod
                     new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
                 });
                 $(employeeButtons).on('click', function () {
+                    manageButton.className = '';
+                    loggedButton.className = '';
                     indexSidebar.style.display = 'none';
                     new GetEvent_1.GetEvent.forPage('colleague-main', GetPath_1.GetPath.forHTML('main'));
                 });

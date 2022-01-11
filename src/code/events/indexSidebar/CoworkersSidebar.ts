@@ -25,6 +25,8 @@ export namespace CoworkersSidebar {
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
+      let loggedButton: HTMLElement = indexHeader.querySelector('#logged-tickets button');
+      let manageButton: HTMLElement = indexHeader.querySelector('#manage-tickets button');
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
 

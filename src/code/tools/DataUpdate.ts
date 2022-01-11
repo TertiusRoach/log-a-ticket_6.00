@@ -123,7 +123,7 @@ export namespace DataUpdate {
           //--► console.log('Assign Ticket'); ◄--//
           break;
         case 'claim':
-          //--▼ Default response between Switch('assign' and 'claim') ▼--//
+          //--▼ Default response for 'assign', 'claim' and 'take' ▼--//
           markedTicket.className = 'assigned';
           statusInfo.textContent = 'Assigned';
 
@@ -248,8 +248,11 @@ export namespace DataUpdate {
         case 'take':
           markedTicket.className = 'assigned';
           statusInfo.textContent = 'Assigned';
+
+          receiverDisplay.textContent = `${findUser()}`;
           receiverNameInfo.textContent = `${findUser()}`;
           receiverDepartmentInfo.textContent = `${findDepartment(findUser())}`;
+
           descriptionInfo.textContent = `${$(liveDescription).val()}
           
           Taken over by ${findUser()} on ${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
@@ -758,8 +761,8 @@ export namespace DataUpdate {
     new GetEvent.forPage('default-header', GetPath.forHTML('header'));
     switch (mainClass) {
       case 'colleague-main':
-        new GetEvent.forPage('user-main', GetPath.forHTML('main'));
-        new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar'));
+        new GetEvent.forPage('colleague-main', GetPath.forHTML('main'));
+        //--► new GetEvent.forPage('employees-sidebar', GetPath.forHTML('sidebar')); ◄--//
         break;
       case 'logged-main':
         new GetEvent.forPage('logged-main', GetPath.forHTML('main'));

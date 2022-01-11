@@ -143,6 +143,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                     case 'take':
                         markedTicket.className = 'assigned';
                         statusInfo.textContent = 'Assigned';
+                        receiverDisplay.textContent = "".concat(findUser());
                         receiverNameInfo.textContent = "".concat(findUser());
                         receiverDepartmentInfo.textContent = "".concat(findDepartment(findUser()));
                         descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Taken over by ").concat(findUser(), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
@@ -564,8 +565,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
             new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
             switch (mainClass) {
                 case 'colleague-main':
-                    new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
-                    new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    new GetEvent_1.GetEvent.forPage('colleague-main', GetPath_1.GetPath.forHTML('main'));
                     break;
                 case 'logged-main':
                     new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
