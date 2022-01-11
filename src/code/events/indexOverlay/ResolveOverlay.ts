@@ -28,46 +28,47 @@ export namespace ResolveOverlay {
 
       const indexMain: HTMLElement = document.querySelector('#index-main');
       const ticketsContainer: HTMLDivElement = indexMain.querySelector('#tickets-container');
-      indexMain.style.display = 'none';
 
       const indexSidebar: HTMLElement = document.querySelector('#index-sidebar');
 
       const indexOverlay: HTMLElement = document.querySelector('#index-overlay');
       let closeOverlay: HTMLButtonElement = indexOverlay.querySelector('#close-overlay');
-      let liveSubject: HTMLInputElement = indexOverlay.querySelector('#ticket-subject');
-      let liveDescription: HTMLTextAreaElement = indexOverlay.querySelector('#ticket-description');
-      let liveDepartment: HTMLHeadingElement = indexOverlay.querySelector('#department-name');
-      let liveColleague: HTMLHeadingElement = indexOverlay.querySelector('#colleague-name');
-      let livePending: HTMLHeadingElement = indexOverlay.querySelector('#pending-date');
-      let liveAssigned: HTMLHeadingElement = indexOverlay.querySelector('#assigned-date');
-      let liveResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-date');
-      let liveNoteResolved: HTMLHeadingElement = indexOverlay.querySelector('#resolved-note');
-      let liveDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-date');
-      let liveNoteDeleted: HTMLHeadingElement = indexOverlay.querySelector('#deleted-note');
-
-      /*
-      liveSubject.value = `${getTicket('subject-text', ticketsContainer)}`;
-      liveDescription.textContent = `${getTicket('description-text', ticketsContainer)}`;
-      liveDepartment.textContent = `${getTicket('receiver-department', ticketsContainer)}`;
-      livePending.textContent = `${getTicket('date-pending', ticketsContainer)}`;
-      if (getTicket('receiver-name', ticketsContainer) === `${undefined}`) {
-        liveColleague.style.display = 'none';
-        liveAssigned.style.display = 'none';
-      } else {
-        liveColleague.textContent = `${getTicket('receiver-name', ticketsContainer)}`;
-        liveAssigned.textContent = `${getTicket('date-assigned', ticketsContainer)}`;
-      }
-      liveDeleted.textContent = `${getTicket('date-deleted', ticketsContainer)}`;
-      liveNoteDeleted.textContent = `${getTicket('note-deleted', ticketsContainer)}`;
-      */
+      let resolveButton: HTMLButtonElement = indexOverlay.querySelector('#resolve-ticket button');
+      let ticketNote: HTMLTextAreaElement = indexOverlay.querySelector('section #ticket-note');
 
       const indexData: HTMLElement = document.querySelector('#index-data');
 
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      function highlightButton() {
+        resolveButton.className = '';
+        ticketNote.style.border = '';
+      }
 
       /* Classes ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      $(resolveButton).on('click', () => {
+        if ($(ticketNote).val() === '') {
+          ticketNote.style.border = `2px solid ${GetColor.resolvedDefault()}`;
+        } else if (resolveButton.className !== 'disabled-button') {
+          new DataUpdate.forButton('resolve');
+        }
+      });
+      $(ticketNote)
+        .on('keyup', () => {
+          if ($(ticketNote).val() === '') {
+            resolveButton.className = 'disabled-button';
+          } else {
+            highlightButton();
+          }
+        })
+        .on('keydown', () => {
+          if ($(ticketNote).val() === '') {
+            resolveButton.className = 'disabled-button';
+          } else {
+            highlightButton();
+          }
+        });
       $(closeOverlay).on('click', () => {
         closeContainer('index-overlay');
       });

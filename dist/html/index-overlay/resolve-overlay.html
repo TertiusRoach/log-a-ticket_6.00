@@ -5,12 +5,17 @@
 </button>
 
 <section id="ticket-container" style="display: grid">
-  <textarea id="ticket-description" placeholder="Resolved Note (Optional)"></textarea>
+  <!--▼ Button Sample ▼-->
+  <div id="resolve-ticket">
+    <!--► Default: class="disabled-button" ◄-->
+    <button class="disabled-button">
+      <i class="fad fa-check fa-4x"></i>
+      <h1>Resolve Ticket</h1>
+    </button>
+  </div>
+  <!--▲ Button Sample ▲-->
 
-  <button class="resolve-ticket">
-    <i class="fad fa-check fa-4x"></i>
-    <div>Resolve Ticket</div>
-  </button>
+  <textarea id="ticket-note" placeholder="Resolved Note"></textarea>
 </section>
 
 <div class="resolved-mark" style="background: #084887"><h1>Resolved</h1></div>

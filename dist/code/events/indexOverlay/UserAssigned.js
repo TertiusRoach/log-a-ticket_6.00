@@ -1,4 +1,4 @@
-define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "code/tools/GetColor", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseDatefy"], function (require, exports, DataRead_1, DataUpdate_1, GetColor_1, GetEvent_1, GetPath_1, UseDatefy_1) {
+define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "code/tools/GetEvent", "code/tools/GetPath", "code/tools/UseDatefy"], function (require, exports, DataRead_1, GetColor_1, GetEvent_1, GetPath_1, UseDatefy_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.UserAssigned = void 0;
@@ -27,7 +27,9 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/DataUpdate", "c
                 var indexData = document.querySelector('#index-data');
                 $(resolveButton)
                     .on('click', function () {
-                    new DataUpdate_1.DataUpdate.forButton('resolve');
+                    if (resolveButton.className !== 'disabled-button') {
+                        new GetEvent_1.GetEvent.forPage('resolve-overlay', GetPath_1.GetPath.forHTML('overlay'));
+                    }
                 })
                     .on('mouseenter', function () {
                     resolveButton.style.color = "".concat(GetColor_1.GetColor.resolvedDefault());
