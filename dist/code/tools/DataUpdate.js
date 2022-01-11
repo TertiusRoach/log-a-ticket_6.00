@@ -562,6 +562,10 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
             var ticketsCollection = ticketsData.getElementsByTagName('article');
             new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
             switch (mainClass) {
+                case 'colleague-main':
+                    new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
+                    new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
+                    break;
                 case 'logged-main':
                     new GetEvent_1.GetEvent.forPage('logged-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('coworkers-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
@@ -570,12 +574,11 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                     new GetEvent_1.GetEvent.forPage('manage-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     break;
-                case 'colleague-main':
+                case 'user-main':
                     new GetEvent_1.GetEvent.forPage('user-main', GetPath_1.GetPath.forHTML('main'));
                     new GetEvent_1.GetEvent.forPage('employees-sidebar', GetPath_1.GetPath.forHTML('sidebar'));
                     break;
             }
-            console.log(indexMain.className);
         }
     })(DataUpdate = exports.DataUpdate || (exports.DataUpdate = {}));
 });
