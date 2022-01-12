@@ -8,8 +8,6 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
             function forMain(page, status) {
                 var indexBody = document.querySelector('#index-body');
                 var userSelect = indexBody.querySelector('#user-form select');
-                var userName = userSelect.selectedOptions[0].textContent;
-                var userDepartment = findDepartment(userName);
                 var indexHeader = document.querySelector('#index-header');
                 var indexMain = document.querySelector('#index-main');
                 var ticketsMain = indexMain.querySelector('#tickets-container');
@@ -27,6 +25,8 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                 var ticketsData = indexData.querySelector('#tickets-data');
                 var ticketsCollection = ticketsData.getElementsByTagName('article');
                 var ticketsTotal = ticketsCollection.length;
+                var userName = findUser();
+                var userDepartment = findDepartment(findUser());
                 function clearTickets(container, status) {
                     container.innerHTML = '';
                     container.className = '';
@@ -178,7 +178,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                             var noteResolved = ticketInfo.children[12].textContent;
                             var dateDeleted = ticketInfo.children[13].textContent;
                             var noteDeleted = ticketInfo.children[14].textContent;
-                            if (userDepartment === receiverDepartment && receiverName === userName) {
+                            if (receiverName === userName) {
                                 $(ticketsMain).append("<article class=\"".concat(ticketStatus, "\" onClick=\"$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');\">\n                  <p class=\"shortdate\">").concat(dateShort, "</p>\n                  <p class=\"subject\">").concat(subjectText, "</p>\n                  <p class=\"sender\">").concat(senderName, "</p>\n                  \n                  <div style=\"display: none\">\n                    <p class=\"ticket-status\">").concat(ticketStatus, "</p>\n                    <p class=\"ticket-rating\">").concat(ticketRating, "</p>\n                    <p class=\"subject-text\">").concat(subjectText, "</p>\n                    <p class=\"description-text\">").concat(descriptionText, "</p>\n                    <p class=\"sender-name\">").concat(senderName, "</p>\n                    <p class=\"sender-department\">").concat(senderDepartment, "</p>\n                    <p class=\"receiver-name\">").concat(receiverName, "</p>\n                    <p class=\"receiver-department\">").concat(receiverDepartment, "</p>\n                    <p class=\"date-short\">").concat(dateShort, "</p>\n                    <p class=\"date-pending\">").concat(datePending, "</p>\n                    <p class=\"date-assigned\">").concat(dateAssigned, "</p>\n                    <p class=\"date-resolved\">").concat(dateResolved, "</p>\n                    <p class=\"note-resolved\">").concat(noteResolved, "</p>\n                    <p class=\"date-deleted\">").concat(dateDeleted, "</p>\n                    <p class=\"note-deleted\">").concat(noteDeleted, "</p>\n                  </div>\n                </article>"));
                             }
                         }
@@ -489,7 +489,7 @@ define(["require", "exports", "code/tools/GetColor", "code/tools/GetEvent", "cod
                     case 'logged-deleted':
                         ticketSubject.value = "".concat(getTicket('subject-text'));
                         ticketDescription.textContent = "".concat(getTicket('description-text'));
-                        senderDepartment.textContent = "".concat(getTicket('sender-department'));
+                        senderDepartment.textContent = "".concat(getTicket('receiver-department'));
                         colleagueName.textContent = "".concat(getTicket('receiver-name'));
                         pendingDate.textContent = "".concat(getTicket('date-pending'));
                         if (getTicket('receiver-name') === "".concat(undefined)) {

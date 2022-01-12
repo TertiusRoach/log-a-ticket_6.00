@@ -206,7 +206,7 @@ export namespace DataUpdate {
 
           descriptionInfo.textContent = `${$(liveDescription).val()}
           
-          Ticket resycled by ${findUser()} on ${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
+          Ticket recycled by ${findUser()} on ${UseDatefy.forToday('Weekday, 00 Month YYYY')}`;
           dateAssignedInfo.textContent = UseDatefy.forToday('Weekday, 00 Month YYYY');
 
           closeContainer();
