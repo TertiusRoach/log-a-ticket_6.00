@@ -166,7 +166,6 @@ export namespace GetArray {
 
   export function tickets(): ticketReference[] {
     return [
-      /*
       {
         ticketStatus: 'Pending',
         ticketRating: undefined,
@@ -9415,7 +9414,6 @@ export namespace GetArray {
         dateDeleted: undefined,
         noteDeleted: undefined,
       },
-      */
     ];
   }
   class ticketReference {
