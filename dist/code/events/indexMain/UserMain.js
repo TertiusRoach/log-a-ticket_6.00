@@ -73,15 +73,6 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                             break;
                     }
                 }
-                $(ticketMain).on('click', function () {
-                    var activeTicket = document.querySelector('.active-ticket');
-                    var activeStatus = activeTicket.classList[0];
-                    new GetEvent_1.GetEvent.forPage("user-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
-                    indexOverlay.style.display = 'grid';
-                });
-                $(openEmployees).on('click', function () {
-                    indexSidebar.style.display = 'grid';
-                });
                 $(assignedTab)
                     .on('click', function () {
                     ticketsMain.className = 'assigned-tickets';
@@ -111,6 +102,15 @@ define(["require", "exports", "code/tools/DataRead", "code/tools/GetColor", "cod
                 })
                     .on('mouseleave', function () {
                     countTickets('active');
+                });
+                $(ticketMain).on('click', function () {
+                    var activeTicket = document.querySelector('.active-ticket');
+                    var activeStatus = activeTicket.classList[0];
+                    new GetEvent_1.GetEvent.forPage("user-".concat(activeStatus), GetPath_1.GetPath.forHTML('overlay'));
+                    indexOverlay.style.display = 'grid';
+                });
+                $(openEmployees).on('click', function () {
+                    indexSidebar.style.display = 'grid';
                 });
                 countTickets('active');
             }

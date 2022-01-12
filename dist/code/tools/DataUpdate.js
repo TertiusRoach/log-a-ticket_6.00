@@ -114,7 +114,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath", "code
                     case 'recycle':
                         markedTicket.className = 'assigned';
                         statusInfo.textContent = 'Assigned';
-                        descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Ticket resycled by ").concat(findUser(), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
+                        descriptionInfo.textContent = "".concat($(liveDescription).val(), "\n          \n          Ticket recycled by ").concat(findUser(), " on ").concat(UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY'));
                         dateAssignedInfo.textContent = UseDatefy_1.UseDatefy.forToday('Weekday, 00 Month YYYY');
                         closeContainer();
                         refreshBlocks();

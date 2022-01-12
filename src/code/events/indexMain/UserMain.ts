@@ -96,16 +96,6 @@ export namespace UserMain {
       }
 
       /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
-      $(ticketMain).on('click', () => {
-        let activeTicket: HTMLElement = document.querySelector('.active-ticket');
-        let activeStatus: String = activeTicket.classList[0];
-
-        new GetEvent.forPage(`user-${activeStatus}`, GetPath.forHTML('overlay'));
-        indexOverlay.style.display = 'grid';
-      });
-      $(openEmployees).on('click', () => {
-        indexSidebar.style.display = 'grid';
-      });
 
       $(assignedTab)
         .on('click', () => {
@@ -139,6 +129,16 @@ export namespace UserMain {
         .on('mouseleave', () => {
           countTickets('active');
         });
+      $(ticketMain).on('click', () => {
+        let activeTicket: HTMLElement = document.querySelector('.active-ticket');
+        let activeStatus: String = activeTicket.classList[0];
+
+        new GetEvent.forPage(`user-${activeStatus}`, GetPath.forHTML('overlay'));
+        indexOverlay.style.display = 'grid';
+      });
+      $(openEmployees).on('click', () => {
+        indexSidebar.style.display = 'grid';
+      });
 
       /* Last ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       countTickets('active');

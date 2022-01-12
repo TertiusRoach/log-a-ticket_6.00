@@ -18,8 +18,7 @@ export namespace DataRead {
       /* Declarations ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       const indexBody: HTMLBodyElement = document.querySelector('#index-body');
       let userSelect: HTMLSelectElement = indexBody.querySelector('#user-form select');
-      let userName: String = userSelect.selectedOptions[0].textContent;
-      let userDepartment: String = findDepartment(userName);
+      // let userName: String = userSelect.selectedOptions[0].textContent;
 
       const indexHeader: HTMLElement = document.querySelector('#index-header');
 
@@ -43,6 +42,8 @@ export namespace DataRead {
       let ticketsCollection: HTMLCollection = ticketsData.getElementsByTagName('article');
       let ticketsTotal: Number = ticketsCollection.length;
 
+      let userName: String = findUser();
+      let userDepartment: String = findDepartment(findUser());
       /* Functions ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
       function clearTickets(container: HTMLDivElement, status: String | 'pending' | 'assigned' | 'resolved' | 'deleted' | 'everything') {
         container.innerHTML = '';
@@ -286,7 +287,6 @@ export namespace DataRead {
           ticketsMain.innerHTML = '';
           ticketsMain.className = '';
           ticketsMain.className = `${status}-tickets`;
-
           userHeader.innerHTML = `${userName}`;
           for (let i = 0; i < ticketsTotal; i++) {
             const ticketInfo = ticketsCollection[i].children[1];
@@ -306,7 +306,7 @@ export namespace DataRead {
             let dateDeleted: String = ticketInfo.children[13].textContent;
             let noteDeleted: String = ticketInfo.children[14].textContent;
 
-            if (userDepartment === receiverDepartment && receiverName === userName) {
+            if (/*userDepartment === receiverDepartment &&*/ receiverName === userName) {
               //--▼ Manage Main ▼--//
               $(ticketsMain).append(
                 `<article class="${ticketStatus}" onClick="$('.active-ticket').removeClass('active-ticket'); $(this).addClass('active-ticket');">
@@ -741,7 +741,7 @@ export namespace DataRead {
           ticketSubject.value = `${getTicket('subject-text')}`;
           ticketDescription.textContent = `${getTicket('description-text')}`;
 
-          senderDepartment.textContent = `${getTicket('sender-department')}`;
+          senderDepartment.textContent = `${getTicket('receiver-department')}`;
           colleagueName.textContent = `${getTicket('receiver-name')}`;
 
           pendingDate.textContent = `${getTicket('date-pending')}`;
