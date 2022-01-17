@@ -51,6 +51,7 @@ define(["require", "exports", "code/tools/GetEvent", "code/tools/GetPath"], func
                             break;
                     }
                 }
+                new GetEvent_1.GetEvent.forPage('default-header', GetPath_1.GetPath.forHTML('header'));
                 new GetEvent_1.GetEvent.forPage('default-overlay', GetPath_1.GetPath.forHTML('overlay'));
                 new GetEvent_1.GetEvent.forPage('default-data', GetPath_1.GetPath.forHTML('data'));
                 $(userSelect).on('change', function () {
