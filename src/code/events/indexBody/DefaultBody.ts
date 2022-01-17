@@ -77,6 +77,7 @@ export namespace DefaultBody {
       }
 
       // Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
+      new GetEvent.forPage('default-header', GetPath.forHTML('header'));
       new GetEvent.forPage('default-overlay', GetPath.forHTML('overlay'));
       new GetEvent.forPage('default-data', GetPath.forHTML('data'));
 

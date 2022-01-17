@@ -35,7 +35,7 @@ export namespace Start {
 
   /* Classes ▼ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
   new GetEvent.forPage('default-body', GetPath.forHTML('body'));
-  new GetEvent.forPage('default-header', GetPath.forHTML('header'));
+  // new GetEvent.forPage('default-header', GetPath.forHTML('header'));
 
   /* Events ▼ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= ◄ */
 
