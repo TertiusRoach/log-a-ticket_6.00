@@ -1,10 +1,20 @@
-## Project Setup (Default)
+## Log a Ticket (6.13.1)
 
-## Step 1: Open the folder containing your project
+---
 
-## Step 2: Run Node.js (Terminal Commands)
+## Step 1: Open Terminal in Visual Studio Code (Press: Ctrl + `)
 
     npm init
+
+---
+
+## Step 2: Input information such as version, description and keywords
+
+---
+
+## Step 3: Install Node.js frameworks: (npm Version 8.1.0)
+
+# This creates a 'package-lock.json' file
 
     npm install --save-dev @gulp-sourcemaps/identity-map
     npm install --save-dev gulp-sourcemaps
@@ -25,49 +35,51 @@
     npm install -g gulp
     npm install jquery
 
-## Step 3: Close Code editor
+---
 
-## Step 4: Create a GitHub Repository
+## Step 3: Commit to Repository by using these commands
 
-## Step 5: Open Code editor
+# This is a sample commit
 
-## Step 6: Commit to Repository by using these commands
-
-    echo "# log-a-ticket_6.00" >> README.md
-    git init
-    git add README.md
-    git commit -m "first commit"
-    git branch -M main
-    git remote add origin https://github.com/TertiusRoach/log-a-ticket_6.00.git
-    git push -u origin main
+    <!-- echo "# brainstorm-bin" >> README.md -->
+    <!-- git init -->
+    <!-- git add README.md -->
+    <!-- git commit -m "first commit" -->
+    <!-- git branch -M main -->
+    <!-- git remote add origin https://github.com/TertiusRoach/brainstorm-bin.git -->
+    <!-- git push -u origin main -->
 
 ---
 
-VSCode Extensions (Optional)
+## Step 4: Install Extensions for Visual Studio Code
 
-    CSS Grid Snippets: ohansemmanuel
-    Gulp Tasks: Nick Dodd
-    JavaScript (ES6) code snippets: charalampos karypidis
-    jQuery Code Snippets: Don Jayamanne
-    Live Server: Ritwick Dey
-    Material Icon Theme: Philipp Kief
-    Prettier - Code formatter: Prettier
-    TODO Highlight: Wayou Liu
-    Auto Import: steoates
+    --Tabnine AI Autocomplete for Javascript, Python, Typescript, PHP, Go, Java, Ruby & more: TabNine
+    <!-- --Code Spell Checker: Street Side Software (Optional) -->
+    --GitLens - Git supercharged: GitKraken
+    --Prettier - Code formatter: Prettier
+    --Bracket Pair Colorizer: CoenraadS
+    --Material Icon Theme: Philipp Kief
+    --Auto Rename Tag: Jun Han
+    --Live Server: Ritwick Dey
+    --One Dark Pro: binaryify
+    --Gulp Tasks: Nick Dodd
+    --Auto Import: steoates
+    --Live Share: Microsoft
+    --Quokka.js: Wallaby.js
+    --ESLint: Microsoft
+    --Python: Microsoft
+    --C/C++: Microsoft
 
 ---
 
-VSC Exclude (Optional)
+## Ignore local content in Visual Studio Code
 
-    .git
-    *.lnk
-    dist/*.js.map
-    dist/desktop.ini
-    node_modules
-    package-lock.json
-    src/*.d.ts
-    src/desktop.ini
+# File -> Preferences -> Settings => Search: Exclude
+
     types
-    tsconfig.json
+    src/*.d.ts
+    dist/**/*js.map
+    dist/desktop.init
+    package-lock.json
 
 ---
