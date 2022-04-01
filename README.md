@@ -74,7 +74,7 @@
 
 ## Ignore local content in Visual Studio Code
 
-# File -> Preferences -> Settings => Search: Exclude
+# File -> Preferences -> Settings -> Search: Exclude
 
     types
     src/*.d.ts
