@@ -12,7 +12,7 @@
 
 ---
 
-## Step 3: Install Node.js frameworks: (npm Version 8.1.0)
+## Step 3: Install Node.js frameworks (npm Version 8.1.0)
 
 # This creates a 'package-lock.json' file
 
